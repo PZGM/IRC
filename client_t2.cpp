@@ -18,12 +18,12 @@ int main(int argc, char *argv[])
 	int    sockfd;
 	char   send_buf[80];
 	char   recv_buf[80];
-	struct sockaddr_in6   addr;
+	struct sockaddr_in   addr;
 
 	/*************************************************/
 	/* Create an AF_INET6 stream socket              */
 	/*************************************************/
-	sockfd = socket(AF_INET6, SOCK_STREAM, 0);
+	sockfd = socket(AF_INET, SOCK_STREAM, 0);
 	if (sockfd < 0)
 	{
 		perror("socket");
@@ -34,9 +34,9 @@ int main(int argc, char *argv[])
 	/* Initialize the socket address structure       */
 	/*************************************************/
 	memset(&addr, 0, sizeof(addr));
-	addr.sin6_family      = AF_INET6;
-	memcpy(&addr.sin6_addr, &in6addr_any, sizeof(in6addr_any));
-	addr.sin6_port        = htons(SERVER_PORT);
+	addr.sin_family      = AF_INET;
+	addr.sin_addr.s_addr		= INADDR_ANY;
+	addr.sin_port      = htons(SERVER_PORT);
 
 	/*************************************************/
 	/* Connect to the server                         */
