@@ -90,6 +90,7 @@ int main(int argc,char **argv) {
 			if (fds[i].revents != POLLIN) //if != 0 && != POLLIN then its unexpected
 			{
 				std::cout <<" Error revents = " << fds[i].revents << std::endl;
+				std::cout << errno << std::endl;
 				perror("error A : ");
 				end_serv = true;
 				break;
@@ -118,8 +119,12 @@ int main(int argc,char **argv) {
 				std::cout << " Descriptor " << i << " is readable " << std::endl;
 				close_conn = false;
 				do {
-					if ((rc = recv(fds[i].fd, buff, sizeof(buff), 0)) < 0) //receive data
+					usleep(10000);
+					rc = recv(fds[i].fd, buff, sizeof(buff), 0); //receive data
+					if (rc < 0)
 					{
+						std::cout << "__RC = " << rc << std::endl;
+						std::cout << errno << std::endl;
 						if (errno != EWOULDBLOCK)
 						{
 							std::cerr << " recv error" << std::endl;
@@ -136,7 +141,6 @@ int main(int argc,char **argv) {
 					}
 					len = rc;
 					std::cout << len << "bytes received " << std::endl;
-					//	if ((rc = send(i, buff, len, 0)) < 0)
 					if ((rc = send(fds[i].fd, buff, len, 0)) < 0)
 					{
 						std::cerr << " send error " << std::endl;

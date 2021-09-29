@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
 			sizeof(struct sockaddr_in));
 	if (rc < 0)
 	{
-		perror("bite ");
+		perror("error ");
 		std::cerr<<"error while connecting"<<std::endl;
 		close(sockfd);
 		exit(-1);
@@ -82,7 +82,6 @@ int main(int argc, char *argv[])
 		exit(-1);
 	}
 	std::cout << len << " bytes receive" << std::endl;
-
 	/*************************************************/
 	/* Close down the socket                         */
 	/*************************************************/
