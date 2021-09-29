@@ -10,6 +10,7 @@
 #include <arpa/inet.h>
 #include <sys/ioctl.h>
 #include <errno.h>
+#include <fcntl.h>
 
 #define PORT 8080
 #define BUFF 1024
@@ -37,13 +38,14 @@ int main(int argc,char **argv) {
 		std::cerr <<"socket creation failed" <<std::endl;
 		exit(0);
 	}
-	if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR |SO_REUSEPORT, &opt, sizeof(opt))){ //to prevent error such as "address already in use
+	if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) < 0){ //to prevent error such as "address already in use
 		std::cerr << "setsockopt error" << std::endl;
+		perror("error :");
 		exit(0);
 	}
 
-	if ((rc = ioctl(sockfd, FIONBIO, &opt, sizeof(opt))) < 0) { //set socket to be nonblocking
-		std::cerr << "ioctl error" << std::endl;
+	if ((rc = fcntl(sockfd, F_SETFL, O_NONBLOCK)) < 0) { //set socket to be nonblocking
+		std::cerr << "fnctl error" << std::endl;
 		exit(0);
 	}
 	memset(&addr, 0, sizeof(addr));
@@ -82,11 +84,13 @@ int main(int argc,char **argv) {
 		size = nfds;					//with poll need to find which descriptor are readable
 		for (i = 0; i < size; i++)
 		{
+			std::cout<< "fd[" <<i<<"]"<<std::endl;
 			if (fds[i].revents == 0)
 				continue;
 			if (fds[i].revents != POLLIN) //if != 0 && != POLLIN then its unexpected
 			{
 				std::cout <<" Error revents = " << fds[i].revents << std::endl;
+				perror("error A : ");
 				end_serv = true;
 				break;
 			}
@@ -114,8 +118,7 @@ int main(int argc,char **argv) {
 				std::cout << " Descriptor " << i << " is readable " << std::endl;
 				close_conn = false;
 				do {
-					//	if ((rc = recv(i, buff, sizeof(buff), 0)) < 0) //receive data
-					if ((rc = recv(fds[i].fd, buff, sizeof(buff), 0)) < 0)
+					if ((rc = recv(fds[i].fd, buff, sizeof(buff), 0)) < 0) //receive data
 					{
 						if (errno != EWOULDBLOCK)
 						{
@@ -124,6 +127,7 @@ int main(int argc,char **argv) {
 						}
 						break;
 					}
+					std::cout << "rc = "<<rc<<std::endl;
 					if (rc == 0)
 					{
 						std::cout << "connection close " <<std::endl;

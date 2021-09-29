@@ -43,10 +43,11 @@ int main(int argc, char *argv[])
 	/*************************************************/
 	rc = connect(sockfd,
 			(struct sockaddr *)&addr,
-			sizeof(struct sockaddr_in6));
+			sizeof(struct sockaddr_in));
 	if (rc < 0)
 	{
-		std::cerr<<"connect"<<std::endl;
+		perror("bite ");
+		std::cerr<<"error while connecting"<<std::endl;
 		close(sockfd);
 		exit(-1);
 	}
