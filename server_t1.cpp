@@ -17,21 +17,8 @@
 #define BACKLOG 4
 #define FD_MAX 200
 
-int main(int argc,char **argv) {
-
-	char buff[BUFF] = {0};
-	struct sockaddr_in addr;
-	int time;
-	int connfd, val, rc, max_sd, new_sd, desc, len;
+int initialize_socket_fd() {
 	int opt = 1;
-	bool close_conn = true;
-	bool end_serv = false;
-	int addrlen = sizeof(addr);
-	struct pollfd fds[FD_MAX];
-	bool compr_arr = false;
-	int nfds = 1;
-	int size = 0;
-	int i;
 
 	int sockfd = socket(AF_INET, SOCK_STREAM, 0); //AF_INET = IPV4(AF_INET6...) SOCK_STREAM = TCP 0 = IP
 	if (sockfd == -1) { //execption instead of if ?
@@ -43,17 +30,16 @@ int main(int argc,char **argv) {
 		perror("error :");
 		exit(0);
 	}
+	return sockfd;
+}
 
-	if ((rc = fcntl(sockfd, F_SETFL, O_NONBLOCK)) < 0) { //set socket to be nonblocking
-		std::cerr << "fnctl error" << std::endl;
-		exit(0);
-	}
-	memset(&addr, 0, sizeof(addr));
-	addr.sin_family = AF_INET;
-	addr.sin_addr.s_addr = INADDR_ANY; // all address accepted
-	addr.sin_port = htons(PORT); //convert an integer from an byt of the server to on of the host
+void init_address(struct sockaddr_in * addr, int sockfd) {
+	memset(addr, 0, sizeof(*addr));
+	addr->sin_family = AF_INET;
+	addr->sin_addr.s_addr = INADDR_ANY; // all address accepted
+	addr->sin_port = htons(PORT); //convert an integer from an byt of the server to on of the host
 
-	if (bind(sockfd, (struct sockaddr *) &addr, addrlen) < 0) {
+	if (bind(sockfd, (struct sockaddr *) addr, sizeof(*addr)) < 0) {
 		std::cerr << "bind error" <<std::endl;
 		exit(0);
 	}
@@ -62,8 +48,34 @@ int main(int argc,char **argv) {
 		std::cerr << "error while listening" <<std::endl;
 		exit(0);
 	}
+}
 
-	memset(fds,0, sizeof(fds));
+int main(int argc,char **argv) {
+
+	char buff[BUFF] = {0};
+	struct sockaddr_in addr;
+	int time;
+	int connfd, val, rc, max_sd, new_sd, desc, len;
+
+	bool close_conn = true;
+	bool end_serv = false;
+	int addrlen = sizeof(addr);
+	struct pollfd fds[FD_MAX];
+	bool compr_arr = false;
+	int nfds = 1;
+	int size = 0;
+	int i;
+
+	int sockfd = initialize_socket_fd();
+
+	if ((rc = fcntl(sockfd, F_SETFL, O_NONBLOCK)) < 0) { //set socket to be nonblocking
+		std::cerr << "fnctl error" << std::endl;
+		exit(0);
+	}
+
+	init_address(&addr, sockfd);
+
+		memset(fds,0, sizeof(fds));
 	fds[0].fd = sockfd;
 	fds[0].events = POLLIN;
 
@@ -77,7 +89,6 @@ int main(int argc,char **argv) {
 			break;
 		}
 		if (rc == 0) {
-			//	std::cerr << "select timed out... " << std::endl;
 			std::cerr << "poll timed out..." << std::endl;
 			break;
 		}
@@ -119,9 +130,9 @@ int main(int argc,char **argv) {
 				std::cout << " Descriptor " << i << " is readable " << std::endl;
 				close_conn = false;
 				do {
-					// usleep(10000);
-					rc = recv(fds[i].fd, buff, sizeof(buff),  MSG_DONTWAIT); //receive data
-					if (rc < 0 && errno != EWOULDBLOCK)
+					usleep(100);
+					rc = recv(fds[i].fd, buff, sizeof(buff),  0); //receive data
+					if (rc < 0)
 					{
 						std::cout << "__RC = " << rc << std::endl;
 						std::cout << errno << std::endl;
@@ -133,7 +144,7 @@ int main(int argc,char **argv) {
 						break;
 					}
 					std::cout << "rc = "<<rc<<std::endl;
-					if (rc == 0 || errno == EWOULDBLOCK)
+					if (rc == 0)
 					{
 						std::cout << "connection close " <<std::endl;
 						close_conn = true;

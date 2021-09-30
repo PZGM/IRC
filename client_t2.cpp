@@ -75,6 +75,7 @@ int main(int argc, char *argv[])
 	/* Receive data buffer from the worker job       */
 	/*************************************************/
 	len = recv(sockfd, recv_buf, sizeof(recv_buf), 0);
+	std::cout << "recv = " << len << std::endl;
 	if (len != strlen(send_buf) + 1)
 	{
 		std::cerr << "recv" << std::endl;
