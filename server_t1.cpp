@@ -119,9 +119,9 @@ int main(int argc,char **argv) {
 				std::cout << " Descriptor " << i << " is readable " << std::endl;
 				close_conn = false;
 				do {
-					usleep(10000);
-					rc = recv(fds[i].fd, buff, sizeof(buff), 0); //receive data
-					if (rc < 0)
+					// usleep(10000);
+					rc = recv(fds[i].fd, buff, sizeof(buff),  MSG_DONTWAIT); //receive data
+					if (rc < 0 && errno != EWOULDBLOCK)
 					{
 						std::cout << "__RC = " << rc << std::endl;
 						std::cout << errno << std::endl;
@@ -133,7 +133,7 @@ int main(int argc,char **argv) {
 						break;
 					}
 					std::cout << "rc = "<<rc<<std::endl;
-					if (rc == 0)
+					if (rc == 0 || errno == EWOULDBLOCK)
 					{
 						std::cout << "connection close " <<std::endl;
 						close_conn = true;
