@@ -14,8 +14,8 @@
 
 #define PORT 8080
 #define BUFF 1024
-#define BACKLOG 4
-#define FD_MAX 200
+#define BACKLOG 7
+#define FD_MAX 2000
 
 int initialize_socket_fd() {
 	int opt = 1;
@@ -98,7 +98,7 @@ int main(int argc,char **argv) {
 			std::cout<< "fd[" <<i<<"]"<<std::endl;
 			if (fds[i].revents == 0)
 				continue;
-			if (fds[i].revents != POLLIN) //if != 0 && != POLLIN then its unexpected
+			if (fds[i].revents % 2  != POLLIN) //if != 0 && != POLLIN then its unexpected
 			{
 				std::cout <<" Error revents = " << fds[i].revents << std::endl;
 				std::cout << errno << std::endl;
@@ -130,7 +130,8 @@ int main(int argc,char **argv) {
 				std::cout << " Descriptor " << i << " is readable " << std::endl;
 				close_conn = false;
 				do {
-					usleep(100);
+					// usleep(100);
+					memset(buff, 0,sizeof(buff)); 
 					rc = recv(fds[i].fd, buff, sizeof(buff),  0); //receive data
 					if (rc < 0)
 					{
