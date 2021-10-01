@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 	struct sockaddr_in   addr;
 
 	/*************************************************/
-	/* Create an AF_INET6 stream socket              */
+	/* Create an AF_INET  stream socket              */
 	/*************************************************/
 	sockfd = socket(AF_INET, SOCK_STREAM, 0);
 	if (sockfd < 0)
