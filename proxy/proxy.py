@@ -1,7 +1,7 @@
 import socket
 import os
 from threading import Thread
-import parser as parser
+import parse as parser
 import sys
 
 class Proxy2Server(Thread):
@@ -91,7 +91,7 @@ else:
     master_server = Proxy('0.0.0.0', ip, port_server, port_proxy)
     master_server.start()
 
-    while True:
+while True:
     try:
         cmd = raw_input('$ ')
         if cmd[:4] == 'quit':
