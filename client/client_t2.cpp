@@ -10,7 +10,11 @@
 #include <cstring>
 #include <unistd.h>
 
+#ifdef PROXY
 #define SERVER_PORT  8000
+#else
+#define SERVER_PORT 8080
+#endif
 
 int main(int argc, char *argv[])
 {
