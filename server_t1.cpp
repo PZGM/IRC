@@ -36,7 +36,7 @@ int initialize_socket_fd() {
 void init_address(struct sockaddr_in * addr, int sockfd) {
 	memset(addr, 0, sizeof(*addr));
 	addr->sin_family = AF_INET;
-	addr->sin_addr.s_addr = INADDR_ANY; // all address accepted
+	addr->sin_addr.s_addr = inet_addr("127.0.0.1");//INADDR_ANY; // all address accepted
 	addr->sin_port = htons(PORT); //convert an integer from an byt of the server to on of the host
 
 	if (bind(sockfd, (struct sockaddr *) addr, sizeof(*addr)) < 0) {
@@ -83,7 +83,7 @@ int main(int argc,char **argv) {
 	do
 	{
 		std::cout << " waiting poll..." << std::endl;
-		if ((rc = poll(fds, nfds, time)) < 0)
+		if ((rc = poll(fds, nfds, -1)) < 0)
 		{
 			std::cerr << "poll failed" << std::endl;
 			break;

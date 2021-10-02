@@ -10,7 +10,7 @@
 #include <cstring>
 #include <unistd.h>
 
-#define SERVER_PORT  8080
+#define SERVER_PORT  8000
 
 int main(int argc, char *argv[])
 {
@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 	/*************************************************/
 	memset(&addr, 0, sizeof(addr));
 	addr.sin_family      = AF_INET;
-	addr.sin_addr.s_addr		= INADDR_ANY;
+	addr.sin_addr.s_addr		= inet_addr("127.0.0.1");//INADDR_ANY;
 	addr.sin_port      = htons(SERVER_PORT);
 
 	/*************************************************/
@@ -86,6 +86,7 @@ int main(int argc, char *argv[])
 	/*************************************************/
 	/* Close down the socket                         */
 	/*************************************************/
+	while(1);
 	close(sockfd);
 	return 0;
 }
