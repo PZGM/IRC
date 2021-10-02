@@ -7,5 +7,5 @@ nc -C localhost <PORT>
 On differents terminal/windows :
 ```
 ./server
-./client 
+#./client 
 ```
