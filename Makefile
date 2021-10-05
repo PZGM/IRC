@@ -15,6 +15,8 @@ NAME = ircserv
 SRCS =	./server_t1.cpp			\
 		./parsing.cpp			\
 		./tool.cpp			\
+		./nick.cpp			\
+		./join.cpp			\
 		# ./.cpp			\
 		
 OBJS = ${SRCS:.cpp=.o}

@@ -26,28 +26,35 @@ vector<string> * split(string str, string sep) {
 return (ret);
 }
 
-void parsing(std::string str) {
-    std::cout << str.size() << std::endl;
+void parsing(std::string str, User & usr) {
+    usr.print();
+    if (str[str.length() -1] == '\n')
+    	str.resize(str.length() - 1);
+    if (str.size() == 0)
+        return;
     vector<string> *vec = split(str, " ");
     string command = allupper(vec->front());
-    std::cout << command <<"|" << std::endl;
+    if (command.empty())
+        return;
+    vec->erase(vec->begin());
     if (command == "JOIN") {
-        std::cout << "join" << std::endl;
+        std::cout << "___Command: JOIN" << std::endl;
     }
     else if (command == "USER") {
-        std::cout << "USER" << std::endl;
+        std::cout << "___Command: USER" << std::endl;
     }
     else if (command == "NICK") {
-        std::cout << "NICK" << std::endl;
+        std::cout << "___Command: NICK" << std::endl;
+        nick(vec, usr);
     }
     else if (command == "PRIVMSG") {
-        std::cout << "private msg" << std::endl;
+        std::cout << "___Command: PRIVMSG" << std::endl;
     }
     else if (command == "OPER") {
-        std::cout << "oper" << std::endl;
+        std::cout << "___Command: OPER" << std::endl;
     }
     else if (command == "MODE") {
-        std::cout << "mode" << std::endl;
+        std::cout << "___Command: MODE" << std::endl;
     }
     else
         std::cout << "command not found" << std::endl;

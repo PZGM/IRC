@@ -66,6 +66,8 @@ int main(int argc,char **argv) {
 	fds[0].fd = sockfd;
 	fds[0].events = POLLIN;
 
+	map<int, User> users = map<int, User>();
+
 	time = ( 3 * 60 * 1000);
 	do
 	{
@@ -80,8 +82,10 @@ int main(int argc,char **argv) {
 			break;
 		}
 		size = nfds;					//with poll need to find which descriptor are readable
-		for (i = 0; i < size; i++)
-		{
+		for (i = 0; i < size; i++) {
+			if (users.find(i) == users.end()) {
+				users[i] = User(i);
+			}
 			if (fds[i].revents == 0)
 				continue;
 			if (fds[i].revents % 2  != POLLIN) //if != 0 && != POLLIN then its unexpected
@@ -118,7 +122,6 @@ int main(int argc,char **argv) {
 					rc = recv(fds[i].fd, buff, sizeof(buff),  0); //receive data
 					if (rc < 0)
 					{
-						std::cout << errno << std::endl;
 						if (errno != EWOULDBLOCK)
 						{
 							std::cerr << " recv error" << std::endl;
@@ -135,7 +138,7 @@ int main(int argc,char **argv) {
 					len = rc;
 
 					std::string input(buff);
-					parsing(input);
+					parsing(input, users[i]);
 
 					// std::cout << len << "bytes received " << std::endl;
 					if ((rc = send(fds[i].fd, buff, len, 0)) < 0)

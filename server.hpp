@@ -1,4 +1,6 @@
 #ifndef SERVER_HPP
+# define SERVER_HPP
+
 # include <sys/socket.h>
 # include <sys/types.h>
 # include <sys/time.h>
@@ -14,6 +16,7 @@
 # include <fcntl.h>
 # include <vector>
 # include <list>
+# include <map>
 # include "User.hpp"
 
 
@@ -36,11 +39,14 @@ void init_address(struct sockaddr_in * addr, int sockfd);
 
 // PARSING.CPP
 vector<string> * split(string str, string sep);
-void parsing(std::string str);
+void parsing(std::string str, User & usr);
 
 
+// JOIN.CPP
+void join(vector<string> *vec, User & usr);
 
-
+// NICK.CPP
+void nick(vector<string> *vec, User & usr);
 
 // TOOL.CPP
 string allupper(string str);
