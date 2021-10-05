@@ -48,6 +48,9 @@ void join(vector<string> *vec, User & usr);
 // NICK.CPP
 void nick(vector<string> *vec, User & usr);
 
+// USER.CPP
+void user(vector<string> *vec, User & usr);
+
 // TOOL.CPP
 string allupper(string str);
 

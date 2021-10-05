@@ -5,6 +5,7 @@
 class User
 {
 	private:
+		std::string 	_user_name;
 		std::string 	_real_name;
 		std::string		_nick_name;
 		std::string 	_pass;
@@ -29,6 +30,21 @@ class User
 
 		bool set_nick(std::string nick) {
 			_nick_name = nick;
+			return true;
+		}
+		bool set_real(std::string real) {
+			_real_name = real;
+			return true;
+		}
+		bool set_user(std::string user) {
+			_user_name = user;
+			return true;
+		}
+		bool set_flags(std::string flag) {
+			if (flag[0] == '1')
+				_flags = true;
+			else
+				_flags = false;
 			return true;
 		}
 

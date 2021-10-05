@@ -42,6 +42,7 @@ void parsing(std::string str, User & usr) {
     }
     else if (command == "USER") {
         std::cout << "___Command: USER" << std::endl;
+        user(vec, usr);
     }
     else if (command == "NICK") {
         std::cout << "___Command: NICK" << std::endl;
