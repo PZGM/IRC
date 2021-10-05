@@ -1,4 +1,8 @@
-#include "server.hpp"
+#ifndef PARSING_CPP
+# define PARSING_CPP
+
+# include "server.hpp"
+
 
 vector<string> * split(string str, string sep) {
 	vector<string> * ret = new vector<string>();
@@ -23,8 +27,10 @@ return (ret);
 }
 
 void parsing(std::string str) {
+    std::cout << str.size() << std::endl;
     vector<string> *vec = split(str, " ");
     string command = allupper(vec->front());
+    std::cout << command <<"|" << std::endl;
     if (command == "JOIN") {
         std::cout << "join" << std::endl;
     }
@@ -46,3 +52,6 @@ void parsing(std::string str) {
     else
         std::cout << "command not found" << std::endl;
 }
+
+
+#endif

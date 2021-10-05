@@ -37,6 +37,8 @@ void init_address(struct sockaddr_in * addr, int sockfd) {
 }
 
 int main(int argc,char **argv) {
+	(void)argc;
+	(void)argv;
 	char buff[BUFF] = {0};
 	struct sockaddr_in addr;
 	int time;
@@ -112,7 +114,7 @@ int main(int argc,char **argv) {
 			{
 				close_conn = false;
 				do {
-					memset(buff, 0,sizeof(buff)); 
+					memset(buff, 0, sizeof(buff)); 
 					rc = recv(fds[i].fd, buff, sizeof(buff),  0); //receive data
 					if (rc < 0)
 					{

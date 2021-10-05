@@ -13,6 +13,10 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <vector>
+# include <list>
+# include "User.hpp"
+
+
 
 #define PORT 8080
 #define BUFF 1024
