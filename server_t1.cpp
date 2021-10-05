@@ -1,21 +1,7 @@
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <sys/time.h>
-#include <netinet/in.h>
-#include <iostream>
-#include <cstring>
-#include <unistd.h>
-#include <sys/poll.h>
-#include <poll.h>
-#include <arpa/inet.h>
-#include <sys/ioctl.h>
-#include <errno.h>
-#include <fcntl.h>
+#include "server.hpp"
 
-#define PORT 8080
-#define BUFF 1024
-#define BACKLOG 7
-#define FD_MAX 2000
+
+
 
 int initialize_socket_fd() {
 	int opt = 1;
@@ -51,7 +37,6 @@ void init_address(struct sockaddr_in * addr, int sockfd) {
 }
 
 int main(int argc,char **argv) {
-
 	char buff[BUFF] = {0};
 	struct sockaddr_in addr;
 	int time;
@@ -95,14 +80,12 @@ int main(int argc,char **argv) {
 		size = nfds;					//with poll need to find which descriptor are readable
 		for (i = 0; i < size; i++)
 		{
-			std::cout<< "fd[" <<i<<"]"<<std::endl;
 			if (fds[i].revents == 0)
 				continue;
 			if (fds[i].revents % 2  != POLLIN) //if != 0 && != POLLIN then its unexpected
 			{
 				std::cout <<" Error revents = " << fds[i].revents << std::endl;
 				std::cout << errno << std::endl;
-				perror("error A : ");
 				end_serv = true;
 				break;
 			}
@@ -127,15 +110,12 @@ int main(int argc,char **argv) {
 			}
 			else //not the listening socket so an existing connection must be readable
 			{
-				std::cout << " Descriptor " << i << " is readable " << std::endl;
 				close_conn = false;
 				do {
-					// usleep(100);
 					memset(buff, 0,sizeof(buff)); 
 					rc = recv(fds[i].fd, buff, sizeof(buff),  0); //receive data
 					if (rc < 0)
 					{
-						std::cout << "__RC = " << rc << std::endl;
 						std::cout << errno << std::endl;
 						if (errno != EWOULDBLOCK)
 						{
@@ -144,7 +124,6 @@ int main(int argc,char **argv) {
 						}
 						break;
 					}
-					std::cout << "rc = "<<rc<<std::endl;
 					if (rc == 0)
 					{
 						std::cout << "connection close " <<std::endl;
@@ -152,7 +131,11 @@ int main(int argc,char **argv) {
 						break;
 					}
 					len = rc;
-					std::cout << len << "bytes received " << std::endl;
+
+					std::string input(buff);
+					parsing(input);
+
+					// std::cout << len << "bytes received " << std::endl;
 					if ((rc = send(fds[i].fd, buff, len, 0)) < 0)
 					{
 						std::cerr << " send error " << std::endl;
