@@ -18,6 +18,8 @@
 # include <list>
 # include <map>
 # include "User.hpp"
+# include "Channel.hpp"
+# include "Class_server.hpp"
 
 
 

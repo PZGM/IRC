@@ -3,17 +3,18 @@
 
 # include "server.hpp"
 
-class Class_server
+class Server
 {
 	private:
 		list<User>	_user;
+		map<string, Channel> _channel;
 		string		_name;
 		bool		_mp;
 	public:
 
-		Class_server();
-		Class_server();
-		virtual	~Class_server();
+		Server();
+		Server();
+		virtual	~Server();
 
 };
 
