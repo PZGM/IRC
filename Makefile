@@ -17,6 +17,7 @@ SRCS =	./server_t1.cpp			\
 		./tool.cpp			\
 		./nick.cpp			\
 		./join.cpp			\
+		./user.cpp			\
 		# ./.cpp			\
 		
 OBJS = ${SRCS:.cpp=.o}
@@ -46,11 +47,13 @@ fclean:  clean
 re: fclean all clean
 
 exe: re
+	@echo "nc -C localhost <PORT: 8080 ou 8000>"
 	@echo "${YELLOW}Execution${RESET}"
 	@./${NAME}
 
 exec: fclean
 	@${CC} -o ${NAME} ${SRCS} 
+	@echo "nc -C localhost <PORT>"
 	@echo "${YELLOW}Execution${RESET}"
 	@./${NAME}
 
