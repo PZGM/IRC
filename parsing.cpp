@@ -26,6 +26,13 @@ vector<string> * split(string str, string sep) {
 return (ret);
 }
 
+
+
+
+
+// ======================================================================================================
+// IL FAUT TOUT METTRE DANS LA CLASSE SERVER CAR JOIN UTILISE PAS LE USER 
+// ======================================================================================================
 void parsing(std::string str, User & usr) {
 	usr.print();
 	if (str[str.length() -1] == '\n')
@@ -39,6 +46,7 @@ void parsing(std::string str, User & usr) {
 	vec->erase(vec->begin());
 	if (command == "JOIN") {
 		std::cout << "___Command: JOIN" << std::endl;
+		// join(vec[0], srv); 
 	}
 	else if (command == "USER") {
 		std::cout << "___Command: USER" << std::endl;
