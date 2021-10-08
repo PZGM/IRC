@@ -1,7 +1,7 @@
 #ifndef JOIN_CPP
 # define JOIN_CPP
 
-#include "server.hpp"
+#include "../include/server.hpp"
 
 void	join(string name, Server & srv)
 {

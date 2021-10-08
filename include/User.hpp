@@ -2,6 +2,8 @@
 # define USER_HPP
 
 # include "server.hpp"
+using namespace std;
+
 class User
 {
 	private:

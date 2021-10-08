@@ -1,7 +1,7 @@
 #ifndef PARSING_CPP
 # define PARSING_CPP
 
-# include "server.hpp"
+#include "../include/server.hpp"
 
 
 vector<string> * split(string str, string sep) {

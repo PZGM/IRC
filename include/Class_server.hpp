@@ -2,6 +2,7 @@
 # define CLASS_SERVER_HPP
 
 # include "server.hpp"
+using namespace std;
 
 class Server
 {
@@ -13,7 +14,6 @@ class Server
 
 	public:
 
-		Server();
 		Server();
 		virtual	~Server();
 

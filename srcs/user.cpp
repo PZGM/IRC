@@ -1,7 +1,7 @@
 #ifndef USER_CPP
 # define USER_CPP
 
-# include "server.hpp"
+# include "../include/server.hpp"
 
 // bool verif(string str)
 // {

@@ -1,7 +1,7 @@
 #ifndef NICK_CPP
 # define NICK_CPP
 
-#include "server.hpp"
+#include "../include/server.hpp"
 
 void nick(vector<string> *vec, User & usr) {
     if (vec->empty())

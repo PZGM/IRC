@@ -12,20 +12,24 @@ endif
 
 NAME = ircserv
 
-SRCS =	./server_t1.cpp			\
-		./parsing.cpp			\
-		./tool.cpp			\
-		./nick.cpp			\
-		./join.cpp			\
-		./user.cpp			\
-		# ./.cpp			\
+SRCS =	./srcs/Bot.cpp			\
+		./srcs/Channel.cpp			\
+		./srcs/join.cpp			\
+		./srcs/Mode.cpp			\
+		./srcs/nick.cpp			\
+		./srcs/Oper.cpp			\
+		./srcs/parsing.cpp			\
+		./srcs/Privmsg.cpp			\
+		./srcs/server_t1.cpp			\
+		./srcs/tool.cpp			\
+		./srcs/user.cpp			\
+		# ./srcs/.cpp			\
 		
 OBJS = ${SRCS:.cpp=.o}
 
 CC  = clang++
 
-FLAGS = 
-# -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror
 
 SANI = -fsanitize=address -O0 -g3
 

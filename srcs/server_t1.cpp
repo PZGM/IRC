@@ -1,4 +1,4 @@
-#include "server.hpp"
+#include "../include/server.hpp"
 
 
 
@@ -36,17 +36,21 @@ void init_address(struct sockaddr_in * addr, int sockfd) {
 	}
 }
 
+
+
+// ===========================================================================================
+// ./ircserv [host:port_network:password_network] <port> <password>
+// ===========================================================================================
 int main(int argc,char **argv) {
 	(void)argc;
 	(void)argv;
 	char buff[BUFF] = {0};
 	struct sockaddr_in addr;
 	int time;
-	int connfd, val, rc, max_sd, new_sd, desc, len;
+	int rc, new_sd, len;
 
 	bool close_conn = true;
 	bool end_serv = false;
-	int addrlen = sizeof(addr);
 	struct pollfd fds[FD_MAX];
 	bool compr_arr = false;
 	int nfds = 1;

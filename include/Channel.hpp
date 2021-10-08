@@ -7,7 +7,7 @@ class Channel
 {
 	private:
 
-		string	_name;
+		std::string	_name;
 
 	public:
 
