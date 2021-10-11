@@ -23,6 +23,7 @@ SRCS =	./srcs/Bot.cpp			\
 		./srcs/server_t1.cpp			\
 		./srcs/tool.cpp			\
 		./srcs/user.cpp			\
+		./srcs/utils.cpp			\
 		# ./srcs/.cpp			\
 		
 OBJS = ${SRCS:.cpp=.o}

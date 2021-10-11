@@ -27,13 +27,27 @@ return (ret);
 }
 
 
-
+void	yo(int i)
+{
+	std::cout << "yo = " << i << std::endl;
+}
+void	mdr(int i)
+{
+	std::cout << "mdr = " << i << std::endl;
+}
 
 
 // ======================================================================================================
 // IL FAUT TOUT METTRE DANS LA CLASSE SERVER CAR JOIN UTILISE PAS LE USER 
 // ======================================================================================================
 void parsing(std::string str, User & usr) {
+	Server server;
+    map<string,void(*)(vector<string>*, User &,Server &)> fmap;
+	fmap["NICK"] = nick;
+
+
+
+
 	usr.print();
 	if (str[str.length() -1] == '\n')
 		str.resize(str.length() - 1);
@@ -50,11 +64,12 @@ void parsing(std::string str, User & usr) {
 	}
 	else if (command == "USER") {
 		std::cout << "___Command: USER" << std::endl;
-		user(vec, usr);
+		user(vec, usr,server);
 	}
 	else if (command == "NICK") {
 		std::cout << "___Command: NICK" << std::endl;
-		nick(vec, usr);
+		fmap["NICK"](vec, usr, server);
+		// nick(vec, usr, server);
 	}
 	else if (command == "PRIVMSG") {
 		std::cout << "___Command: PRIVMSG" << std::endl;

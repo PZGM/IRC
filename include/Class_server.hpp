@@ -10,12 +10,12 @@ class Server
 		list<User>	_user;
 		map<string, Channel> _channel;
 		string		_name;
-		bool		_mp;
+		// bool		_mp;
 
 	public:
 
-		Server();
-		virtual	~Server();
+		Server(){};
+		virtual	~Server(){};
 
 		map<string, Channel>::iterator get_begin_channel()
 		{

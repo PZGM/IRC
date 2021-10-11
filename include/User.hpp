@@ -30,9 +30,8 @@ class User
 		}
 		virtual	~User(){};
 
-		bool set_nick(std::string nick) {
+		void set_nick(std::string nick) {
 			_nick_name = nick;
-			return true;
 		}
 		bool set_real(std::string real) {
 			_real_name = real;
@@ -48,6 +47,14 @@ class User
 			else
 				_flags = false;
 			return true;
+		}
+
+		std::string get_nick(void) const {
+			return _nick_name;
+		}
+
+		int get_fd(void) const {
+			return _fd;
 		}
 
 		void print() {

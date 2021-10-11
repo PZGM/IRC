@@ -27,6 +27,7 @@
 #define BUFF 1024
 #define BACKLOG 7
 #define FD_MAX 2000
+#define SERVER_NAME "mepd"
 
 using namespace std;
 
@@ -37,24 +38,30 @@ int initialize_socket_fd();
 void init_address(struct sockaddr_in * addr, int sockfd);
 
 
-
-
 // PARSING.CPP
 vector<string> * split(string str, string sep);
 void parsing(std::string str, User & usr);
 
 
 // JOIN.CPP
-void join(vector<string> *vec, User & usr);
+void join(vector<string> *vec, User & usr, Server & srv);
 
 // NICK.CPP
-void nick(vector<string> *vec, User & usr);
+void nick(vector<string> *vec, User & usr, Server & srv);
 
 // USER.CPP
-void user(vector<string> *vec, User & usr);
+void user(vector<string> *vec, User & usr, Server & srv);
 
 // TOOL.CPP
 string allupper(string str);
+
+//UTILS.CPP
+bool check_name(std::string str);
+void send(std::string str, int fd);
+void send_error(int err, User & usr);
+void send_error_ws(int err, User & usr, std::string msg);
+
+
 
 
 #endif

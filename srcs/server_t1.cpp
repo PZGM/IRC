@@ -1,8 +1,5 @@
 #include "../include/server.hpp"
 
-
-
-
 int initialize_socket_fd() {
 	int opt = 1;
 
@@ -87,9 +84,6 @@ int main(int argc,char **argv) {
 		}
 		size = nfds;					//with poll need to find which descriptor are readable
 		for (i = 0; i < size; i++) {
-			if (users.find(i) == users.end()) {
-				users[i] = User(i);
-			}
 			if (fds[i].revents == 0)
 				continue;
 			if (fds[i].revents % 2  != POLLIN) //if != 0 && != POLLIN then its unexpected
@@ -115,6 +109,10 @@ int main(int argc,char **argv) {
 					std::cout << "new incoming connection - "<< new_sd << std::endl;
 					fds[nfds].fd = new_sd;
 					fds[nfds].events = POLLIN;
+					if (users.find(new_sd) == users.end()) {
+						std::cout << "User " << new_sd << " creation" << std::endl;
+						users[new_sd] = User(new_sd);
+					}
 					nfds++;
 				} while(new_sd != -1);
 			}
@@ -142,15 +140,15 @@ int main(int argc,char **argv) {
 					len = rc;
 
 					std::string input(buff);
-					parsing(input, users[i]);
+					parsing(input, users[fds[i].fd]);
 
 					// std::cout << len << "bytes received " << std::endl;
-					if ((rc = send(fds[i].fd, buff, len, 0)) < 0)
-					{
-						std::cerr << " send error " << std::endl;
-						close_conn = true;
-						break;
-					}
+					// if ((rc = send(fds[i].fd, buff, len, 0)) < 0)
+					// {
+					// 	std::cerr << " send error " << std::endl;
+					// 	close_conn = true;
+					// 	break;
+					// }
 				} while(true);
 				if (close_conn)
 				{

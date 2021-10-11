@@ -8,7 +8,8 @@
 // 	if (s)
 // }
 
-void user(vector<string> *vec, User & usr) {
+void user(vector<string> *vec, User & usr, Server & srv) {
+	(void)srv;
 	std::cout << "Je suis dans user" << std::endl;
 	if (vec->size() < 4)
 		std::cout << "wrong format" << std::endl;

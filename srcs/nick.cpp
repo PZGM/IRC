@@ -3,14 +3,17 @@
 
 #include "../include/server.hpp"
 
-void nick(vector<string> *vec, User & usr) {
+void nick(vector<string> *vec, User & usr, Server & srv) {
+    (void) srv;
     if (vec->empty())
-        std::cout << "wrong format" << std::endl;
+        send_error(431, usr);
     else {
-        if (usr.set_nick(vec->front()))
-            std::cout << "nick changed" << std::endl;
-        else
-            std::cout << "nick not changed" << std::endl;
+        if (check_name(vec->front()) == false)
+            send_error_ws(432, usr, vec->front());
+        else {
+            usr.set_nick(vec->front());
+            //send response
+        }
     }
 }
 

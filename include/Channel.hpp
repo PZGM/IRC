@@ -11,8 +11,8 @@ class Channel
 
 	public:
 
-		Channel();
-		virtual	~Channel();
+		Channel(){};
+		virtual	~Channel(){};
 
 };
 
