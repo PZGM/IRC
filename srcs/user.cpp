@@ -9,42 +9,26 @@
 // }
 
 void user(vector<string> *vec, User & usr, Server & srv) {
-	usr.set_registred(true);
-	usr.set_real_name("yes");
 	(void)srv;
-	std::cout << "Je suis dans user" << std::endl;
-	if (vec->size() < 4)
-		std::cout << "wrong format" << std::endl;
-	else {
-		vector<string>::iterator it = vec->begin();
-		// std::cout << *it << std::endl;
-		if ((*it++).size() <= 63 && ((*it)[0] == '1' || (*it)[0] == '0') && (*it++).size() == 1)
-		{
-			it = vec->begin();
-			usr.set_user(*it++);
-			usr.set_flags(*it++);
-			it++;
-			string tmp;
-			while (it != vec->end())
-			{
-				tmp.insert(tmp.length(), (*it));
-				if ((++it)!= vec->end())
-				tmp.insert(tmp.length(), " ");
-			}
-			std::cout << "tmp  = |"<< tmp << "|"<< std::endl;
-			if (usr.set_real(*it))
-				cout<<"real good"<<endl;
-		}
-
-		// cout<<"user good"<<endl;
-		// std::cout << *it << std::endl;
-		// if ((*it)[0])
-		// 	cout<<"flag good"<<endl;
-		// std::cout << *it << std::endl;
-		// it++;
-		// std::cout << *it << std::endl;
+	if (vec->size() < 4) {
+		send_error(461, usr, "USER");
+		return;
 	}
-
+	if (check_user_name(vec->front()) == false)
+		send_error(468, usr);
+	usr.set_user(vec->front());
+	vec->erase(vec->begin(), vec->begin() + 3);
+	string str = vec->front();
+	vec->erase(vec->begin());
+	while (vec->size() != 0) {
+		str += " ";
+		str += vec->front();
+		vec->erase(vec->begin());
+	}
+	usr.set_real_name(str);
+	std::cout << "=====" << usr.get_nick() << std::endl;
+	if (usr.get_nick() != "")
+		register_user(usr);
 }
 
 #endif

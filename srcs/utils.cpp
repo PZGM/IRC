@@ -27,6 +27,12 @@ bool check_nick(std::string str) {
     return true;
 }
 
+bool check_user_name(std::string str) {
+    if (str.find('@') != std::string::npos || str.find(' ') != std::string::npos)
+        return false;
+    return true;
+}
+
 
 void send(std::string str, int fd) {
     std::cout << "[" << fd << "] => " << str << std::endl;
@@ -47,6 +53,8 @@ void send_error(int err, User & usr) {
     str += " :";
     if (err == 431)
         str += "No nickname given";
+    if (err == 468)
+        str += "Malformed username";
     str += "\n";
     send(str, usr.get_fd());
 }

@@ -7,7 +7,7 @@ using namespace std;
 class Server
 {
 	private:
-		map<int, User>	_users;
+		map<int, User> _users;
 		map<string, Channel> _channel;
 		string		_name;
 		// bool		_mp;
@@ -16,7 +16,9 @@ class Server
 
 		Server(){
 			_users = map<int, User>();
-		};		virtual	~Server(){};
+		};
+		
+		virtual	~Server(){};
 
 		map<int, User> & get_users(void) {
 			return _users;
