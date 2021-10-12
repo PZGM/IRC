@@ -133,7 +133,9 @@ int main(int argc,char **argv) {
 					}
 					if (rc == 0)
 					{
-						std::cout << "connection close " <<std::endl;
+						std::cout << "connection close" <<std::endl;
+						users.erase(users.find(fds[i].fd));
+						std::cout << "user deleted from database" << std::endl;
 						close_conn = true;
 						break;
 					}

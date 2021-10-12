@@ -7,9 +7,9 @@ using namespace std;
 class User
 {
 	private:
-		std::string 	_user_name;
-		std::string 	_real_name;
-		std::string		_nick_name;
+		std::string 	_userName;
+		std::string 	_realName;
+		std::string		_nickName;
 		std::string 	_pass;
 		int				_fd;
 		bool			_flags;
@@ -20,11 +20,12 @@ class User
 
 	public:
 
-		User() : _real_name(""), _nick_name(""), _pass(""), _fd(-1), _flags(false), _registred(false){};
-		User(int fd) : _real_name(""), _nick_name(""), _pass(""), _fd(fd), _flags(false), _registred(false) {};
+		User() : _userName(""), _realName(""), _nickName(""), _pass(""), _fd(-1), _flags(false), _registred(false){};
+		User(int fd) : _userName(""), _realName(""), _nickName(""), _pass(""), _fd(fd), _flags(false), _registred(false) {};
 		User(const User & src) {
-			_real_name = src._real_name;
-			_nick_name = src._nick_name;
+			_userName = src._userName;
+			_realName = src._realName;
+			_nickName = src._nickName;
 			_pass = src._pass;
 			_fd = src._fd;
 			_flags = src._flags;
@@ -33,14 +34,14 @@ class User
 		virtual	~User(){};
 
 		void set_nick(std::string nick) {
-			_nick_name = nick;
+			_nickName = nick;
 		}
 		bool set_real(std::string real) {
-			_real_name = real;
+			_realName = real;
 			return true;
 		}
 		bool set_user(std::string user) {
-			_user_name = user;
+			_userName = user;
 			return true;
 		}
 		bool set_flags(std::string flag) {
@@ -52,15 +53,15 @@ class User
 		}
 
 		std::string getNick(void) const {
-			return _nick_name;
+			return _nickName;
 		}
 
 		std::string getRealName(void) const {
-			return _real_name;
+			return _realName;
 		}
 
 		void setRealName(std::string realName) {
-			_real_name = realName;
+			_realName = realName;
 		}
 
 		int get_fd(void) const {
@@ -79,9 +80,9 @@ class User
 
 		void print() {
 			if (_flags == true)
-				std::cout << "USER _ " << _fd << " : " << _nick_name << "(" << _real_name << ") is op"<< std::endl;
+				std::cout << "USER _ " << _fd << " : " << _nickName << "(" << _realName << ") is op"<< std::endl;
 			else
-				std::cout << "USER _ " << _fd << " : " << _nick_name << "(" << _real_name << ") isnt op" << std::endl; 
+				std::cout << "USER _ " << _fd << " : " << _nickName << "(" << _realName << ") isnt op" << std::endl; 
 		}
 
 };

@@ -9,6 +9,7 @@ bool registerUser(User & usr) {
         return false;
     }
     usr.setRegistred(true);
+    send("=====> YOU'RE REGISTRED !", usr.get_fd());
     return true;
 }
 
