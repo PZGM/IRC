@@ -9,11 +9,6 @@
 // }
 
 void user(vector<string> *vec, User & usr, Server & srv) {
-<<<<<<< HEAD
-=======
-	usr.set_registred(true);
-	usr.set_real_name("yes");
->>>>>>> c2edda767212b26b11664f258f5d6dfebd682c7a
 	(void)srv;
 	if (vec->size() < 4) {
 		send_error(461, usr, "USER");
@@ -30,9 +25,9 @@ void user(vector<string> *vec, User & usr, Server & srv) {
 		str += vec->front();
 		vec->erase(vec->begin());
 	}
-	usr.setRealName(str);
-	if (usr.getNick() != "")
-		registerUser(usr);
+	usr.set_real_name(str);
+	if (usr.get_nick() != "")
+		register_user(usr);
 }
 
 #endif
