@@ -14,6 +14,8 @@ class User
 		int				_fd;
 		bool			_flags;
 		bool			_registred;
+		std::vector<string>		_op_channel;
+
 
 
 
@@ -51,15 +53,15 @@ class User
 			return true;
 		}
 
-		std::string getNick(void) const {
+		std::string get_nick(void) const {
 			return _nick_name;
 		}
 
-		std::string getRealName(void) const {
+		std::string ge_real_name(void) const {
 			return _real_name;
 		}
 
-		void setRealName(std::string realName) {
+		void set_real_name(std::string realName) {
 			_real_name = realName;
 		}
 
@@ -67,14 +69,18 @@ class User
 			return _fd;
 		}
 
-		bool isRegistred(void) const {
+		bool is_registred(void) const {
 			return _registred;
 		}
 
-		void setRegistred(bool registration) {
+		void set_registred(bool registration) {
 			_registred = registration;
 		}
 
+		void add_channel(string str)
+		{
+			_op_channel.insert((_op_channel.end())--, str);
+		}
 
 
 		void print() {
