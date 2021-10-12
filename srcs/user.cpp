@@ -9,8 +9,8 @@
 // }
 
 void user(vector<string> *vec, User & usr, Server & srv) {
-	usr.setRegistred(true);
-	usr.setRealName("yes");
+	usr.set_registred(true);
+	usr.set_real_name("yes");
 	(void)srv;
 	std::cout << "Je suis dans user" << std::endl;
 	if (vec->size() < 4)

@@ -32,7 +32,10 @@ class Server
 				return true;
 			return false;
 		}
-
+		void	add_channel(Channel chan)
+		{
+			_channel[(chan.get_name())] = chan;
+		}
 };
 
 

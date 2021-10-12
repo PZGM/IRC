@@ -40,8 +40,8 @@ void send_error(int err, User & usr) {
     str += " ";
     str += std::to_string(err);
     str += " ";
-    if (usr.isRegistred())
-        str += usr.getNick();
+    if (usr.is_registred())
+        str += usr.get_nick();
     else
         str += "*";
     str += " :";
@@ -58,8 +58,8 @@ void send_error(int err, User & usr, std::string msg) {
     str += " ";
     str += std::to_string(err);
     str += " ";
-    if (usr.isRegistred())
-        str += usr.getNick();
+    if (usr.is_registred())
+        str += usr.get_nick();
     else
         str += "*";
     str += " ";
@@ -78,7 +78,7 @@ void send_error(int err, User & usr, std::string msg) {
 void send_update(User & usr, std::string command, std::string params) {
     std::string str;
     str += ":";
-    str += usr.getNick();
+    str += usr.get_nick();
     str += "!~u@kq2rf7a2iqsci.irc";
     str += " ";
     str += command;

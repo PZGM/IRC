@@ -7,13 +7,13 @@ using namespace std;
 class User
 {
 	private:
-		std::string 	_user_name;
-		std::string 	_real_name;
-		std::string		_nick_name;
-		std::string 	_pass;
-		int				_fd;
-		bool			_flags;
-		bool			_registred;
+		std::string 			_user_name;
+		std::string 			_real_name;
+		std::string				_nick_name;
+		std::string 			_pass;
+		int						_fd;
+		bool					_flags;
+		bool					_registred;
 		std::vector<string>		_op_channel;
 
 
@@ -57,7 +57,7 @@ class User
 			return _nick_name;
 		}
 
-		std::string ge_real_name(void) const {
+		std::string get_real_name(void) const {
 			return _real_name;
 		}
 

@@ -7,7 +7,7 @@ void nick(vector<string> *vec, User & usr, Server & srv) {
     (void) srv;
     if (vec->front() == ":")
         vec->erase(vec->begin());
-    if (vec->empty() == false && usr.getRealName() == "") {
+    if (vec->empty() == false && usr.get_real_name() == "") {
         usr.set_nick(vec->front());
         return;
     }
@@ -19,11 +19,11 @@ void nick(vector<string> *vec, User & usr, Server & srv) {
         send_error(432, usr, vec->front());
         return;
     }
-    if (usr.isRegistred())
+    if (usr.is_registred())
         send_update(usr, "NICK", vec->front());
     usr.set_nick(vec->front());
-    if (!usr.isRegistred())
-        registerUser(usr);
+    if (!usr.is_registred())
+        register_user(usr);
 }
 
 #endif

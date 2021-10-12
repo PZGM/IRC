@@ -72,7 +72,7 @@ void send_update(User & usr, std::string command, std::string params);
 bool check_nick(std::string str);
 
 //REGISTRATION.CPP
-bool registerUser(User & usr);
+bool register_user(User & usr);
 
 
 
