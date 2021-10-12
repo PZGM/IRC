@@ -7,15 +7,20 @@ using namespace std;
 class Server
 {
 	private:
-		list<User>	_user;
+		map<int, User>	_users;
 		map<string, Channel> _channel;
 		string		_name;
 		// bool		_mp;
 
 	public:
 
-		Server(){};
-		virtual	~Server(){};
+		Server(){
+			_users = map<int, User>();
+		};		virtual	~Server(){};
+
+		map<int, User> & get_users(void) {
+			return _users;
+		}
 
 		map<string, Channel>::iterator get_begin_channel()
 		{
@@ -35,6 +40,11 @@ class Server
 		void	add_channel(Channel chan)
 		{
 			_channel[(chan.get_name())] = chan;
+		}
+
+		bool find_chan_user(User & usr, Channel chan)
+		{
+			return chan.find_user(usr);
 		}
 };
 
