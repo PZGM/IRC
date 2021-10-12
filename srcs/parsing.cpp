@@ -27,16 +27,6 @@ return (ret);
 }
 
 
-void	yo(int i)
-{
-	std::cout << "yo = " << i << std::endl;
-}
-void	mdr(int i)
-{
-	std::cout << "mdr = " << i << std::endl;
-}
-
-
 // ======================================================================================================
 // IL FAUT TOUT METTRE DANS LA CLASSE SERVER CAR JOIN UTILISE PAS LE USER 
 // ======================================================================================================

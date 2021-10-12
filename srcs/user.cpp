@@ -9,6 +9,11 @@
 // }
 
 void user(vector<string> *vec, User & usr, Server & srv) {
+<<<<<<< HEAD
+=======
+	usr.set_registred(true);
+	usr.set_real_name("yes");
+>>>>>>> c2edda767212b26b11664f258f5d6dfebd682c7a
 	(void)srv;
 	if (vec->size() < 4) {
 		send_error(461, usr, "USER");

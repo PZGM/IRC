@@ -3,13 +3,12 @@
 
 #include "../include/server.hpp"
 
-bool registerUser(User & usr) {
-    if (check_nick(usr.getNick()) == false) {
-        send_error(432, usr, usr.getNick());
+bool register_user(User & usr) {
+    if (check_nick(usr.get_nick()) == false) {
+        send_error(432, usr, usr.get_nick());
         return false;
     }
-    usr.setRegistred(true);
-    send("=====> YOU'RE REGISTRED !", usr.get_fd());
+    usr.set_registred(true);
     return true;
 }
 

@@ -26,8 +26,16 @@ class Server
 			return(_channel.end());
 		}
 
-
-
+		bool	find_channel(string str)
+		{
+			if (_channel.find(str) != _channel.end())
+				return true;
+			return false;
+		}
+		void	add_channel(Channel chan)
+		{
+			_channel[(chan.get_name())] = chan;
+		}
 };
 
 
