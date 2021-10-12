@@ -71,6 +71,9 @@ void send_error(int err, User & usr, std::string msg);
 void send_update(User & usr, std::string command, std::string params);
 bool check_nick(std::string str);
 
+//REGISTRATION.CPP
+bool registerUser(User & usr);
+
 
 
 

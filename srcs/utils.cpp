@@ -39,10 +39,11 @@ void send_error(int err, User & usr) {
     str += SERVER_NAME;
     str += " ";
     str += std::to_string(err);
-    if (usr.exist()) {
-        str += " ";
-        str += usr.get_nick();
-    }
+    str += " ";
+    if (usr.isRegistred())
+        str += usr.getNick();
+    else
+        str += "*";
     str += " :";
     if (err == 431)
         str += "No nickname given";
@@ -57,10 +58,11 @@ void send_error(int err, User & usr, std::string msg) {
     str += " ";
     str += std::to_string(err);
     str += " ";
-    if (usr.exist()) {
-        str += usr.get_nick();
-        str += " ";
-    }
+    if (usr.isRegistred())
+        str += usr.getNick();
+    else
+        str += "*";
+    str += " ";
     str += msg;
     str += " :";
     if (err == 461)
@@ -76,7 +78,7 @@ void send_error(int err, User & usr, std::string msg) {
 void send_update(User & usr, std::string command, std::string params) {
     std::string str;
     str += ":";
-    str += usr.get_nick();
+    str += usr.getNick();
     str += "!~u@kq2rf7a2iqsci.irc";
     str += " ";
     str += command;

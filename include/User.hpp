@@ -13,22 +13,22 @@ class User
 		std::string 	_pass;
 		int				_fd;
 		bool			_flags;
-		bool			_exist;
+		bool			_registred;
 
 
 
 
 	public:
 
-		User() : _real_name(""), _nick_name(""), _pass(""), _fd(-1), _flags(false), _exist(false){};
-		User(int fd) : _real_name(""), _nick_name(""), _pass(""), _fd(fd), _flags(false), _exist(false) {};
+		User() : _real_name(""), _nick_name(""), _pass(""), _fd(-1), _flags(false), _registred(false){};
+		User(int fd) : _real_name(""), _nick_name(""), _pass(""), _fd(fd), _flags(false), _registred(false) {};
 		User(const User & src) {
 			_real_name = src._real_name;
 			_nick_name = src._nick_name;
 			_pass = src._pass;
 			_fd = src._fd;
 			_flags = src._flags;
-			_exist = src._exist;
+			_registred = src._registred;
 		}
 		virtual	~User(){};
 
@@ -51,21 +51,31 @@ class User
 			return true;
 		}
 
-		std::string get_nick(void) const {
+		std::string getNick(void) const {
 			return _nick_name;
+		}
+
+		std::string getRealName(void) const {
+			return _real_name;
+		}
+
+		void setRealName(std::string realName) {
+			_real_name = realName;
 		}
 
 		int get_fd(void) const {
 			return _fd;
 		}
 
-		bool exist(void) const {
-			return _exist;
+		bool isRegistred(void) const {
+			return _registred;
 		}
 
-		void setExist(bool exist) {
-			_exist = exist;
+		void setRegistred(bool registration) {
+			_registred = registration;
 		}
+
+
 
 		void print() {
 			if (_flags == true)
