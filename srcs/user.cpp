@@ -9,6 +9,7 @@
 // }
 
 void user(vector<string> *vec, User & usr, Server & srv) {
+	usr.setExist(true);
 	(void)srv;
 	std::cout << "Je suis dans user" << std::endl;
 	if (vec->size() < 4)

@@ -43,8 +43,12 @@ void	mdr(int i)
 void parsing(std::string str, User & usr) {
 	Server server;
     map<string,void(*)(vector<string>*, User &,Server &)> fmap;
+	fmap["JOIN"] = join;
+	fmap["USER"] = user;
 	fmap["NICK"] = nick;
-
+	fmap["PRIVMSG"] = privmsg;
+	fmap["OPER"] = oper;
+	fmap["MODE"] = mode;
 
 
 
@@ -57,31 +61,16 @@ void parsing(std::string str, User & usr) {
 	string command = allupper(vec->front());
 	if (command.empty())
 		return;
-	vec->erase(vec->begin());
-	if (command == "JOIN") {
-		std::cout << "___Command: JOIN" << std::endl;
-		// join(vec[0], srv); 
-	}
-	else if (command == "USER") {
-		std::cout << "___Command: USER" << std::endl;
-		user(vec, usr,server);
-	}
-	else if (command == "NICK") {
-		std::cout << "___Command: NICK" << std::endl;
-		fmap["NICK"](vec, usr, server);
-		// nick(vec, usr, server);
-	}
-	else if (command == "PRIVMSG") {
-		std::cout << "___Command: PRIVMSG" << std::endl;
-	}
-	else if (command == "OPER") {
-		std::cout << "___Command: OPER" << std::endl;
-	}
-	else if (command == "MODE") {
-		std::cout << "___Command: MODE" << std::endl;
+	if (fmap.count(command)) {
+		vec->erase(vec->begin());
+		if (vec->size() == 0) {
+			send_error(461, usr, command);
+			return;
+		}
+		fmap[command](vec, usr, server);
 	}
 	else
-		std::cout << "command not found" << std::endl;
+		send_error(421, usr, command);
 }
 
 

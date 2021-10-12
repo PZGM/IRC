@@ -13,20 +13,22 @@ class User
 		std::string 	_pass;
 		int				_fd;
 		bool			_flags;
+		bool			_exist;
 
 
 
 
 	public:
 
-		User() : _real_name(""), _nick_name(""), _pass(""), _fd(-1), _flags(false){};
-		User(int fd) : _real_name(""), _nick_name(""), _pass(""), _fd(fd), _flags(false) {};
+		User() : _real_name(""), _nick_name(""), _pass(""), _fd(-1), _flags(false), _exist(false){};
+		User(int fd) : _real_name(""), _nick_name(""), _pass(""), _fd(fd), _flags(false), _exist(false) {};
 		User(const User & src) {
 			_real_name = src._real_name;
 			_nick_name = src._nick_name;
 			_pass = src._pass;
 			_fd = src._fd;
 			_flags = src._flags;
+			_exist = src._exist;
 		}
 		virtual	~User(){};
 
@@ -55,6 +57,14 @@ class User
 
 		int get_fd(void) const {
 			return _fd;
+		}
+
+		bool exist(void) const {
+			return _exist;
+		}
+
+		void setExist(bool exist) {
+			_exist = exist;
 		}
 
 		void print() {

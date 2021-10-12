@@ -12,14 +12,13 @@ endif
 
 NAME = ircserv
 
-SRCS =	./srcs/Bot.cpp			\
-		./srcs/Channel.cpp			\
+SRCS =	./srcs/bot.cpp			\
 		./srcs/join.cpp			\
-		./srcs/Mode.cpp			\
+		./srcs/mode.cpp			\
 		./srcs/nick.cpp			\
-		./srcs/Oper.cpp			\
+		./srcs/oper.cpp			\
 		./srcs/parsing.cpp			\
-		./srcs/Privmsg.cpp			\
+		./srcs/privmsg.cpp			\
 		./srcs/server_t1.cpp			\
 		./srcs/tool.cpp			\
 		./srcs/user.cpp			\

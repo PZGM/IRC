@@ -52,14 +52,25 @@ void nick(vector<string> *vec, User & usr, Server & srv);
 // USER.CPP
 void user(vector<string> *vec, User & usr, Server & srv);
 
+// PRIVMSG.CPP
+void privmsg(vector<string> *vec, User & usr, Server & srv);
+
+// OPER.CPP
+void oper(vector<string> *vec, User & usr, Server & srv);
+
+// MODE.CPP
+void mode(vector<string> *vec, User & usr, Server & srv);
+
 // TOOL.CPP
 string allupper(string str);
 
 //UTILS.CPP
-bool check_name(std::string str);
 void send(std::string str, int fd);
 void send_error(int err, User & usr);
-void send_error_ws(int err, User & usr, std::string msg);
+void send_error(int err, User & usr, std::string msg);
+void send_update(User & usr, std::string command, std::string params);
+bool check_nick(std::string str);
+
 
 
 
