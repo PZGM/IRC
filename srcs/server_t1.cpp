@@ -54,6 +54,8 @@ int main(int argc,char **argv) {
 	int size = 0;
 	int i;
 
+	Server srv;
+
 	int sockfd = initialize_socket_fd();
 
 	if ((rc = fcntl(sockfd, F_SETFL, O_NONBLOCK)) < 0) { //set socket to be nonblocking
@@ -67,7 +69,7 @@ int main(int argc,char **argv) {
 	fds[0].fd = sockfd;
 	fds[0].events = POLLIN;
 
-	map<int, User> users = map<int, User>();
+	map<int, User> & users = srv.get_users();
 
 	time = ( 3 * 60 * 1000);
 	do
