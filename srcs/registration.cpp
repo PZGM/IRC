@@ -9,6 +9,7 @@ bool register_user(User & usr) {
         return false;
     }
     usr.set_registred(true);
+    send("=====> YOU'RE REGISTRED !\n", usr.get_fd());
     return true;
 }
 

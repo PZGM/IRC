@@ -26,6 +26,7 @@ void user(vector<string> *vec, User & usr, Server & srv) {
 		vec->erase(vec->begin());
 	}
 	usr.set_real_name(str);
+	std::cout << "=====" << usr.get_nick() << std::endl;
 	if (usr.get_nick() != "")
 		register_user(usr);
 }
