@@ -14,8 +14,14 @@ void user(vector<string> *vec, User & usr, Server & srv) {
 		send_error(461, usr, "USER");
 		return;
 	}
-	if (check_user_name(vec->front()) == false)
+	if (usr.is_registred() == true) {
+		send_error(462, usr);
+		return;
+	}
+	if (check_user_name(vec->front()) == false) {
 		send_error(468, usr);
+		return;
+	}
 	usr.set_user(vec->front());
 	vec->erase(vec->begin(), vec->begin() + 3);
 	string str = vec->front();

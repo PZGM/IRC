@@ -67,6 +67,8 @@ void send_error(int err, User & usr) {
         str += "No nickname given";
     if (err == 468)
         str += "Malformed username";
+    if (err == 462)
+        str += "You may not reregister";
     str += "\n";
     send(str, usr.get_fd());
 }

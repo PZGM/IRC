@@ -36,8 +36,6 @@ void parsing(std::string str, User & usr, Server & srv) {
 	fmap["OPER"] = oper;
 	fmap["MODE"] = mode;
 
-
-
 	usr.print();
 	if (str[str.length() -1] == '\n')
 		str.resize(str.length() - 1);
