@@ -12,6 +12,18 @@ bool check_char(bool alpha, bool digit, bool special, std::string more, char c) 
     return false;
 }
 
+bool check_nick_availibility(std::string str, Server & srv) {
+    map<int, User> & users = srv.get_users();
+    map<int, User>::iterator it = users.begin();
+    while (it != users.end()) {
+        User & usr = (*it).second;
+        if (usr.get_nick() == str && usr.is_registred())
+            return false;
+        it++;
+    }
+    return true;
+}
+
 bool check_nick(std::string str) {
     if (str.length() > 9)
         return false;
@@ -79,6 +91,8 @@ void send_error(int err, User & usr, std::string msg) {
         str += "Erroneous nickname";
     if (err == 421)
         str += "Unknown command";
+    if (err == 433)
+        str += "Nickname is already in use";
     str += "\n";
     send(str, usr.get_fd());
 }
