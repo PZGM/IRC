@@ -27,9 +27,6 @@ return (ret);
 }
 
 
-// ======================================================================================================
-// IL FAUT TOUT METTRE DANS LA CLASSE SERVER CAR JOIN UTILISE PAS LE USER 
-// ======================================================================================================
 void parsing(std::string str, User & usr) {
 	Server server;
     map<string,void(*)(vector<string>*, User &,Server &)> fmap;

@@ -25,7 +25,7 @@ class Channel
 			std::list<User>::iterator it = _user.begin();
 			while (it != _user.end())
 			{
-				if ((*it).get_fd() == usr.get_fd())
+				if ((*it) == usr)
 					return true;
 				it++;
 			}

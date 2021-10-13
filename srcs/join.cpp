@@ -38,7 +38,6 @@ void	join(vector<string> *vec, User & usr, Server & srv)
 }
 
 
-// check si le user et deja dans le channel si oui il dit rien
 
 
 #endif
