@@ -19,6 +19,10 @@ void nick(vector<string> *vec, User & usr, Server & srv) {
         send_error(432, usr, vec->front());
         return;
     }
+    if (check_nick_availibility(vec->front(), srv) == false) {
+        send_error(433, usr, vec->front());
+        return;
+    }
     if (usr.is_registred())
         send_update(usr, "NICK", vec->front());
     usr.set_nick(vec->front());

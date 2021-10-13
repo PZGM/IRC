@@ -40,7 +40,7 @@ void init_address(struct sockaddr_in * addr, int sockfd);
 
 // PARSING.CPP
 vector<string> * split(string str, string sep);
-void parsing(std::string str, User & usr);
+void parsing(std::string str, User & usr, Server & srv);
 
 
 // JOIN.CPP
@@ -70,6 +70,7 @@ void send_error(int err, User & usr);
 void send_error(int err, User & usr, std::string msg);
 void send_update(User & usr, std::string command, std::string params);
 bool check_nick(std::string str);
+bool check_nick_availibility(std::string str, Server & srv);
 bool check_user_name(std::string str);
 
 //REGISTRATION.CPP

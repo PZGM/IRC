@@ -144,7 +144,7 @@ int main(int argc,char **argv) {
 					len = rc;
 
 					std::string input(buff);
-					parsing(input, users[fds[i].fd]);
+					parsing(input, users[fds[i].fd], srv);
 
 					// std::cout << len << "bytes received " << std::endl;
 					// if ((rc = send(fds[i].fd, buff, len, 0)) < 0)
