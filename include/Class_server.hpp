@@ -61,15 +61,11 @@ class Server
 
 		int		get_fd_from_nick(string nick)
 		{
-			std::cout << "size = " << _users.size() << std::endl;
-			std::cout << "dans fd from nick" << std::endl;
 			for (map<int, User>::iterator it = _users.begin(); it != _users.end(); it++)
 			{
-				std::cout << "nick =" << (*it).second.get_nick() << std::endl;
 				if ((*it).second.get_nick() == nick)
 					return (*it).first;
 			}
-			std::cout << "i m out" << std::endl;
 			return 0;
 		}
 };

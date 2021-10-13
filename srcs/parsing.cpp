@@ -27,15 +27,7 @@ return (ret);
 }
 
 
-<<<<<<< HEAD
-void parsing(std::string str, User & usr) {
-	Server server;
-=======
-// ======================================================================================================
-// IL FAUT TOUT METTRE DANS LA CLASSE SERVER CAR JOIN UTILISE PAS LE USER 
-// ======================================================================================================
 void parsing(std::string str, User & usr, Server & srv) {
->>>>>>> 465ad86209de3700d9f39c6b01da0f2227ac08b5
     map<string,void(*)(vector<string>*, User &,Server &)> fmap;
 	fmap["JOIN"] = join;
 	fmap["USER"] = user;
