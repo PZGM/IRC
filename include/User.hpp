@@ -52,19 +52,24 @@ class User
 				_flags = false;
 			return true;
 		}
+		void set_real_name(std::string realName) {
+			_real_name = realName;
+		}
 
 		std::string get_nick(void) const {
 			return _nickName;
 		}
-
 		std::string get_real_name(void) const {
 			return _realName;
 		}
+<<<<<<< HEAD
+=======
 
 		void set_real_name(std::string realName) {
 			_realName = realName;
 		}
 
+>>>>>>> 481b58ddd507d4c5b94e506a80120cfbfa7fc5fd
 		int get_fd(void) const {
 			return _fd;
 		}
@@ -82,6 +87,17 @@ class User
 			_op_channel.insert((_op_channel.end())--, str);
 		}
 
+		bool find_channel(string str)
+		{
+			vector<string>::iterator it = _op_channel.begin();
+			while (it != _op_channel.end())
+			{
+				if ((*it) == str)
+					return true;
+				it++;
+			}
+			return false;
+		}
 
 		void print() {
 			if (_flags == true)

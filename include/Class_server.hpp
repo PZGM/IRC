@@ -17,6 +17,7 @@ class Server
 		Server(){
 			_users = map<int, User>();
 		};
+		
 		virtual	~Server(){};
 
 		map<int, User> & get_users(void) {
@@ -41,6 +42,11 @@ class Server
 		void	add_channel(Channel chan)
 		{
 			_channel[(chan.get_name())] = chan;
+		}
+
+		bool find_chan_user(User & usr, Channel chan)
+		{
+			return chan.find_user(usr);
 		}
 };
 
