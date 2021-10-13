@@ -16,7 +16,8 @@ bool check_nick_availibility(std::string str, Server & srv) {
     map<int, User> & users = srv.get_users();
     map<int, User>::iterator it = users.begin();
     while (it != users.end()) {
-        if ((*it).second.get_nick() == str)
+        User & usr = (*it).second;
+        if (usr.get_nick() == str && usr.is_registred())
             return false;
         it++;
     }

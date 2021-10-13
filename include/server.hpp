@@ -74,7 +74,7 @@ bool check_nick_availibility(std::string str, Server & srv);
 bool check_user_name(std::string str);
 
 //REGISTRATION.CPP
-bool register_user(User & usr);
+bool register_user(User & usr, Server & srv);
 
 
 
