@@ -53,7 +53,7 @@ class User
 			return true;
 		}
 		void set_real_name(std::string realName) {
-			_real_name = realName;
+			_realName = realName;
 		}
 
 		std::string get_nick(void) const {
@@ -62,14 +62,7 @@ class User
 		std::string get_real_name(void) const {
 			return _realName;
 		}
-<<<<<<< HEAD
-=======
 
-		void set_real_name(std::string realName) {
-			_realName = realName;
-		}
-
->>>>>>> 481b58ddd507d4c5b94e506a80120cfbfa7fc5fd
 		int get_fd(void) const {
 			return _fd;
 		}
