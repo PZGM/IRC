@@ -10,17 +10,29 @@ class Server
 		map<int, User> _users;
 		map<string, Channel> _channel;
 		string		_name;
+		string		_passw;
+		int			_port;
 		// bool		_mp;
 
 	public:
 
-		Server(){
+		Server( string p, string passw) _passw(passw) {
+		for (char const &c : str) {
+        	if (std::isdigit(c) == 0)
+			std::cout << "Port must be a number" << std::endl;
+    	}
+		_port = std::stoi(p); //definir des values limites
 			_users = map<int, User>();
 		};
 		
+		Server(){
+			_users = map<int, User>();
+		};
+
 		virtual	~Server(){};
 
-		map<int, User> & get_users(void) {
+		map<int, User> & get_users(void)
+		{
 			return _users;
 		}
 
@@ -28,6 +40,7 @@ class Server
 		{
 			return(_channel.begin());
 		}
+
 		map<string, Channel>::iterator get_end_channel()
 		{
 			return(_channel.end());
@@ -67,6 +80,10 @@ class Server
 					return (*it).first;
 			}
 			return 0;
+		}
+
+		int get_port() {
+			return _port;
 		}
 };
 

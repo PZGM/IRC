@@ -21,21 +21,18 @@
 # include "Channel.hpp"
 # include "Class_server.hpp"
 
-
-
-#define PORT 8080
 #define BUFF 1024
 #define BACKLOG 7
 #define FD_MAX 2000
 #define SERVER_NAME "mepd"
 
-using namespace std;
+using namespace std; //VIRER TOUT LES STD
 
 
 
 // SERVER.HPP
 int initialize_socket_fd();
-void init_address(struct sockaddr_in * addr, int sockfd);
+void init_address(struct sockaddr_in * addr, int sockfd, int port);
 
 
 // PARSING.CPP
