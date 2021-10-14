@@ -11,13 +11,13 @@ class Server
 		map<string, Channel> _channel;
 		string		_name;
 		string		_passw;
-		int			_port;
+		int		_port;
 		// bool		_mp;
 
 	public:
 
-		Server( string p, string passw) _passw(passw) {
-		for (char const &c : str) {
+		Server( string p, std::string passw): _passw(passw) {
+		for (char const &c : p) {
         	if (std::isdigit(c) == 0)
 			std::cout << "Port must be a number" << std::endl;
     	}

@@ -67,7 +67,7 @@ int main(int argc,char **argv) {
 		exit(0);
 	}
 
-	init_address(&addr, sockfd; std::stoi(argv[1]));
+	init_address(&addr, sockfd, std::stoi(argv[1]));
 
 		memset(fds,0, sizeof(fds));
 	fds[0].fd = sockfd;
