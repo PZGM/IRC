@@ -20,7 +20,8 @@ class Server
 		for (char const &c : p) {
         	if (std::isdigit(c) == 0)
 			std::cout << "Port must be a number" << std::endl;
-    	}
+			exit(0);
+    		}
 		_port = std::stoi(p); //definir des values limites
 			_users = map<int, User>();
 		};
