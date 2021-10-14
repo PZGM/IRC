@@ -32,6 +32,7 @@ bool check_nick(std::string str) {
         return false;
     it++;
     while (it != str.end()) {
+        std::cout << "." << std::endl;
         if (!check_char(true, true, true, "-", *it))
             return false;
         it++;
