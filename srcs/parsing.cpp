@@ -28,7 +28,7 @@ return (ret);
 
 
 void parsing(std::string str, User & usr, Server & srv) {
-	map<string,void(*)(vector<string>*, User &,Server &)> fmap;
+    map<string,void(*)(vector<string>*, User &,Server &)> fmap;
 	fmap["JOIN"] = join;
 	fmap["USER"] = user;
 	fmap["NICK"] = nick;

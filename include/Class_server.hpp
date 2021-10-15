@@ -11,18 +11,31 @@ class Server
 		map<string, Channel> _channel;
 		string		_name;
 		time_t 		_tm;
+		string		_passw;
+		int		_port;
 		// bool		_mp;
 
 	public:
 
-		Server(){
+		Server( string p, std::string passw): _passw(passw) {
+		for (char const &c : p) {
+        	if (std::isdigit(c) == 0)
+			std::cout << "Port must be a number" << std::endl;
+			exit(0);
+    		}
+		_port = std::stoi(p); //definir des values limites
 			_users = map<int, User>();
 			_tm = time(NULL);
 		};
 		
+		Server(){
+			_users = map<int, User>();
+		};
+
 		virtual	~Server(){};
 
-		map<int, User> & get_users(void) {
+		map<int, User> & get_users(void)
+		{
 			return _users;
 		}
 
@@ -30,6 +43,7 @@ class Server
 		{
 			return(_channel.begin());
 		}
+
 		map<string, Channel>::iterator get_end_channel()
 		{
 			return(_channel.end());
@@ -72,16 +86,16 @@ class Server
 
 		int		get_fd_from_nick(string nick)
 		{
-			std::cout << "size = " << _users.size() << std::endl;
-			std::cout << "dans fd from nick" << std::endl;
 			for (map<int, User>::iterator it = _users.begin(); it != _users.end(); it++)
 			{
-				std::cout << "nick =" << (*it).second.get_nick() << std::endl;
 				if ((*it).second.get_nick() == nick)
 					return (*it).first;
 			}
-			std::cout << "i m out" << std::endl;
 			return 0;
+		}
+
+		int get_port() {
+			return _port;
 		}
 };
 

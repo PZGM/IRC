@@ -30,13 +30,13 @@
 #define SERVER_NAME "mepd"
 #define SERVER_VERSION "0.0.1"
 
-using namespace std;
+using namespace std; //VIRER TOUT LES STD
 
 
 
 // SERVER.HPP
 int initialize_socket_fd();
-void init_address(struct sockaddr_in * addr, int sockfd);
+void init_address(struct sockaddr_in * addr, int sockfd, int port);
 
 
 // PARSING.CPP
