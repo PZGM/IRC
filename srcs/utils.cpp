@@ -152,3 +152,32 @@ map<int, string> get_msgs(void) {
     msgs[462] = "You may not reregister";
     return msgs;
 }
+
+// Channel * get_chan_by_name(Server &srv, string name) {
+//     map<string, Channel>::iterator it = srv.get_begin_channel();
+//     while (it != srv.get_end_channel()) {
+//         if (it->first == name) {
+//             return it->second;
+//         }
+//         it++;
+//     }
+// }
+
+// list<User> get_chans_usrs(User & usr, Server & srv) {
+//     list<User> users;
+//     list<string> chans = usr.get_chans();
+//     list<string>::iterator it = chans.begin();
+//     while (it != chans.end()) {
+//         Channel * chan = get_chan_by_name(*it);
+//         users.insert(chan->get_users().begin(), chan->get_users().end());
+//         it++;
+//     }
+//     users.unique();
+//     list<User>::iterator ite = users.begin();
+//     std::cout << "=======" << std::endl;
+//     while (ite != users.end()) {
+//         std::cout << ite->get_nick() << std::endl;
+//     }
+//     std::cout << "=======" << std::endl;
+//     return users;
+// }
