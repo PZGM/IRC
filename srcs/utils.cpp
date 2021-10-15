@@ -52,91 +52,55 @@ void send(std::string str, int fd) {
     send(fd, str.c_str(), str.length(), 0);
 }
 
+void send_rpl(int rpl, User & usr) {
+    map<int, std::string> msgs = get_msgs();
+    std::string str = prefix(rpl);
+    str += (usr.is_registred()) ? usr.get_nick() : "*";
+    str += " :";
+    str += msgs[rpl];
+    str += "\n";
+    send(str, usr.get_fd());
+}
+
+void send_rpl(int rpl, User & usr, string s1) {
+    map<int, std::string> msgs = get_msgs();
+    std::string str = prefix(rpl);
+    str += (usr.is_registred()) ? usr.get_nick() : "*";
+    str += " :";
+    str += msgs[rpl];
+    str.replace(str.find("+"), 1, s1);
+    str += "\n";
+    send(str, usr.get_fd());
+}
+
+void send_rpl(int rpl, User & usr, string s1, string s2) {
+    std::string str = prefix(rpl);
+    map<int, std::string> msgs = get_msgs();
+    str += (usr.is_registred()) ? usr.get_nick() : "*";
+    str += " :";
+    str += msgs[rpl];
+    str.replace(str.find("+"), 1, s1);
+    str.replace(str.find("+"), 1, s2);
+    str += "\n";
+    send(str, usr.get_fd());
+}
+
 void send_error(int err, User & usr) {
-    map<int, std::string> & msgs = get_msgs();
-    std::string str;
-    str += ":";
-    str += SERVER_NAME;
-    str += " ";
-    if (err < 10)
-        str += "0";
-    if (err < 100)
-        str += "0";
-    str += std::to_string(err);
-    str += " ";
-    if (usr.is_registred())
-        str += usr.get_nick();
-    else
-        str += "*";
+    std::string str = prefix(err);
+    map<int, std::string> msgs = get_msgs();
+    str += (usr.is_registred()) ? usr.get_nick() : "*";
     str += " :";
-    if (err == 431)
-        str += "No nickname given";
-    if (err == 468)
-        str += "Malformed username";
-    if (err == 462)
-        str += "You may not reregister";
+    str += msgs[err];
     str += "\n";
     send(str, usr.get_fd());
 }
 
-void send_rpl(int rpl, User & usr, string str1) {
-    std::string str;
-    str += ":";
-    str += SERVER_NAME;
+void send_error(int err, User & usr, std::string ctx) {
+    std::string str = prefix(err);
+    map<int, std::string> msgs = get_msgs();
+    str += (usr.is_registred()) ? usr.get_nick() : "*";
     str += " ";
-    if (rpl < 10)
-        str += "0";
-    if (rpl < 100)
-        str += "0";
-    str += std::to_string(rpl);
-    str += " ";
-    if (usr.is_registred())
-        str += usr.get_nick();
-    else
-        str += "*";
-    str += " :";
-    if (rpl == 1) {
-        str += "Welcome to the Internet Relay Network ";
-        str += usr.get_nick();
-    }
-    if (rpl == 2) {
-        str += "Your host is ";
-        str += SERVER_NAME;
-        str += ", running version ";
-        str += SERVER_VERSION;
-    }
-    if (rpl == 3) {
-        str += "This server was created ";
-        str += str1;
-    }
-    if (rpl == 4) {
-        str += SERVER_NAME;
-        str += " ";
-        str += SERVER_VERSION;
-        str += " BERTZios CEIMRUabefhiklmnoqstuv Iabefhkloqv";
-    }
-    str += "\n";
-    send(str, usr.get_fd());
-}
-
-void send_error(int err, User & usr, std::string msg) {
-    std::string str;
-    map<int, std::string> & msgs = get_msgs();
-    str += ":";
-    str += SERVER_NAME;
-    str += " ";
-    if (err < 10)
-        str += "0";
-    if (err < 100)
-        str += "0";
-    str += std::to_string(err);
-    str += " ";
-    if (usr.is_registred())
-        str += usr.get_nick();
-    else
-        str += "*";
-    str += " ";
-    str += msg;
+    str += ctx;
     str += " :";
     str += msgs[err];
     str += "\n";
@@ -156,10 +120,35 @@ void send_update(User & usr, std::string command, std::string params) {
     send(str, usr.get_fd());
 }
 
-map<int, string> & get_msgs(void) {
+string prefix(int num) {
+    std::string str;
+    str += ":";
+    str += SERVER_NAME;
+    str += " ";
+    if (num < 10)
+        str += "0";
+    if (num < 100)
+        str += "0";
+    str += std::to_string(num);
+    str += " ";
+    return str;
+}
+
+map<int, string> get_msgs(void) {
     map<int, string> msgs;
+    msgs[1]   = "Welcome to the Internet Relay Network +";
+    msgs[2]   = "Your host is +, running version +";
+    msgs[3]   = "This server was created +";
+    msgs[4]   = "+ + BERTZios CEIMRUabefhiklmnoqstuv Iabefhkloqv";
+    msgs[372] = "- +";
+    msgs[375] = "- + Message of the day -";
+    msgs[376] = "End of MOTD command";
     msgs[421] = "Unknown command";
+    msgs[431] = "No nickname given";
     msgs[432] = "Erroneous nickname";
     msgs[433] = "Nickname is already in use";
     msgs[461] = "Not enough parameters";
+    msgs[468] = "Malformed username";
+    msgs[462] = "You may not reregister";
+    return msgs;
 }
