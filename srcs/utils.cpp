@@ -120,6 +120,16 @@ void send_update(User & usr, std::string command, std::string params) {
     send(str, usr.get_fd());
 }
 
+void send_msg(string msg, User &usr) {
+    std::string str;
+    str += ":";
+    str += SERVER_NAME;
+    str += " ";
+    str += msg;
+    str += "\n";
+    send(str, usr.get_fd());
+}
+
 string prefix(int num) {
     std::string str;
     str += ":";
@@ -143,6 +153,8 @@ map<int, string> get_msgs(void) {
     msgs[372] = "- +";
     msgs[375] = "- + Message of the day -";
     msgs[376] = "End of MOTD command";
+    msgs[381] = "You are now an IRC operator";
+    msgs[400] = "You're already opered-up!"; //Not really in the rfc2812
     msgs[421] = "Unknown command";
     msgs[431] = "No nickname given";
     msgs[432] = "Erroneous nickname";
@@ -150,7 +162,17 @@ map<int, string> get_msgs(void) {
     msgs[461] = "Not enough parameters";
     msgs[468] = "Malformed username";
     msgs[462] = "You may not reregister";
+    msgs[464] = "Password incorrect";
+    msgs[501] = "Unknown MODE flag";
+    msgs[502] = "Cannot change mode for other users";
     return msgs;
+}
+
+bool check_oper(string name, string pass) {
+    (void)name;
+    if (pass == "1234")
+        return true;
+    return false;
 }
 
 // Channel * get_chan_by_name(Server &srv, string name) {

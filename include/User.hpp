@@ -14,6 +14,7 @@ class User
 		int				_fd;
 		bool			_flags;
 		bool			_registred;
+		bool			_isOper;
 		vector<string>	_op_channel;
 
 
@@ -21,8 +22,8 @@ class User
 
 	public:
 
-		User() : _userName(""), _realName(""), _nickName(""), _pass(""), _fd(-1), _flags(false), _registred(false){};
-		User(int fd) : _userName(""), _realName(""), _nickName(""), _pass(""), _fd(fd), _flags(false), _registred(false) {};
+		User() : _userName(""), _realName(""), _nickName(""), _pass(""), _fd(-1), _flags(false), _registred(false), _isOper(false) {};
+		User(int fd) : _userName(""), _realName(""), _nickName(""), _pass(""), _fd(fd), _flags(false), _registred(false), _isOper(false) {};
 		User(const User & src) {
 			_userName = src._userName;
 			_realName = src._realName;
@@ -33,6 +34,14 @@ class User
 			_registred = src._registred;
 		}
 		virtual	~User(){};
+
+		void set_oper(bool oper) {
+			_isOper = oper;
+		}
+
+		bool is_oper(void) const {
+			return _isOper;
+		}
 
 		void set_nick(std::string nick) {
 			_nickName = nick;

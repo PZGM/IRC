@@ -78,6 +78,8 @@ bool check_nick_availibility(std::string str, Server & srv);
 bool check_user_name(std::string str);
 map<int, string> get_msgs(void);
 string prefix(int num);
+bool check_oper(string name, string pass);
+void send_msg(string msg, User &usr);
 
 //REGISTRATION.CPP
 bool register_user(User & usr, Server & srv);

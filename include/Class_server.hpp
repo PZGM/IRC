@@ -19,7 +19,7 @@ class Server
 
 		Server( string p, std::string passw): _passw(passw) {
 		for (char const &c : p) {
-        	if (std::isdigit(c) == 0)
+        	if (std::isdigit(c) == 0) {
 			std::cout << "Port must be a number" << std::endl;
 			exit(0);
     		}
@@ -27,6 +27,7 @@ class Server
 			_users = map<int, User>();
 			_tm = time(NULL);
 		};
+		}
 		
 		Server(){
 			_users = map<int, User>();
