@@ -53,6 +53,7 @@ void send(std::string str, int fd) {
 }
 
 void send_error(int err, User & usr) {
+    map<int, std::string> & msgs = get_msgs();
     std::string str;
     str += ":";
     str += SERVER_NAME;
@@ -76,6 +77,7 @@ void send_error(int err, User & usr) {
 
 void send_error(int err, User & usr, std::string msg) {
     std::string str;
+    map<int, std::string> & msgs = get_msgs();
     str += ":";
     str += SERVER_NAME;
     str += " ";
@@ -88,14 +90,7 @@ void send_error(int err, User & usr, std::string msg) {
     str += " ";
     str += msg;
     str += " :";
-    if (err == 461)
-        str += "Not enough parameters";
-    if (err == 432)
-        str += "Erroneous nickname";
-    if (err == 421)
-        str += "Unknown command";
-    if (err == 433)
-        str += "Nickname is already in use";
+    str += msgs[err];
     str += "\n";
     send(str, usr.get_fd());
 }
@@ -111,4 +106,12 @@ void send_update(User & usr, std::string command, std::string params) {
     str += params;
     str += "\n";
     send(str, usr.get_fd());
+}
+
+map<int, string> & get_msgs(void) {
+    map<int, string> msgs;
+    msgs[421] = "Unknown command";
+    msgs[432] = "Erroneous nickname";
+    msgs[433] = "Nickname is already in use";
+    msgs[461] = "Not enough parameters";
 }
