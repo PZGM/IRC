@@ -14,7 +14,11 @@ bool register_user(User & usr, Server & srv) {
         return false;
     }
     usr.set_registred(true);
-    send("=====> YOU'RE REGISTRED !\n", usr.get_fd());
+    send_rpl(1, usr, "");
+    send_rpl(2, usr, "");
+    send_rpl(3, usr, srv.get_creation_time());
+    send_rpl(4, usr, "");
+    //send("=====> YOU'RE REGISTRED !\n", usr.get_fd());
     return true;
 }
 

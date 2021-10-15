@@ -57,6 +57,10 @@ void send_error(int err, User & usr) {
     str += ":";
     str += SERVER_NAME;
     str += " ";
+    if (err < 10)
+        str += "0";
+    if (err < 100)
+        str += "0";
     str += std::to_string(err);
     str += " ";
     if (usr.is_registred())
@@ -74,11 +78,55 @@ void send_error(int err, User & usr) {
     send(str, usr.get_fd());
 }
 
+void send_rpl(int rpl, User & usr, string str1) {
+    std::string str;
+    str += ":";
+    str += SERVER_NAME;
+    str += " ";
+    if (rpl < 10)
+        str += "0";
+    if (rpl < 100)
+        str += "0";
+    str += std::to_string(rpl);
+    str += " ";
+    if (usr.is_registred())
+        str += usr.get_nick();
+    else
+        str += "*";
+    str += " :";
+    if (rpl == 1) {
+        str += "Welcome to the Internet Relay Network ";
+        str += usr.get_nick();
+    }
+    if (rpl == 2) {
+        str += "Your host is ";
+        str += SERVER_NAME;
+        str += ", running version ";
+        str += SERVER_VERSION;
+    }
+    if (rpl == 3) {
+        str += "This server was created ";
+        str += str1;
+    }
+    if (rpl == 4) {
+        str += SERVER_NAME;
+        str += " ";
+        str += SERVER_VERSION;
+        str += " BERTZios CEIMRUabefhiklmnoqstuv Iabefhkloqv";
+    }
+    str += "\n";
+    send(str, usr.get_fd());
+}
+
 void send_error(int err, User & usr, std::string msg) {
     std::string str;
     str += ":";
     str += SERVER_NAME;
     str += " ";
+    if (err < 10)
+        str += "0";
+    if (err < 100)
+        str += "0";
     str += std::to_string(err);
     str += " ";
     if (usr.is_registred())
