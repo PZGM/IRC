@@ -10,12 +10,14 @@ class Server
 		map<int, User> _users;
 		map<string, Channel> _channel;
 		string		_name;
+		time_t 		_tm;
 		// bool		_mp;
 
 	public:
 
 		Server(){
 			_users = map<int, User>();
+			_tm = time(NULL);
 		};
 		
 		virtual	~Server(){};
@@ -57,6 +59,15 @@ class Server
 					return true;
 			}
 			return false;
+		}
+
+		string	get_creation_time(void) const {
+			string str = "";
+			struct tm * curtime = localtime ( &_tm );
+			str += asctime(curtime);
+			if (*(str.end() - 1) == '\n')
+				str.resize(str.size() - 1);
+			return str;
 		}
 
 		int		get_fd_from_nick(string nick)
