@@ -59,6 +59,7 @@ int main(int argc,char **argv) {
 
 
 	Server srv(argv[1], argv[2]);
+std::cout << "yo" << std::endl;
 
 	int sockfd = initialize_socket_fd();
 
@@ -74,7 +75,6 @@ int main(int argc,char **argv) {
 	fds[0].events = POLLIN;
 
 	map<int, User> & users = srv.get_users();
-
 	time = ( 3 * 60 * 1000);
 	do
 	{

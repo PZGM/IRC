@@ -7,8 +7,8 @@ using namespace std;
 class Server
 {
 	private:
-		map<int, User> _users;
-		map<string, Channel> _channel;
+		map<int, User> _users; //fd, User
+		map<string, Channel> _channel; //name, Channel
 		string		_name;
 		string		_passw;
 		int		_port;
@@ -49,6 +49,8 @@ class Server
 
 		bool	find_channel(string str)
 		{
+			if (str[0] == '#')
+				str.erase(0, 1);
 			if (_channel.find(str) != _channel.end())
 				return true;
 			return false;
@@ -86,6 +88,7 @@ class Server
 		int get_port() {
 			return _port;
 		}
+
 };
 
 

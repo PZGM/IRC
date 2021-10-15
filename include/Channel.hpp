@@ -3,6 +3,8 @@
 
 # include "server.hpp"
 
+void send_update(User & usr, std::string command, std::string params);
+
 class Channel
 {
 	private:
@@ -20,6 +22,7 @@ class Channel
 
 
 		std::string		get_name(){return _name;}
+
 		bool find_user(User & usr)
 		{
 			std::list<User>::iterator it = _user.begin();
@@ -30,6 +33,16 @@ class Channel
 				it++;
 			}
 			return false;
+		}
+		void	general_msg(string cmd, string msg, User * forbiden_usr = NULL)
+		{
+			for (std::list<User>::iterator it = _user.begin(); it != _user.end(); it++)
+			{
+				if (forbiden_usr == NULL || (*it).get_fd() != forbiden_usr->get_fd())
+				{
+					send_update((*it),cmd, msg);
+				}
+			}
 		}
 };
 

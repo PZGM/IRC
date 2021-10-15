@@ -1,3 +1,7 @@
+#ifndef UTILS_CPP
+# define UTILS_CPP
+
+
 #include "../include/server.hpp"
 
 bool check_char(bool alpha, bool digit, bool special, std::string more, char c) {
@@ -111,3 +115,4 @@ void send_update(User & usr, std::string command, std::string params) {
     str += "\n";
     send(str, usr.get_fd());
 }
+#endif

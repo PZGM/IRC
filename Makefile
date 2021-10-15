@@ -30,7 +30,8 @@ OBJS = ${SRCS:.cpp=.o}
 
 CC  = clang++
 
-FLAGS = -Wall -Wextra -Werror
+FLAGS = 
+# FLAGS = -Wall -Wextra -Werror
 
 SANI = -fsanitize=address -O0 -g3
 
@@ -54,7 +55,7 @@ re: fclean all clean
 exe: re
 	@echo "nc -C localhost <PORT: 8080 ou 8000>"
 	@echo "${YELLOW}Execution${RESET}"
-	@./${NAME}
+	@./${NAME} 8080 hrien4
 
 exec: fclean
 	@${CC} -o ${NAME} ${SRCS} 
