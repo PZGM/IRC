@@ -32,6 +32,7 @@ bool check_nick(std::string str) {
         return false;
     it++;
     while (it != str.end()) {
+        std::cout << "." << std::endl;
         if (!check_char(true, true, true, "-", *it))
             return false;
         it++;
@@ -51,50 +52,57 @@ void send(std::string str, int fd) {
     send(fd, str.c_str(), str.length(), 0);
 }
 
-void send_error(int err, User & usr) {
-    std::string str;
-    str += ":";
-    str += SERVER_NAME;
-    str += " ";
-    str += std::to_string(err);
-    str += " ";
-    if (usr.is_registred())
-        str += usr.get_nick();
-    else
-        str += "*";
+void send_rpl(int rpl, User & usr) {
+    map<int, std::string> msgs = get_msgs();
+    std::string str = prefix(rpl);
+    str += (usr.is_registred()) ? usr.get_nick() : "*";
     str += " :";
-    if (err == 431)
-        str += "No nickname given";
-    if (err == 468)
-        str += "Malformed username";
-    if (err == 462)
-        str += "You may not reregister";
+    str += msgs[rpl];
     str += "\n";
     send(str, usr.get_fd());
 }
 
-void send_error(int err, User & usr, std::string msg) {
-    std::string str;
-    str += ":";
-    str += SERVER_NAME;
-    str += " ";
-    str += std::to_string(err);
-    str += " ";
-    if (usr.is_registred())
-        str += usr.get_nick();
-    else
-        str += "*";
-    str += " ";
-    str += msg;
+void send_rpl(int rpl, User & usr, string s1) {
+    map<int, std::string> msgs = get_msgs();
+    std::string str = prefix(rpl);
+    str += (usr.is_registred()) ? usr.get_nick() : "*";
     str += " :";
-    if (err == 461)
-        str += "Not enough parameters";
-    if (err == 432)
-        str += "Erroneous nickname";
-    if (err == 421)
-        str += "Unknown command";
-    if (err == 433)
-        str += "Nickname is already in use";
+    str += msgs[rpl];
+    str.replace(str.find("+"), 1, s1);
+    str += "\n";
+    send(str, usr.get_fd());
+}
+
+void send_rpl(int rpl, User & usr, string s1, string s2) {
+    std::string str = prefix(rpl);
+    map<int, std::string> msgs = get_msgs();
+    str += (usr.is_registred()) ? usr.get_nick() : "*";
+    str += " :";
+    str += msgs[rpl];
+    str.replace(str.find("+"), 1, s1);
+    str.replace(str.find("+"), 1, s2);
+    str += "\n";
+    send(str, usr.get_fd());
+}
+
+void send_error(int err, User & usr) {
+    std::string str = prefix(err);
+    map<int, std::string> msgs = get_msgs();
+    str += (usr.is_registred()) ? usr.get_nick() : "*";
+    str += " :";
+    str += msgs[err];
+    str += "\n";
+    send(str, usr.get_fd());
+}
+
+void send_error(int err, User & usr, std::string ctx) {
+    std::string str = prefix(err);
+    map<int, std::string> msgs = get_msgs();
+    str += (usr.is_registred()) ? usr.get_nick() : "*";
+    str += " ";
+    str += ctx;
+    str += " :";
+    str += msgs[err];
     str += "\n";
     send(str, usr.get_fd());
 }
@@ -111,3 +119,65 @@ void send_update(User & usr, std::string command, std::string params) {
     str += "\n";
     send(str, usr.get_fd());
 }
+
+string prefix(int num) {
+    std::string str;
+    str += ":";
+    str += SERVER_NAME;
+    str += " ";
+    if (num < 10)
+        str += "0";
+    if (num < 100)
+        str += "0";
+    str += std::to_string(num);
+    str += " ";
+    return str;
+}
+
+map<int, string> get_msgs(void) {
+    map<int, string> msgs;
+    msgs[1]   = "Welcome to the Internet Relay Network +";
+    msgs[2]   = "Your host is +, running version +";
+    msgs[3]   = "This server was created +";
+    msgs[4]   = "+ + BERTZios CEIMRUabefhiklmnoqstuv Iabefhkloqv";
+    msgs[372] = "- +";
+    msgs[375] = "- + Message of the day -";
+    msgs[376] = "End of MOTD command";
+    msgs[421] = "Unknown command";
+    msgs[431] = "No nickname given";
+    msgs[432] = "Erroneous nickname";
+    msgs[433] = "Nickname is already in use";
+    msgs[461] = "Not enough parameters";
+    msgs[468] = "Malformed username";
+    msgs[462] = "You may not reregister";
+    return msgs;
+}
+
+// Channel * get_chan_by_name(Server &srv, string name) {
+//     map<string, Channel>::iterator it = srv.get_begin_channel();
+//     while (it != srv.get_end_channel()) {
+//         if (it->first == name) {
+//             return it->second;
+//         }
+//         it++;
+//     }
+// }
+
+// list<User> get_chans_usrs(User & usr, Server & srv) {
+//     list<User> users;
+//     list<string> chans = usr.get_chans();
+//     list<string>::iterator it = chans.begin();
+//     while (it != chans.end()) {
+//         Channel * chan = get_chan_by_name(*it);
+//         users.insert(chan->get_users().begin(), chan->get_users().end());
+//         it++;
+//     }
+//     users.unique();
+//     list<User>::iterator ite = users.begin();
+//     std::cout << "=======" << std::endl;
+//     while (ite != users.end()) {
+//         std::cout << ite->get_nick() << std::endl;
+//     }
+//     std::cout << "=======" << std::endl;
+//     return users;
+// }

@@ -18,8 +18,14 @@ class Channel
 		};
 		virtual	~Channel(){};
 
+		list<User> get_users() const {
+			return _user;
+		}
 
-		std::string		get_name(){return _name;}
+		std::string		get_name(){
+			return _name;
+		}
+		
 		bool find_user(User & usr)
 		{
 			std::list<User>::iterator it = _user.begin();
