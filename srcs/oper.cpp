@@ -10,8 +10,8 @@ void	oper(vector<string> *vec, User & usr, Server & srv)
 		return;
 	}
 	string name = vec->front();
-	string pass = (vec->size() == 1) ? "" : (*vec)[1]();
-	if (check_oper(name, pass) == false) {
+	string pass = (vec->size() == 1) ? "" : (*vec)[1];
+	if (srv.check_oper(name, pass) == false) {
 		send_error(464, usr, "OPER");
 		return;
 	}

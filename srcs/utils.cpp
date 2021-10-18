@@ -107,14 +107,27 @@ void send_error(int err, User & usr, std::string ctx) {
     send(str, usr.get_fd());
 }
 
-void send_update(User & usr, std::string command, std::string params) {
-    std::string str;
+void send_update(User & usr, Server & srv, string command, string params) {
+    string str;
     str += ":";
     str += usr.get_nick();
-    str += "!~u@kq2rf7a2iqsci.irc";
+    str += srv.get_code();
     str += " ";
     str += command;
-    str += " :";
+    str += " ";
+    str += params;
+    str += "\n";
+    send(str, usr.get_fd());
+}
+
+void broadcast_update(User & usr, Server & srv, string command, string params) {
+    string str;
+    str += ":";
+    str += usr.get_nick();
+    str += srv.get_code();
+    str += " ";
+    str += command;
+    str += " ";
     str += params;
     str += "\n";
     send(str, usr.get_fd());
@@ -159,6 +172,7 @@ map<int, string> get_msgs(void) {
     msgs[431] = "No nickname given";
     msgs[432] = "Erroneous nickname";
     msgs[433] = "Nickname is already in use";
+    msgs[451] = "You need to register before you can use that command";
     msgs[461] = "Not enough parameters";
     msgs[468] = "Malformed username";
     msgs[462] = "You may not reregister";
@@ -166,13 +180,6 @@ map<int, string> get_msgs(void) {
     msgs[501] = "Unknown MODE flag";
     msgs[502] = "Cannot change mode for other users";
     return msgs;
-}
-
-bool check_oper(string name, string pass) {
-    (void)name;
-    if (pass == "1234")
-        return true;
-    return false;
 }
 
 // Channel * get_chan_by_name(Server &srv, string name) {

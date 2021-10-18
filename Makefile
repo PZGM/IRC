@@ -33,7 +33,7 @@ CC  = clang++
 
 FLAGS = -Wall -Wextra
 
-SANI = -fsanitize=address -O0 -g3
+SANI = -fsanitize=address -O0 -g3 --std=c++11
 
 $(NAME):
 	@echo "\r\r${YELLOW}Compilation...${RESET}"
@@ -55,7 +55,7 @@ re: fclean all clean
 exe: re
 	@echo "nc -C localhost <PORT: 8080 ou 8000>"
 	@echo "${YELLOW}Execution${RESET}"
-	@./${NAME}
+	@./${NAME} 8080 0
 
 exec: fclean
 	@${CC} -o ${NAME} ${SRCS} 

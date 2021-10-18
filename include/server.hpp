@@ -21,6 +21,7 @@
 # include "Channel.hpp"
 # include "Class_server.hpp"
 # include <ctime>
+#include "openssl/sha.h"
 
 
 #define PORT 8080
@@ -72,13 +73,13 @@ void send_error(int err, User & usr, std::string ctx);
 void send_rpl(int rpl, User & usr);
 void send_rpl(int rpl, User & usr, string s1);
 void send_rpl(int rpl, User & usr, string s1, string s2);
-void send_update(User & usr, std::string command, std::string params);
+void send_update(User & usr, Server & srv, string command, string params);
+void broadcast_update(User & usr, Server & srv, string command, string params);
 bool check_nick(std::string str);
 bool check_nick_availibility(std::string str, Server & srv);
 bool check_user_name(std::string str);
 map<int, string> get_msgs(void);
 string prefix(int num);
-bool check_oper(string name, string pass);
 void send_msg(string msg, User &usr);
 
 //REGISTRATION.CPP
@@ -87,6 +88,5 @@ bool register_user(User & usr, Server & srv);
 //PONG.CPP
 void ping(vector<string> *vec, User & usr, Server & srv);
 void pong(vector<string> *vec, User & usr, Server & srv);
-
 
 #endif

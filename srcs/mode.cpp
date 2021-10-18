@@ -5,11 +5,16 @@
 
 void	mode(vector<string> *vec, User & usr, Server & srv)
 {
-	if (vec->front() != usr.get_nick())
+	(void)srv;
+	if (vec->front() != usr.get_nick()) {
 		send_error(502, usr);
+		return;
+	}
 	if (vec->size() > 1) {
-		if ((*vec)[1] == "-o")
+		if ((*vec)[1] == "-o") {
+			send_update(usr, srv, "MODE", (*vec)[0] + " " + (*vec)[1]);
 			usr.set_oper(false);
+		}
 		else if ((*vec)[1] == "+o")
 			;
 		else {
