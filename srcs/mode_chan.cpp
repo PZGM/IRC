@@ -1,8 +1,12 @@
 #ifndef MODE_CHAN_CPP
 # define MODE_CHAN_CPP
 
-void mode_chan(Vector<string> *vec, User & usr, Server & srv) {
-    
+#include "../include/server.hpp"
+
+void mode_chan(vector<string> *vec, User & usr, Server & srv) {
+    (void)vec;
+    (void)usr;
+    (void)srv;
 }
 
 #endif
