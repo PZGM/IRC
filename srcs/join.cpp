@@ -11,7 +11,7 @@ void	join(vector<string> *vec, User & usr, Server & srv)
 		send_error(461, usr); //:ergo.test 461 fg JOIN :Not enough parameters
 		return;
 	}
-	if (vec->front()[0] != '#' || srv.find_channel(vec->front()) == false)
+	if (vec->front()[0] != '#')
 	{
 		std::cout << "no channel" << std::endl;
 		send_error(403, usr); //:ergo.test 403 fg yolo :No such channel
@@ -24,7 +24,10 @@ void	join(vector<string> *vec, User & usr, Server & srv)
 		if ((vec->front()).compare((*it).first) == 0)
 		{
 			if (usr.find_channel(vec->front()) == false || srv.find_chan_user(usr, (*it).second) == false)
+			{
 				usr.add_channel(vec->front());
+				srv.add_user_channel(usr, vec->front());
+			}
 			return;
 		}
 		it++;

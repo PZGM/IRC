@@ -1,3 +1,7 @@
+#ifndef UTILS_CPP
+# define UTILS_CPP
+
+
 #include "../include/server.hpp"
 
 bool check_char(bool alpha, bool digit, bool special, std::string more, char c) {
@@ -210,3 +214,5 @@ map<int, string> get_msgs(void) {
 //     std::cout << "=======" << std::endl;
 //     return users;
 // }
+
+#endif
