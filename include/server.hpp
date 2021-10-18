@@ -55,6 +55,8 @@ void user(vector<string> *vec, User & usr, Server & srv);
 
 // PRIVMSG.CPP
 void privmsg(vector<string> *vec, User & usr, Server & srv);
+bool	privmsg_user(vector<string> *vec, User & usr, Server & srv);
+bool	privmsg_channel(vector<string> *vec, User & usr, Server & srv);
 
 // OPER.CPP
 void oper(vector<string> *vec, User & usr, Server & srv);
