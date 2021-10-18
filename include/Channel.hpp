@@ -16,7 +16,10 @@ class Channel
 	
 	public:
 
-		Channel(){};
+		Channel(){
+			_mode = "+nt";
+
+		};
 		Channel(string name, User & usr): _name(name)
 		{
 			_user.push_front(usr);
