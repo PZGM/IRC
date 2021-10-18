@@ -179,6 +179,15 @@ void send_msg(string msg, User &usr) {
     send(str, usr.get_fd());
 }
 
+void send_msg2(int num, User & usr, string msg) {
+    string str = prefix(num);
+    str += usr.get_nick();
+    str += " ";
+    str += msg;
+    str += "\n";
+    send(str, usr.get_fd());
+}
+
 string prefix(int num) {
     std::string str;
     str += ":";
@@ -214,7 +223,7 @@ map<int, string> get_msgs(void) {
     msgs[462] = "You may not reregister";
     msgs[464] = "Password incorrect";
     msgs[501] = "Unknown MODE flag";
-    msgs[502] = "Cannot change mode for other users";
+    msgs[502] = "Cannot view/change mode for other users";
     return msgs;
 }
 
