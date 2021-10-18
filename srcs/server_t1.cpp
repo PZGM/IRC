@@ -59,8 +59,6 @@ int main(int argc,char **argv) {
 
 
 	Server srv(argv[1], argv[2]);
-std::cout << "yo" << std::endl;
-
 	int sockfd = initialize_socket_fd();
 
 	if ((rc = fcntl(sockfd, F_SETFL, O_NONBLOCK)) < 0) { //set socket to be nonblocking

@@ -19,9 +19,11 @@ class Server
 		Server( string p, std::string passw): _passw(passw) {
 		for (char const &c : p) {
         	if (std::isdigit(c) == 0)
-			std::cout << "Port must be a number" << std::endl;
-			exit(0);
+			{
+				std::cout << "Port must be a number" << std::endl;
+				exit(0);
     		}
+		}
 		_port = std::stoi(p); //definir des values limites
 			_users = map<int, User>();
 		};
@@ -57,6 +59,7 @@ class Server
 		}
 		void	add_channel(Channel chan)
 		{
+			std::cout << "Channel cree" << std::endl;
 			_channel[(chan.get_name())] = chan;
 		}
 
@@ -88,6 +91,12 @@ class Server
 		int get_port() {
 			return _port;
 		}
+
+		void	add_user_channel(User &usr, string chan_name)
+		{
+			_channel[chan_name].add_user(usr);
+		}
+
 
 };
 
