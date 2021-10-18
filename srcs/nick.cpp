@@ -19,12 +19,16 @@ void nick(vector<string> *vec, User & usr, Server & srv) {
         send_error(432, usr, nick);
         return;
     }
+
+    if (nick == usr.get_nick())
+        return;
+
     if (check_nick_availibility(nick, srv) == false) {
         send_error(433, usr, nick);
         return;
     }
     if (usr.is_registred())
-        send_update(usr, "NICK", nick);
+        send_update(usr, srv, "NICK", nick); //send to everyone !
     usr.set_nick(nick);
     if (!usr.is_registred())
         register_user(usr, srv);

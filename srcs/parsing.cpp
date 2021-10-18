@@ -50,6 +50,10 @@ void parsing(std::string str, User & usr, Server & srv) {
 	if (command.empty())
 		return;
 	if (fmap.count(command)) {
+		if (!usr.is_registred() && (command == "JOIN" || command == "PRIVMSG")) {
+			send_error(451, usr);
+			return;
+		}
 		vec->erase(vec->begin());
 		if (vec->size() == 0) {
 			send_error(461, usr, command);

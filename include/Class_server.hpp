@@ -9,26 +9,31 @@ class Server
 	private:
 		map<int, User> _users; //fd, User
 		map<string, Channel> _channel; //name, Channel
+		map<string, string> _operators;
 		string		_name;
 		time_t 		_tm;
 		string		_passw;
+		string		_code;
 		int		_port;
 		// bool		_mp;
 
 	public:
 
 		Server( string p, std::string passw): _passw(passw) {
-		for (char const &c : p) {
-        	if (std::isdigit(c) == 0)
-			{
-				std::cout << "Port must be a number" << std::endl;
-				exit(0);
+		for (string::iterator it = p.begin(); it != p.end(); it++) {
+        	if (std::isdigit(*it) == 0) {
+			std::cout << "Port must be a number" << std::endl;
+			exit(0);
     		}
 		}
 		_port = std::stoi(p); //definir des values limites
 			_users = map<int, User>();
 			_tm = time(NULL);
+			_operators = map<string, string>();
+			_operators["admin"] = "admin";
+			_code = "!~u@kq2rf7a2iqsci.irc";
 		};
+		}
 		
 		Server(){
 			_users = map<int, User>();
@@ -103,6 +108,17 @@ class Server
 			return _port;
 		}
 
+		string get_code() const {
+			return _code;
+		}
+
+		bool check_oper(string name, string pass) {
+			if (_operators.count(name) == 0)
+				return false;
+			if (_operators[name] != pass)
+				return false;
+			return true;
+		}
 		void	add_user_channel(User &usr, string chan_name)
 		{
 			_channel[chan_name].add_user(usr);

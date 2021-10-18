@@ -31,10 +31,9 @@ OBJS = ${SRCS:.cpp=.o}
 
 CC  = clang++
 
-FLAGS = 
-# FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra
 
-SANI = -fsanitize=address -O0 -g3
+SANI = -fsanitize=address -O0 -g3 --std=c++11
 
 $(NAME):
 	@echo "\r\r${YELLOW}Compilation...${RESET}"

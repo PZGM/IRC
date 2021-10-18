@@ -111,15 +111,38 @@ void send_error(int err, User & usr, std::string ctx) {
     send(str, usr.get_fd());
 }
 
-void send_update(User & usr, std::string command, std::string params) {
-    std::string str;
+void send_update(User & usr, Server & srv, string command, string params) {
+    string str;
     str += ":";
     str += usr.get_nick();
-    str += "!~u@kq2rf7a2iqsci.irc";
+    str += srv.get_code();
     str += " ";
     str += command;
-    str += " :";
+    str += " ";
     str += params;
+    str += "\n";
+    send(str, usr.get_fd());
+}
+
+void broadcast_update(User & usr, Server & srv, string command, string params) {
+    string str;
+    str += ":";
+    str += usr.get_nick();
+    str += srv.get_code();
+    str += " ";
+    str += command;
+    str += " ";
+    str += params;
+    str += "\n";
+    send(str, usr.get_fd());
+}
+
+void send_msg(string msg, User &usr) {
+    std::string str;
+    str += ":";
+    str += SERVER_NAME;
+    str += " ";
+    str += msg;
     str += "\n";
     send(str, usr.get_fd());
 }
@@ -147,13 +170,19 @@ map<int, string> get_msgs(void) {
     msgs[372] = "- +";
     msgs[375] = "- + Message of the day -";
     msgs[376] = "End of MOTD command";
+    msgs[381] = "You are now an IRC operator";
+    msgs[400] = "You're already opered-up!"; //Not really in the rfc2812
     msgs[421] = "Unknown command";
     msgs[431] = "No nickname given";
     msgs[432] = "Erroneous nickname";
     msgs[433] = "Nickname is already in use";
+    msgs[451] = "You need to register before you can use that command";
     msgs[461] = "Not enough parameters";
     msgs[468] = "Malformed username";
     msgs[462] = "You may not reregister";
+    msgs[464] = "Password incorrect";
+    msgs[501] = "Unknown MODE flag";
+    msgs[502] = "Cannot change mode for other users";
     return msgs;
 }
 
