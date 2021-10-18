@@ -124,7 +124,20 @@ void send_update(User & usr, Server & srv, string command, string params) {
     send(str, usr.get_fd());
 }
 
-void broadcast_update(User & usr, Server & srv, string command, string params) {
+void send_update(User & usr, string command, string params) {
+    string str;
+    str += ":";
+    str += usr.get_nick();
+    str += "!~u@kq2rf7a2iqsci.irc";
+    str += " ";
+    str += command;
+    str += " ";
+    str += params;
+    str += "\n";
+    send(str, usr.get_fd());
+}
+
+void send_update(User & usr, Server & srv, string command, string params, int fd) {
     string str;
     str += ":";
     str += usr.get_nick();
@@ -134,7 +147,26 @@ void broadcast_update(User & usr, Server & srv, string command, string params) {
     str += " ";
     str += params;
     str += "\n";
-    send(str, usr.get_fd());
+    send(str, fd);
+}
+
+void broadcast_update(User & usr, Server & srv, string command, string params) {
+    vector<string> chans = usr.get_channels();
+    list<int> fds;
+    for(vector<string>::iterator it = chans.begin(); it != chans.end(); it++) {
+        Channel chan = srv.get_channel_by_name(*it);
+        list<User> users = chan.get_users();
+        for(list<User>::iterator ite = users.begin(); ite != users.end(); ite++) {
+            fds.push_back(ite->get_fd());
+        }
+    }
+    fds.sort();
+    fds.unique();
+    list<int>::iterator it = fds.begin();
+    while (it != fds.end()) {
+        send_update(usr, srv, command, params, *it);
+        it++;
+    }
 }
 
 void send_msg(string msg, User &usr) {
@@ -185,34 +217,5 @@ map<int, string> get_msgs(void) {
     msgs[502] = "Cannot change mode for other users";
     return msgs;
 }
-
-// Channel * get_chan_by_name(Server &srv, string name) {
-//     map<string, Channel>::iterator it = srv.get_begin_channel();
-//     while (it != srv.get_end_channel()) {
-//         if (it->first == name) {
-//             return it->second;
-//         }
-//         it++;
-//     }
-// }
-
-// list<User> get_chans_usrs(User & usr, Server & srv) {
-//     list<User> users;
-//     list<string> chans = usr.get_chans();
-//     list<string>::iterator it = chans.begin();
-//     while (it != chans.end()) {
-//         Channel * chan = get_chan_by_name(*it);
-//         users.insert(chan->get_users().begin(), chan->get_users().end());
-//         it++;
-//     }
-//     users.unique();
-//     list<User>::iterator ite = users.begin();
-//     std::cout << "=======" << std::endl;
-//     while (ite != users.end()) {
-//         std::cout << ite->get_nick() << std::endl;
-//     }
-//     std::cout << "=======" << std::endl;
-//     return users;
-// }
 
 #endif

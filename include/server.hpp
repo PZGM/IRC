@@ -75,6 +75,7 @@ void send_error(int err, User & usr, std::string ctx);
 void send_rpl(int rpl, User & usr);
 void send_rpl(int rpl, User & usr, string s1);
 void send_rpl(int rpl, User & usr, string s1, string s2);
+void send_update(User & usr, string command, string params);
 void send_update(User & usr, Server & srv, string command, string params);
 void broadcast_update(User & usr, Server & srv, string command, string params);
 bool check_nick(std::string str);

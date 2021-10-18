@@ -44,6 +44,7 @@ class Channel
 		{
 			_user.push_front(usr);
 		}
+
 		void	general_msg(string cmd, string msg, User * forbiden_usr = NULL)
 		{
 			std::cout << "Bonsoir PARIIIIIIIIS" << std::endl;

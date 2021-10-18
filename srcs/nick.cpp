@@ -28,7 +28,7 @@ void nick(vector<string> *vec, User & usr, Server & srv) {
         return;
     }
     if (usr.is_registred())
-        send_update(usr, srv, "NICK", nick); //send to everyone !
+        broadcast_update(usr, srv, "NICK", nick);
     usr.set_nick(nick);
     if (!usr.is_registred())
         register_user(usr, srv);

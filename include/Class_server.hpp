@@ -14,7 +14,7 @@ class Server
 		time_t 		_tm;
 		string		_passw;
 		string		_code;
-		int		_port;
+		int			_port;
 		// bool		_mp;
 
 	public:
@@ -33,7 +33,6 @@ class Server
 			_operators["admin"] = "admin";
 			_code = "!~u@kq2rf7a2iqsci.irc";
 		};
-		}
 		
 		Server(){
 			_users = map<int, User>();
@@ -124,6 +123,9 @@ class Server
 			_channel[chan_name].add_user(usr);
 		}
 
+		Channel & get_channel_by_name(string name) {
+			return _channel[name];
+		}
 
 };
 

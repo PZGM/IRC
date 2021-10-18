@@ -112,6 +112,10 @@ class User
 			return (_fd == usr._fd);
 		}
 
+		vector<string> get_channels() {
+			return _op_channel;
+		}
+
 };
 
 
