@@ -20,11 +20,15 @@
 # include "User.hpp"
 # include "Channel.hpp"
 # include "Class_server.hpp"
+# include <ctime>
 
+
+#define PORT 8080
 #define BUFF 1024
 #define BACKLOG 7
 #define FD_MAX 2000
 #define SERVER_NAME "mepd"
+#define SERVER_VERSION "0.0.1"
 
 using namespace std; //VIRER TOUT LES STD
 
@@ -66,17 +70,23 @@ string allupper(string str);
 //UTILS.CPP
 void send(std::string str, int fd);
 void send_error(int err, User & usr);
-void send_error(int err, User & usr, std::string msg);
+void send_error(int err, User & usr, std::string ctx);
+void send_rpl(int rpl, User & usr);
+void send_rpl(int rpl, User & usr, string s1);
+void send_rpl(int rpl, User & usr, string s1, string s2);
 void send_update(User & usr, std::string command, std::string params);
 bool check_nick(std::string str);
 bool check_nick_availibility(std::string str, Server & srv);
 bool check_user_name(std::string str);
+map<int, string> get_msgs(void);
+string prefix(int num);
 
 //REGISTRATION.CPP
 bool register_user(User & usr, Server & srv);
 
-
-
+//PONG.CPP
+void ping(vector<string> *vec, User & usr, Server & srv);
+void pong(vector<string> *vec, User & usr, Server & srv);
 
 
 #endif

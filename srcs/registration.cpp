@@ -14,7 +14,17 @@ bool register_user(User & usr, Server & srv) {
         return false;
     }
     usr.set_registred(true);
-    send("=====> YOU'RE REGISTRED !\n", usr.get_fd());
+    send_rpl(1, usr, usr.get_nick());
+    send_rpl(2, usr, SERVER_NAME, SERVER_VERSION);
+    send_rpl(3, usr, srv.get_creation_time());
+    send_rpl(4, usr, SERVER_NAME, SERVER_VERSION);
+    send_rpl(375, usr, SERVER_NAME);
+    send_rpl(372, usr, "  _ __ ___   ___ _ __   __| |");
+    send_rpl(372, usr, " | '_ ` _ \\ / _ \\ '_ \\ / _` |");
+    send_rpl(372, usr, " | | | | | |  __/ |_) | (_| |");
+    send_rpl(372, usr, " |_| |_| |_|\\___| .__/ \\__,_|");
+    send_rpl(372, usr, "                |_| ");
+    send_rpl(376, usr);
     return true;
 }
 

@@ -10,6 +10,7 @@ class Server
 		map<int, User> _users; //fd, User
 		map<string, Channel> _channel; //name, Channel
 		string		_name;
+		time_t 		_tm;
 		string		_passw;
 		int		_port;
 		// bool		_mp;
@@ -26,6 +27,7 @@ class Server
 		}
 		_port = std::stoi(p); //definir des values limites
 			_users = map<int, User>();
+			_tm = time(NULL);
 		};
 		
 		Server(){
@@ -76,6 +78,15 @@ class Server
 					return true;
 			}
 			return false;
+		}
+
+		string	get_creation_time(void) const {
+			string str = "";
+			struct tm * curtime = localtime ( &_tm );
+			str += asctime(curtime);
+			if (*(str.end() - 1) == '\n')
+				str.resize(str.size() - 1);
+			return str;
 		}
 
 		int		get_fd_from_nick(string nick)

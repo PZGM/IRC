@@ -35,9 +35,13 @@ void parsing(std::string str, User & usr, Server & srv) {
 	fmap["PRIVMSG"] = privmsg;
 	fmap["OPER"] = oper;
 	fmap["MODE"] = mode;
+	fmap["PING"] = ping;
+	fmap["PONG"] = pong;
 
 	usr.print();
 	if (str[str.length() -1] == '\n')
+		str.resize(str.length() - 1);
+	if (str[str.length() -1] == 13)
 		str.resize(str.length() - 1);
 	if (str.size() == 0)
 		return;

@@ -30,4 +30,12 @@ void nick(vector<string> *vec, User & usr, Server & srv) {
         register_user(usr, srv);
 }
 
+void inform_users(User & usr, string cmd, string nick, Server &srv) {
+    (void)usr;
+    (void)cmd;
+    (void)nick;
+    (void)srv;
+    ;
+}
+
 #endif

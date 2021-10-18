@@ -17,13 +17,14 @@ SRCS =	./srcs/bot.cpp			\
 		./srcs/mode.cpp			\
 		./srcs/nick.cpp			\
 		./srcs/oper.cpp			\
-		./srcs/parsing.cpp			\
-		./srcs/privmsg.cpp			\
-		./srcs/server_t1.cpp			\
+		./srcs/parsing.cpp		\
+		./srcs/privmsg.cpp		\
+		./srcs/server_t1.cpp	\
 		./srcs/tool.cpp			\
 		./srcs/user.cpp			\
-		./srcs/utils.cpp			\
-		./srcs/registration.cpp			\
+		./srcs/utils.cpp		\
+		./srcs/registration.cpp	\
+		./srcs/pong.cpp			\
 		# ./srcs/.cpp			\
 		
 OBJS = ${SRCS:.cpp=.o}
