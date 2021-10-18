@@ -6,6 +6,10 @@
 void	mode(vector<string> *vec, User & usr, Server & srv)
 {
 	(void)srv;
+	if (vec->front()[0] == '#') {
+		mode_chan(vec, usr, srv);
+		return;
+	}
 	if (vec->front() != usr.get_nick()) {
 		send_error(502, usr);
 		return;

@@ -11,6 +11,7 @@ class Channel
 
 		std::string		_name;
 		std::list<User> _user;
+		std::list<int> _operators;
 	public:
 
 		Channel(){};
@@ -43,6 +44,24 @@ class Channel
 		void	add_user(User &usr)
 		{
 			_user.push_front(usr);
+		}
+
+		void	add_oper(User & usr){
+			_operators.push_back(usr.get_fd());
+		}
+
+		void	rm_oper(User & usr) {
+			_operators.remove(usr.get_fd());
+		}
+
+		bool	is_oper(User & usr) {
+			list<int>::iterator it = _operators.begin();
+			while (it != _operators.end()) {
+				if (*it == usr.get_fd())
+					return true;
+				it++;
+			}
+			return false;
 		}
 
 		void	general_msg(string cmd, string msg, User * forbiden_usr = NULL)
