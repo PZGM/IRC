@@ -57,8 +57,6 @@ class Server
 
 		bool	find_channel(string str)
 		{
-			if (str[0] == '#')
-				str.erase(0, 1);
 			if (_channel.find(str) != _channel.end())
 				return true;
 			return false;

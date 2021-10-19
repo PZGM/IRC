@@ -49,9 +49,6 @@ bool	privmsg_user(vector<string> *vec, User & usr, Server & srv)
 
 bool	privmsg_channel(vector<string> *vec, User & usr, Server & srv)
 {
-	if (vec->front()[0] == '#')
-		vec->front().erase(0, 1);
-
 	map<string, Channel>::iterator it = srv.get_begin_channel();
 	while(it != srv.get_end_channel())
 	{
