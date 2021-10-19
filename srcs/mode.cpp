@@ -26,6 +26,10 @@ void	mode(vector<string> *vec, User & usr, Server & srv)
 			return;
 		}
 	}
+	if (usr.is_oper())
+		send_msg2(221, usr, "+Zo");
+	else
+		send_msg2(221, usr, "+Z");
 }
 
 #endif

@@ -87,6 +87,7 @@ bool check_user_name(std::string str);
 map<int, string> get_msgs(void);
 string prefix(int num);
 void send_msg(string msg, User &usr);
+void send_msg2(int num, User & usr, string msg);
 
 //REGISTRATION.CPP
 bool register_user(User & usr, Server & srv);
@@ -94,5 +95,8 @@ bool register_user(User & usr, Server & srv);
 //PONG.CPP
 void ping(vector<string> *vec, User & usr, Server & srv);
 void pong(vector<string> *vec, User & usr, Server & srv);
+
+//MODE_CHANS_CPP
+void mode_chan(vector<string> *vec, User & usr, Server & srv);
 
 #endif

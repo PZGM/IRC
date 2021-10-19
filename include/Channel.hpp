@@ -3,21 +3,24 @@
 
 # include "server.hpp"
 
-void send_update(User & usr, std::string command, std::string params);
+void send_update(User & usr, string command, string params);
 
 class Channel
 {
 	private:
 
-		std::string		_name;
-		std::list<User> _user;
-		std::list<int> _operators;
+		string		_name;
+		list<User>	_user;
+		list<int>	_operators;
+		string		_mode;
+	
 	public:
 
 		Channel(){};
 		Channel(string name, User & usr): _name(name)
 		{
 			_user.push_front(usr);
+			_mode = "+nt";
 		};
 		virtual	~Channel(){};
 
@@ -25,13 +28,17 @@ class Channel
 			return _user;
 		}
 
-		std::string		get_name(){
+		string		get_name() const {
 			return _name;
+		}
+
+		string		get_mode() const {
+			return _mode;
 		}
 		
 		bool find_user(User & usr)
 		{
-			std::list<User>::iterator it = _user.begin();
+			list<User>::iterator it = _user.begin();
 			while (it != _user.end())
 			{
 				if ((*it) == usr)
@@ -68,8 +75,6 @@ class Channel
 		{
 			for (std::list<User>::iterator it = _user.begin(); it != _user.end(); it++)
 			{
-				std::cout << "it fd = |" << (*it).get_fd() <<"|" << std::endl;
-				// std::cout << "it fd = |" << forbiden_usr->get_fd() <<"|" << std::endl;
 				if (forbiden_usr == NULL || (*it).get_fd() != forbiden_usr->get_fd())
 				{
 					send_update((*it),cmd, msg);
