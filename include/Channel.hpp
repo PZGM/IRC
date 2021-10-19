@@ -73,12 +73,8 @@ class Channel
 
 		void	general_msg(string cmd, string msg, User * forbiden_usr = NULL)
 		{
-			cout << "Bonsoir PARIIIIIIIIS" << endl;
-			cout << "list user = " << _user.size() << endl;
-			for (list<User>::iterator it = _user.begin(); it != _user.end(); it++)
+			for (std::list<User>::iterator it = _user.begin(); it != _user.end(); it++)
 			{
-				cout << "it fd = |" << (*it).get_fd() <<"|" << endl;
-				cout << "it fd = |" << forbiden_usr->get_fd() <<"|" << endl;
 				if (forbiden_usr == NULL || (*it).get_fd() != forbiden_usr->get_fd())
 				{
 					send_update((*it),cmd, msg);

@@ -17,7 +17,6 @@ void	join(vector<string> *vec, User & usr, Server & srv)
 		send_error(403, usr); //:ergo.test 403 fg yolo :No such channel
 		return;
 	}
-	vec->front().erase(0, 1);
 	map<string, Channel>::iterator it = srv.get_begin_channel();
 	while(it != srv.get_end_channel())
 	{
@@ -27,6 +26,9 @@ void	join(vector<string> *vec, User & usr, Server & srv)
 			{
 				usr.add_channel(vec->front());
 				srv.add_user_channel(usr, vec->front());
+				string msg = usr.get_nick();
+				msg += " joined the channel";
+				(*it).second.general_msg(vec->front(), msg, &usr);
 			}
 			return;
 		}
@@ -44,3 +46,10 @@ void	join(vector<string> *vec, User & usr, Server & srv)
 
 
 #endif
+
+
+
+/*
+A faire 
+- garder en memoire le nom des channels avec le #
+*/

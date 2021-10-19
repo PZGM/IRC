@@ -7,7 +7,6 @@ void mode_chan(vector<string> *vec, User & usr, Server & srv) {
     (void)vec;
     (void)usr;
     (void)srv;
-    
 }
 
 #endif

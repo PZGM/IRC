@@ -21,7 +21,7 @@
 # include "Channel.hpp"
 # include "Class_server.hpp"
 # include <ctime>
-#include "openssl/sha.h"
+// #include "openssl/sha.h"
 
 
 #define PORT 8080
@@ -64,6 +64,9 @@ void oper(vector<string> *vec, User & usr, Server & srv);
 
 // MODE.CPP
 void mode(vector<string> *vec, User & usr, Server & srv);
+
+// MODE_CHAN
+void mode_chan(vector<string> *vec, User & usr, Server & srv);
 
 // TOOL.CPP
 string allupper(string str);
