@@ -4,6 +4,7 @@
 # include "server.hpp"
 
 void send_update(User & usr, string command, string params);
+void send(std::string str, int fd);
 
 class Channel
 {
@@ -20,6 +21,7 @@ class Channel
 		Channel(string name, User & usr): _name(name)
 		{
 			_user.push_front(usr);
+			_operators.push_back(usr.get_fd());
 			_mode = "+nt";
 		};
 		virtual	~Channel(){};
@@ -81,6 +83,27 @@ class Channel
 				}
 			}
 		}
+
+		void	join_msg(User & usr)
+		{
+			string msg = _name;
+
+			msg += " :";
+			
+			for (list<User>::iterator uit = _user.begin(); uit != _user.end(); uit++)
+			{
+				for(list<int>::iterator fdit = _operators.begin(); fdit != _operators.end(); fdit++)
+					if ((*fdit) == (*uit).get_fd())
+						msg += "@";
+				msg += (*uit).get_nick();
+				if (++uit != _user.end())
+					msg += " ";
+				uit--;
+			}
+			msg += "\n";
+			send(msg, usr.get_fd());
+		}
+
 };
 
 

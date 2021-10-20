@@ -12,6 +12,7 @@
 # include <poll.h>
 # include <arpa/inet.h>
 # include <sys/ioctl.h>
+# include <fstream>
 # include <errno.h>
 # include <fcntl.h>
 # include <vector>
@@ -21,7 +22,7 @@
 # include "Channel.hpp"
 # include "Class_server.hpp"
 # include <ctime>
-// #include "openssl/sha.h"
+
 
 
 #define PORT 8080
@@ -99,4 +100,6 @@ void pong(vector<string> *vec, User & usr, Server & srv);
 //MODE_CHANS_CPP
 void mode_chan(vector<string> *vec, User & usr, Server & srv);
 
+//CONF.CPP
+Server	configure();
 #endif

@@ -29,6 +29,7 @@ void	join(vector<string> *vec, User & usr, Server & srv)
 				string msg = usr.get_nick();
 				msg += " joined the channel";
 				(*it).second.general_msg(vec->front(), msg, &usr);
+				(*it).second.join_msg(usr);
 			}
 			return;
 		}
@@ -39,6 +40,7 @@ void	join(vector<string> *vec, User & usr, Server & srv)
 		Channel chan(vec->front(), usr);
 		usr.add_channel(vec->front());
 		srv.add_channel(chan);
+		chan.join_msg(usr);
 	}
 }
 
@@ -50,6 +52,6 @@ void	join(vector<string> *vec, User & usr, Server & srv)
 
 
 /*
-A faire 
-- garder en memoire le nom des channels avec le #
+- dans join lorsque le user join le channel la lsite le nom du chan s'affiche et des gens dedans s'affiche et les operator avec un @
+
 */
