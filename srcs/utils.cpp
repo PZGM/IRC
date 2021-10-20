@@ -208,6 +208,7 @@ map<int, string> get_msgs(void) {
     msgs[2]   = "Your host is +, running version +";
     msgs[3]   = "This server was created +";
     msgs[4]   = "+ + BERTZios CEIMRUabefhiklmnoqstuv Iabefhkloqv";
+    msgs[366] = "End of NAMES list";
     msgs[372] = "- +";
     msgs[375] = "- + Message of the day -";
     msgs[376] = "End of MOTD command";

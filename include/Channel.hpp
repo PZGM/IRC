@@ -5,6 +5,8 @@
 
 void send_update(User & usr, string command, string params);
 void send(std::string str, int fd);
+void send_msg2(int num, User & usr, string msg);
+void send_error(int err, User & usr, std::string ctx);
 
 class Channel
 {
@@ -50,9 +52,9 @@ class Channel
 			return false;
 		}
 
-		void	add_user(User &usr)
+		void	add_user(User &usr )
 		{
-			_user.push_front(usr);
+			_user.push_back(usr);
 		}
 
 		void	add_oper(User & usr){
@@ -79,17 +81,35 @@ class Channel
 			{
 				if (forbiden_usr == NULL || (*it).get_fd() != forbiden_usr->get_fd())
 				{
-					send_update((*it),cmd, msg);
+					send_update((*it), cmd, msg);
+				}
+			}
+		}
+
+		void	general_join_msg(string cmd, User * usr)
+		{
+			for (std::list<User>::iterator it = _user.begin(); it != _user.end(); it++)
+			{
+				if (usr == NULL || (*it).get_fd() != usr->get_fd())
+				{
+					string str;
+					str += ":";
+					str += usr->get_nick();
+					str += "!~u@kq2rf7a2iqsci.irc";
+					str += " JOIN ";
+					str += cmd;
+					str += "\n";
+					send(str, (*it).get_fd());
 				}
 			}
 		}
 
 		void	join_msg(User & usr)
 		{
-			string msg = _name;
-
+			send_update(usr, "JOIN", _name);
+			string msg = "= ";
+			msg += _name;
 			msg += " :";
-			
 			for (list<User>::iterator uit = _user.begin(); uit != _user.end(); uit++)
 			{
 				for(list<int>::iterator fdit = _operators.begin(); fdit != _operators.end(); fdit++)
@@ -100,8 +120,15 @@ class Channel
 					msg += " ";
 				uit--;
 			}
-			msg += "\n";
-			send(msg, usr.get_fd());
+			send_msg2(353, usr, msg);
+
+
+			send_error(366, usr, _name);
+			// msg = usr.get_nick();
+			// msg += " ";
+			// msg += _name;
+			// msg += " :End of NAMES list\n";
+			// send(msg, usr.get_fd());
 		}
 
 };
