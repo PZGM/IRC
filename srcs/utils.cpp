@@ -214,15 +214,20 @@ map<int, string> get_msgs(void) {
     msgs[376] = "End of MOTD command";
     msgs[381] = "You are now an IRC operator";
     msgs[400] = "You're already opered-up!"; //Not really in the rfc2812
+    msgs[401] = "No such nick";
+    msgs[403] = "No such channel";
     msgs[421] = "Unknown command";
     msgs[431] = "No nickname given";
     msgs[432] = "Erroneous nickname";
     msgs[433] = "Nickname is already in use";
+    msgs[441] = "They aren't on that channel";
     msgs[451] = "You need to register before you can use that command";
     msgs[461] = "Not enough parameters";
     msgs[468] = "Malformed username";
     msgs[462] = "You may not reregister";
     msgs[464] = "Password incorrect";
+    msgs[472] = "is unknown mode char to me"; //en vrai ca devrait etre un peu plus long mais chuuuutttt
+    msgs[482] = "You're not a channel operator";
     msgs[501] = "Unknown MODE flag";
     msgs[502] = "Cannot view/change mode for other users";
     return msgs;
