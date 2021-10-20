@@ -26,9 +26,7 @@ void	join(vector<string> *vec, User & usr, Server & srv)
 			{
 				usr.add_channel(vec->front());
 				srv.add_user_channel(usr, vec->front());
-				string msg = usr.get_nick();
-				msg += " joined the channel";
-				(*it).second.general_msg(vec->front(), msg, &usr);
+				(*it).second.general_join_msg(vec->front(), &usr);
 				(*it).second.join_msg(usr);
 			}
 			return;

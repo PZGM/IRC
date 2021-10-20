@@ -56,7 +56,7 @@ bool	privmsg_channel(vector<string> *vec, User & usr, Server & srv)
 		{
 			std::string cmd = vec->front();
 			vec->erase(vec->begin());
-			(*it).second.general_msg(cmd, vec->front(),  &usr);
+			(*it).second.general_msg(cmd, vec->front(), &usr);
 			return true;
 		}
 		it++;
