@@ -20,6 +20,12 @@ void mode_chan(vector<string> *vec, User & usr, Server & srv) {
         list<char>::iterator it = lst.begin();
         while (it != lst.end()) {
             string ch(1, *it);
+            if (*it == '+' || *it == '-') {
+                sign = (*it == '+') ? 1 : -1;
+                it++;
+            }
+            if (*it == '+' || *it == '-')
+                break;
             if (*it == 'o')
             {
                 if (nick != "") {
@@ -29,8 +35,14 @@ void mode_chan(vector<string> *vec, User & usr, Server & srv) {
                             if (chan.is_oper(usr))
                             {
                                 int to_add = srv.get_fd_from_nick(nick);
-                                chan.add_oper(to_add);
-                                chan.general_msg("MODE", "+o " + nick);
+                                if (sign == 1) {
+                                    chan.add_oper(to_add);
+                                    chan.general_msg("MODE", chan_name + " +o " + nick);
+                                }
+                                if (sign == 2) {
+                                    chan.rm_oper(to_add);
+                                    chan.general_msg("MODE", chan_name + " -o " + nick);
+                                }
                             }
                             else {
                                 send_error(482, usr, chan_name);
