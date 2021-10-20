@@ -122,9 +122,6 @@ class Server
 		}
 
 		Channel & get_channel_by_name(string name) {
-			auto it = _channel.begin();
-			for(; it != _channel.end(); it++)
-				std::cout << "----" << it->second.get_name() << " _ " << it->first <<  std::endl;
 			return _channel[name];
 		}
 
