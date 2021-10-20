@@ -44,7 +44,21 @@ class Channel
 			list<User>::iterator it = _user.begin();
 			while (it != _user.end())
 			{
-				if ((*it) == usr)
+				if (*it == usr)
+					return true;
+				it++;
+			}
+			return false;
+		}
+
+		bool find_user(string nick)
+		{
+			std::cout << "nick === " << nick << " size = " << _user.size() << std::endl;
+			list<User>::iterator it = _user.begin();
+			while (it != _user.end())
+			{
+				std::cout << "===> " << it->get_nick() << std::endl;
+				if ((it->get_nick()) == nick)
 					return true;
 				it++;
 			}
@@ -64,6 +78,14 @@ class Channel
 			_operators.remove(usr.get_fd());
 		}
 
+		void	add_oper(int fd){
+			_operators.push_back(fd);
+		}
+
+		void	rm_oper(int fd) {
+			_operators.remove(fd);
+		}
+
 		bool	is_oper(User & usr) {
 			list<int>::iterator it = _operators.begin();
 			while (it != _operators.end()) {
@@ -74,10 +96,9 @@ class Channel
 			return false;
 		}
 
-		void	general_msg(string cmd, string msg, User * forbiden_usr = NULL)
+		void	
+		    general_msg(string cmd, string msg, User * forbiden_usr = NULL)
 		{
-			cout << "Bonsoir PARIIIIIIIIS" << endl;
-			cout << "list user = " << _user.size() << endl;
 			for (list<User>::iterator it = _user.begin(); it != _user.end(); it++)
 			{
 				cout << "it fd = |" << (*it).get_fd() <<"|" << endl;

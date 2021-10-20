@@ -21,7 +21,6 @@
 # include "Channel.hpp"
 # include "Class_server.hpp"
 # include <ctime>
-#include "openssl/sha.h"
 
 
 #define PORT 8080

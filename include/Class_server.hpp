@@ -78,7 +78,7 @@ class Server
 		{
 			for (map<int, User>::iterator it = _users.begin(); it != _users.end(); it++)
 			{
-				if ((*it).second.get_nick() == nick)
+				if ((*it).second.get_nick() == nick && (*it).second.is_registred())
 					return true;
 			}
 			return false;
@@ -124,6 +124,9 @@ class Server
 		}
 
 		Channel & get_channel_by_name(string name) {
+			auto it = _channel.begin();
+			for(; it != _channel.end(); it++)
+				std::cout << "----" << it->second.get_name() << " _ " << it->first <<  std::endl;
 			return _channel[name];
 		}
 
