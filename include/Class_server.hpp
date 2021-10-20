@@ -15,6 +15,7 @@ class Server
 		string		_passw;
 		string		_code;
 		int			_port;
+		string		_motd;
 		// bool		_mp;
 
 	public:
@@ -40,6 +41,8 @@ class Server
 
 		virtual	~Server(){};
 
+		void	set_name(string name){_name = name;}
+		void	set_motd(string motd){_motd = motd;}
 		map<int, User> & get_users(void)
 		{
 			return _users;
