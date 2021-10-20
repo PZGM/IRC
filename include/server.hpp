@@ -12,6 +12,7 @@
 # include <poll.h>
 # include <arpa/inet.h>
 # include <sys/ioctl.h>
+# include <fstream>
 # include <errno.h>
 # include <fcntl.h>
 # include <vector>
@@ -64,6 +65,9 @@ void oper(vector<string> *vec, User & usr, Server & srv);
 // MODE.CPP
 void mode(vector<string> *vec, User & usr, Server & srv);
 
+// MODE_CHAN
+void mode_chan(vector<string> *vec, User & usr, Server & srv);
+
 // TOOL.CPP
 string allupper(string str);
 
@@ -95,4 +99,6 @@ void pong(vector<string> *vec, User & usr, Server & srv);
 //MODE_CHANS_CPP
 void mode_chan(vector<string> *vec, User & usr, Server & srv);
 
+//CONF.CPP
+Server	configure();
 #endif

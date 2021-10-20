@@ -26,6 +26,7 @@ SRCS =	./srcs/bot.cpp			\
 		./srcs/registration.cpp	\
 		./srcs/pong.cpp			\
 		./srcs/mode_chan.cpp	\
+		./srcs/conf.cpp			\
 		# ./srcs/.cpp			\
 		
 OBJS = ${SRCS:.cpp=.o}

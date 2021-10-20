@@ -57,8 +57,11 @@ int main(int argc,char **argv) {
 	int size = 0;
 	int i;
 
+	Server srv = configure();
 
-	Server srv(argv[1], argv[2]);
+
+
+	// Server srv(argv[1], argv[2]);
 	int sockfd = initialize_socket_fd();
 
 	if ((rc = fcntl(sockfd, F_SETFL, O_NONBLOCK)) < 0) { //set socket to be nonblocking
