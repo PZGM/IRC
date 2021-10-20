@@ -51,8 +51,7 @@ bool check_user_name(std::string str) {
 }
 
 
-void send(std::string str, int fd) {
-    std::cout << "[" << fd << "] => " << str << std::endl;
+void send(std::string str, int fd) { 
     send(fd, str.c_str(), str.length(), 0);
 }
 
@@ -115,7 +114,7 @@ void send_update(User & usr, Server & srv, string command, string params) {
     string str;
     str += ":";
     str += usr.get_nick();
-    str += srv.get_code();
+    str += srv.get_host();
     str += " ";
     str += command;
     str += " ";
@@ -141,7 +140,7 @@ void send_update(User & usr, Server & srv, string command, string params, int fd
     string str;
     str += ":";
     str += usr.get_nick();
-    str += srv.get_code();
+    str += srv.get_host();
     str += " ";
     str += command;
     str += " ";

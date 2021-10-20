@@ -13,7 +13,7 @@ class Server
 		string		_name;
 		time_t 		_tm;
 		string		_passw;
-		string		_code;
+		string		_host;
 		int			_port;
 		string		_motd;
 		// bool		_mp;
@@ -32,7 +32,6 @@ class Server
 			_tm = time(NULL);
 			_operators = map<string, string>();
 			_operators["admin"] = "admin";
-			_code = "!~u@kq2rf7a2iqsci.irc";
 		};
 		
 		Server(){
@@ -43,6 +42,7 @@ class Server
 
 		void	set_name(string name){_name = name;}
 		void	set_motd(string motd){_motd = motd;}
+		void	set_op(map<string,string> op){_operators = op;}
 		map<int, User> & get_users(void)
 		{
 			return _users;
@@ -108,8 +108,12 @@ class Server
 			return _port;
 		}
 
-		string get_code() const {
-			return _code;
+		string get_host() const {
+			return _host;
+		}
+
+		void set_host(string host) {
+			_host = host;
 		}
 
 		bool check_oper(string name, string pass) {

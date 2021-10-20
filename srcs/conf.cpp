@@ -37,6 +37,13 @@ Server	configure()
 		vector<string> *user = split((*it), ":");
 		operatr[user->front()] = user->back();
 	}
+	srv.set_op(operatr);
+
+	string host;
+	getline(file, host);
+	name.erase(0, 5);
+	srv.set_host(host);
+	
 
 	return srv;
 }
