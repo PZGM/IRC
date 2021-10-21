@@ -61,6 +61,7 @@ int main(int argc,char **argv) {
 	int nfds = 1;
 	int size = 0;
 	int i;
+	string input = "";
 
 	Server srv;
 	if (argc == 3)
@@ -153,8 +154,14 @@ int main(int argc,char **argv) {
 					}
 					len = rc;
 
-					std::string input(buff);
-					parsing(input, users[fds[i].fd], srv);
+					//string sbuff(buff);
+					input += buff;
+					std::cout << input << std::endl;
+					std::cout << input.find('\n') << std::endl;
+					if (input.find('\n') != std::string::npos) {
+						parsing(input, users[fds[i].fd], srv);
+						input = "";
+					}
 
 					// std::cout << len << "bytes received " << std::endl;
 					// if ((rc = send(fds[i].fd, buff, len, 0)) < 0)
