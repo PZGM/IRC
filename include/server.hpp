@@ -38,12 +38,11 @@ using namespace std; //VIRER TOUT LES STD
 // SERVER.HPP
 int initialize_socket_fd();
 void init_address(struct sockaddr_in * addr, int sockfd, int port);
-
+bool file_exist(const char *file);
 
 // PARSING.CPP
 vector<string> * split(string str, string sep);
 void parsing(std::string str, User & usr, Server & srv);
-
 
 // JOIN.CPP
 void join(vector<string> *vec, User & usr, Server & srv);
@@ -100,5 +99,5 @@ void pong(vector<string> *vec, User & usr, Server & srv);
 void mode_chan(vector<string> *vec, User & usr, Server & srv);
 
 //CONF.CPP
-Server	configure();
+Server	configure(char *path);
 #endif

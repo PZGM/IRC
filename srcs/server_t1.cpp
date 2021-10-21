@@ -34,6 +34,11 @@ void init_address(struct sockaddr_in * addr, int sockfd, int port) {
 }
 
 
+bool file_exist(const char *file)
+{
+    std::ifstream infile(file);
+    return infile.good();
+}
 
 // ===========================================================================================
 // ./ircserv [host:port_network:password_network] <port> <password>
@@ -57,11 +62,10 @@ int main(int argc,char **argv) {
 	int size = 0;
 	int i;
 
-	Server srv = configure();
-
-
-
-	// Server srv(argv[1], argv[2]);
+	// if (file_exist(argv[1]) != true)
+	// 	Server srv(argv[1], argv[2]);
+	// else
+		Server srv = configure(argv[1]);
 	int sockfd = initialize_socket_fd();
 
 	if ((rc = fcntl(sockfd, F_SETFL, O_NONBLOCK)) < 0) { //set socket to be nonblocking
@@ -71,7 +75,7 @@ int main(int argc,char **argv) {
 
 	init_address(&addr, sockfd, std::stoi(argv[1]));
 
-		memset(fds,0, sizeof(fds));
+	memset(fds,0, sizeof(fds));
 	fds[0].fd = sockfd;
 	fds[0].events = POLLIN;
 

@@ -57,7 +57,8 @@ re: fclean all clean
 exe: re
 	@echo "nc -C localhost <PORT: 8080 ou 8000>"
 	@echo "${YELLOW}Execution${RESET}"
-	@./${NAME} 8080 hrien4
+	@./${NAME} conf.conf
+	# @./${NAME} 8080 hrien4
 
 exec: fclean
 	@${CC} -o ${NAME} ${SRCS} 

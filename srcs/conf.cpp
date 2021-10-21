@@ -3,9 +3,9 @@
 
 #include "../include/server.hpp"
 
-Server	configure()
+Server	configure(char *path)
 {
-	std::ifstream file("conf.conf");
+	std::ifstream file(path);
 	
 	string port;
 	getline(file, port);
