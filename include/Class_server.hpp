@@ -112,6 +112,10 @@ class Server
 			return _host;
 		}
 
+		string get_motd() const {
+			return _motd;
+		}
+
 		void set_host(string host) {
 			_host = host;
 		}

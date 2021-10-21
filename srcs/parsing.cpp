@@ -13,6 +13,7 @@ vector<string> * split(string str, string sep) {
 		while (str.find(sep) == 0)
 			str.erase(0, sep.length());
 		i = str.find(sep);
+		std::cout << "i = " << i << std::endl;
 		if (i == -1) {
 			while (str.find(sep) == 0)
 				str.erase(0, sep.length());
