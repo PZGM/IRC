@@ -19,7 +19,8 @@ Server	configure(char *path)
 	
 	string motd;
 	getline(file, motd);
-	motd.erase(0, 5);
+	motd.erase(0, 6);
+	motd.resize(motd.length() - 1);
 	srv.set_motd(motd);
 	
 	string name;
@@ -29,7 +30,8 @@ Server	configure(char *path)
 
 	string oper;
 	getline(file, oper);
-	oper.erase(0, 5);
+	oper.erase(0, 6);
+	oper.resize(oper.length() - 1);
 	vector<string> *op = split(oper, "|");
 	map<string, string> operatr;
 	for(vector<string>::iterator it = op->begin(); (it) != op->end(); it++)
