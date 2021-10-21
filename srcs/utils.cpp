@@ -152,6 +152,7 @@ void send_update(User & usr, Server & srv, string command, string params, int fd
 void broadcast_update(User & usr, Server & srv, string command, string params) {
     vector<string> chans = usr.get_channels();
     list<int> fds;
+    fds.push_back(usr.get_fd());
     for(vector<string>::iterator it = chans.begin(); it != chans.end(); it++) {
         Channel chan = srv.get_channel_by_name(*it);
         list<User> users = chan.get_users();
