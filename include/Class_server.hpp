@@ -117,10 +117,12 @@ class Server
 		}
 
 		bool check_oper(string name, string pass) {
-			if (_operators.count(name) == 0)
+			if (_operators.count(name) == 0) {
 				return false;
-			if (_operators[name] != pass)
+			}	
+			if (_operators[name] != pass){
 				return false;
+			}
 			return true;
 		}
 		void	add_user_channel(User &usr, string chan_name)

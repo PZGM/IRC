@@ -68,9 +68,9 @@ exec: fclean
 
 san: fclean
 	@${RM} ${NAME}
-	@${CC} ${FLAGS} ${SANI} ${SRCS} -o ${NAME}
+	@${CC} -o ${NAME} ${FLAGS} ${SANI} ${SRCS} 
 	@${RM}	${OBJS}
 	@echo "${YELLOW}Execution${RESET}"
-	@./${NAME}
+	@./${NAME} conf.conf
 
 .PHONY:    all clean fclean re exe san exec

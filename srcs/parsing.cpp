@@ -50,7 +50,7 @@ void parsing(std::string str, User & usr, Server & srv) {
 	if (command.empty())
 		return;
 	if (fmap.count(command)) {
-		if (!usr.is_registred() && (command == "JOIN" || command == "PRIVMSG")) {
+		if (!usr.is_registred() && (command == "JOIN" || command == "PRIVMSG" || command == "OPER")) {
 			send_error(451, usr);
 			return;
 		}

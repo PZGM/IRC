@@ -45,7 +45,7 @@ bool file_exist(const char *file)
 // ===========================================================================================
 int main(int argc,char **argv) {
 	
-	if (argc != 3) { //accepte que host password car on gere pas multi serv
+	if (argc < 2 || argc > 3) { //accepte que host password car on gere pas multi serv
 		std::cout << "error wrong number of args" << std::endl;
 		return 0;
 	}
@@ -62,10 +62,11 @@ int main(int argc,char **argv) {
 	int size = 0;
 	int i;
 
-	// if (file_exist(argv[1]) != true)
-	// 	Server srv(argv[1], argv[2]);
-	// else
-		Server srv = configure(argv[1]);
+	Server srv;
+	if (argc == 3)
+		srv = Server(argv[1], argv[2]);
+	else
+		srv = configure(argv[1]);
 	int sockfd = initialize_socket_fd();
 
 	if ((rc = fcntl(sockfd, F_SETFL, O_NONBLOCK)) < 0) { //set socket to be nonblocking
@@ -73,7 +74,7 @@ int main(int argc,char **argv) {
 		exit(0);
 	}
 
-	init_address(&addr, sockfd, std::stoi(argv[1]));
+	init_address(&addr, sockfd, srv.get_port());
 
 	memset(fds,0, sizeof(fds));
 	fds[0].fd = sockfd;
