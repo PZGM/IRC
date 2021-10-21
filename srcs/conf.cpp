@@ -43,7 +43,8 @@ Server	configure(char *path)
 
 	string host;
 	getline(file, host);
-	name.erase(0, 5);
+	host.erase(0, 6);
+	host.resize(host.length() - 1); 
 	srv.set_host(host);
 	
 

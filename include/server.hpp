@@ -100,4 +100,8 @@ void mode_chan(vector<string> *vec, User & usr, Server & srv);
 
 //CONF.CPP
 Server	configure(char *path);
+
+// BOT.CPP
+void	bot(vector<string> *vec, User & usr, Server & srv);
+
 #endif
