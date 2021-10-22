@@ -60,6 +60,7 @@ int main(int argc,char **argv) {
 	int nfds = 1;
 	int size = 0;
 	int i;
+	string input = "";
 
 	Server srv;
 	if (argc == 3)

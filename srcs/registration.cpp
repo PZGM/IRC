@@ -19,11 +19,13 @@ bool register_user(User & usr, Server & srv) {
     send_rpl(3, usr, srv.get_creation_time());
     send_rpl(4, usr, SERVER_NAME, SERVER_VERSION);
     send_rpl(375, usr, SERVER_NAME);
-    send_rpl(372, usr, "  _ __ ___   ___ _ __   __| |");
-    send_rpl(372, usr, " | '_ ` _ \\ / _ \\ '_ \\ / _` |");
-    send_rpl(372, usr, " | | | | | |  __/ |_) | (_| |");
-    send_rpl(372, usr, " |_| |_| |_|\\___| .__/ \\__,_|");
-    send_rpl(372, usr, "                |_| ");
+    string motd = srv.get_motd();
+    vector<string> * vec = split(motd, "\\n");
+    vector<string>::iterator it = vec->begin();
+    while (it != vec->end()) {
+        send_rpl(372, usr, *it);
+        it++;
+    }
     send_rpl(376, usr);
     return true;
 }
