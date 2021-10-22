@@ -52,9 +52,8 @@ int main(int argc,char **argv) {
 	char buff[BUFF] = {0};
 	struct sockaddr_in addr;
 	int time;
-	int rc, new_sd, len;
+	int rc, new_sd;
 
-	bool close_conn = true;
 	bool end_serv = false;
 	struct pollfd fds[FD_MAX];
 	bool compr_arr = false;
@@ -130,46 +129,7 @@ int main(int argc,char **argv) {
 			}
 			else //not the listening socket so an existing connection must be readable
 			{
-				close_conn = false;
-				do {
-					memset(buff, 0, sizeof(buff)); 
-					rc = recv(fds[i].fd, buff, sizeof(buff),  0); //receive data
-					if (rc < 0)
-					{
-						if (errno != EWOULDBLOCK)
-						{
-							std::cerr << " recv error" << std::endl;
-							close_conn = true;
-						}
-						break;
-					}
-					if (rc == 0)
-					{
-						std::cout << "connection close" <<std::endl;
-						users.erase(users.find(fds[i].fd));
-						std::cout << "user deleted from database" << std::endl;
-						close_conn = true;
-						break;
-					}
-					len = rc;
-
-					std::string input(buff);
-					parsing(input, users[fds[i].fd], srv);
-
-					// std::cout << len << "bytes received " << std::endl;
-					// if ((rc = send(fds[i].fd, buff, len, 0)) < 0)
-					// {
-					// 	std::cerr << " send error " << std::endl;
-					// 	close_conn = true;
-					// 	break;
-					// }
-				} while(true);
-				if (close_conn)
-				{
-					close(fds[i].fd);
-					fds[i].fd = -1;
-					compr_arr = true;
-				}
+				compr_arr = close_connection(i, buff, *fds, users, srv);
 			}
 		}
 		if (compr_arr)

@@ -69,6 +69,7 @@ void mode_chan(vector<string> *vec, User & usr, Server & srv);
 
 // TOOL.CPP
 string allupper(string str);
+bool	close_connection(int i, char * buff, struct pollfd &fds, map<int, User> & users, Server & srv);
 
 //UTILS.CPP
 void send(std::string str, int fd);
@@ -100,8 +101,5 @@ void mode_chan(vector<string> *vec, User & usr, Server & srv);
 
 //CONF.CPP
 Server	configure(char *path);
-
-// BOT.CPP
-void	bot(vector<string> *vec, User & usr, Server & srv);
 
 #endif

@@ -150,13 +150,7 @@ class Channel
 
 
 			send_error(366, usr, _name);
-			// msg = usr.get_nick();
-			// msg += " ";
-			// msg += _name;
-			// msg += " :End of NAMES list\n";
-			// send(msg, usr.get_fd());
 		}
-
 };
 
 

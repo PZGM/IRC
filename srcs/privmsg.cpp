@@ -24,8 +24,12 @@ void	privmsg(vector<string> *vec, User & usr, Server & srv)
 	}
 	else
 	{
-		send_error(401, usr);
+		if (vec->front()[0] != '#')
+			send_error(401, usr);
+		else
+			send_error(403, usr);
 	// :ergo.test 401 fd g :No such nick
+	// :ergo.test 403 fd g :No such channel
 		return ;
 	}
 }
