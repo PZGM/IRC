@@ -11,6 +11,7 @@ bool	close_connection(int i, struct pollfd &fds, map<int, User> & users, Server 
 {
 	bool close_conn = false;
 	char buff[BUFF] = {0};
+	string input = "";
 	do {
 		memset(buff, 0, sizeof(buff)); 
 		int rc = recv((&fds)[i].fd, buff, sizeof(buff),  0); //receive data
@@ -31,8 +32,16 @@ bool	close_connection(int i, struct pollfd &fds, map<int, User> & users, Server 
 			close_conn = true;
 			break;
 		}
-		std::string input(buff);
-		parsing(input, users[(&fds)[i].fd], srv);
+		input += buff;
+		if (input.find("\n")) {
+			vector<string> * vec = split(input, "\n");
+			vector<string>::iterator it = vec->begin();
+			while (it != vec->end()){
+				parsing(*it, users[(&fds)[i].fd], srv);
+				it++;
+			}
+			input = "";
+		}
 	} while(true);
 	if (close_conn)
 	{
