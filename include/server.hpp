@@ -88,6 +88,7 @@ map<int, string> get_msgs(void);
 string prefix(int num);
 void send_msg(string msg, User &usr);
 void send_msg2(int num, User & usr, string msg);
+void send_privmsg(User & usr, Server & srv, string command, string params, int fd);
 
 //REGISTRATION.CPP
 bool register_user(User & usr, Server & srv);

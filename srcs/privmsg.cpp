@@ -40,7 +40,7 @@ bool	privmsg_user(vector<string> *vec, User & usr, Server & srv)
 	{
 		int i = srv.get_fd_from_nick(vec->front());
 		vec->erase(vec->begin());
-		send(vec->front(),i);
+		send_privmsg(usr, srv, "PRIVMSG", vec->front(), i);
 	}
 	else
 	{
