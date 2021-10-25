@@ -15,7 +15,7 @@ class User
 		bool			_flags;
 		bool			_registred;
 		bool			_isOper;
-		vector<string>	_op_channel;
+		vector<string>	_channel;
 
 
 
@@ -85,13 +85,13 @@ class User
 
 		void add_channel(string str)
 		{
-			_op_channel.insert((_op_channel.end())--, str);
+			_channel.insert((_channel.end())--, str);
 		}
 
 		bool find_channel(string str)
 		{
-			vector<string>::iterator it = _op_channel.begin();
-			while (it != _op_channel.end())
+			vector<string>::iterator it = _channel.begin();
+			while (it != _channel.end())
 			{
 				if ((*it) == str)
 					return true;
@@ -113,7 +113,7 @@ class User
 		}
 
 		vector<string> get_channels() {
-			return _op_channel;
+			return _channel;
 		}
 
 };

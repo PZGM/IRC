@@ -47,6 +47,9 @@ void parsing(std::string str, User & usr, Server & srv);
 // JOIN.CPP
 void join(vector<string> *vec, User & usr, Server & srv);
 
+// WHO.CPP
+void who(vector<string> *vec, User & usr, Server & srv);
+
 // NICK.CPP
 void nick(vector<string> *vec, User & usr, Server & srv);
 

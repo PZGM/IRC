@@ -152,6 +152,7 @@ void send_update(User & usr, string command, string params) {
     send(str, usr.get_fd());
 }
 
+
 void send_update(User & usr, Server & srv, string command, string params, int fd) {
     string str;
     str += ":";
@@ -163,6 +164,20 @@ void send_update(User & usr, Server & srv, string command, string params, int fd
     str += params;
     str += "\n";
     send(str, fd);
+}
+
+void send_who(User & usr, string command, string params) {
+    string str;
+    str += ":mepd 352 ";
+    str += usr.get_nick();
+    str += "!~u@kq2rf7a2iqsci.irc";
+    str += " ";
+    str += 
+    str += command;
+    str += " ";
+    str += params;
+    str += "\n";
+    send(str, usr.get_fd());
 }
 
 void broadcast_update(User & usr, Server & srv, string command, string params) {
@@ -224,6 +239,7 @@ map<int, string> get_msgs(void) {
     msgs[2]   = "Your host is +, running version +";
     msgs[3]   = "This server was created +";
     msgs[4]   = "+ + BERTZios CEIMRUabefhiklmnoqstuv Iabefhkloqv";
+    msgs[315] = "End of WHO list";
     msgs[366] = "End of NAMES list";
     msgs[372] = "- +";
     msgs[375] = "- + Message of the day -";
