@@ -7,9 +7,10 @@ string allupper(string str)
 	return(str);
 }
 
-bool	close_connection(int i, char * buff, struct pollfd &fds, map<int, User> & users, Server & srv)
+bool	close_connection(int i, struct pollfd &fds, map<int, User> & users, Server & srv)
 {
 	bool close_conn = false;
+	char buff[BUFF] = {0};
 	do {
 		memset(buff, 0, sizeof(buff)); 
 		int rc = recv((&fds)[i].fd, buff, sizeof(buff),  0); //receive data
@@ -41,3 +42,4 @@ bool	close_connection(int i, char * buff, struct pollfd &fds, map<int, User> & u
 	}
 	return false;
 }
+

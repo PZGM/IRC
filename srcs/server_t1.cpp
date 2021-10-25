@@ -49,18 +49,13 @@ int main(int argc,char **argv) {
 		std::cout << "error wrong number of args" << std::endl;
 		return 0;
 	}
-	char buff[BUFF] = {0};
-	struct sockaddr_in addr;
-	int time;
-	int rc, new_sd;
 
+	struct sockaddr_in addr;
+	int rc, new_sd, size, i;
 	bool end_serv = false;
 	struct pollfd fds[FD_MAX];
 	bool compr_arr = false;
 	int nfds = 1;
-	int size = 0;
-	int i;
-	string input = "";
 
 	Server srv;
 	if (argc == 3)
@@ -81,7 +76,6 @@ int main(int argc,char **argv) {
 	fds[0].events = POLLIN;
 
 	map<int, User> & users = srv.get_users();
-	time = ( 3 * 60 * 1000);
 	do
 	{
 		std::cout << " waiting poll..." << std::endl;
@@ -130,9 +124,10 @@ int main(int argc,char **argv) {
 			}
 			else //not the listening socket so an existing connection must be readable
 			{
-				compr_arr = close_connection(i, buff, *fds, users, srv);
+				compr_arr = close_connection(i, *fds, users, srv);
 			}
 		}
+		
 		if (compr_arr)
 		{
 			compr_arr = false;
