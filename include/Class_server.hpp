@@ -104,6 +104,16 @@ class Server
 			return 0;
 		}
 
+		string		get_nick_from_fd(int fd)
+		{
+			for (map<int, User>::iterator it = _users.begin(); it != _users.end(); it++)
+			{
+				if ((*it).second.get_fd() == fd)
+					return (*it).second.get_nick();
+			}
+			return 0;
+		}
+
 		int get_port() {
 			return _port;
 		}

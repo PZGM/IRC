@@ -123,6 +123,21 @@ void send_update(User & usr, Server & srv, string command, string params) {
     send(str, usr.get_fd());
 }
 
+void send_privmsg(User & usr, Server & srv, string command, string params, int fd) {
+    string str;
+    str += ":";
+    str += usr.get_nick();
+    str += srv.get_host();
+    str += " ";
+    str += command;
+    str += " ";
+    str += srv.get_nick_from_fd(fd);
+    str += " :";
+    str += params;
+    str += "\n";
+    send(str, fd);
+}
+
 void send_update(User & usr, string command, string params) {
     string str;
     str += ":";
