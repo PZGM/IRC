@@ -92,6 +92,7 @@ string prefix(int num);
 void send_msg(string msg, User &usr);
 void send_msg2(int num, User & usr, string msg);
 void send_privmsg(User & usr, Server & srv, string command, string params, int fd);
+void send_who(User & usr, string chan_name,User & us);
 
 //REGISTRATION.CPP
 bool register_user(User & usr, Server & srv);

@@ -165,17 +165,23 @@ void send_update(User & usr, Server & srv, string command, string params, int fd
     str += "\n";
     send(str, fd);
 }
-
-void send_who(User & usr, string command, string params) {
+// :ergo.test 352 fg #42 ~u 3s5467j74iggk.irc ergo.test ff H@ :0 f
+void send_who(User & usr, string chan_name,User & us) {
     string str;
     str += ":mepd 352 ";
     str += usr.get_nick();
+    str += chan_name;
     str += "!~u@kq2rf7a2iqsci.irc";
     str += " ";
-    str += 
-    str += command;
+    str += SERVER_NAME;
     str += " ";
-    str += params;
+    str += us.get_nick();
+    str += " ";
+    str += "H";
+    if (us.is_oper() == true)
+        str += "@";
+    str += " :0 ";
+    str += us.get_real_name();
     str += "\n";
     send(str, usr.get_fd());
 }

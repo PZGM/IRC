@@ -148,6 +148,16 @@ class Server
 			return _channel[name];
 		}
 
+		User & get_user_by_fd(int fd) {
+			return _users[fd];
+		}
+
+		bool find_user_by_fd(int fd) {
+			if (_users.count(fd) != 0)
+				return true;
+			return false;
+		}
+
 };
 
 

@@ -57,8 +57,8 @@ void	who(vector<string> *vec, User & usr, Server & srv)
 		// }
 
 		vector<string> chans = usr.get_channels();
-		list<User> fds;
-		fds.push_back(usr);
+		list<int> fds;
+		fds.push_back(usr.get_fd());
 		for(vector<string>::iterator it = chans.begin(); it != chans.end(); it++) {
 			Channel chan = srv.get_channel_by_name(*it);
 			list<User> users = chan.get_users();
@@ -66,15 +66,14 @@ void	who(vector<string> *vec, User & usr, Server & srv)
 				fds.push_back(ite->get_fd());
 			}
 		}
-		// fds.sort();
-		// fds.unique();
-		list<User>::iterator it = fds.begin();
+		fds.sort();
+		fds.unique();
+		list<int>::iterator it = fds.begin();
 		while (it != fds.end()) {
-			std::cout << "coucou" << std::endl;
-			// send_update(usr, srv, command, params, *it);
-			std::cout << "nick =" << (*it).get_nick()<< std::endl;
-			std::cout << "fd =" << (*it).get_fd()<< std::endl;
-			send((*it).get_nick(),(*it).get_fd());//send le machin
+			if (srv.find_user_by_fd(*it)) {
+				User & us = srv.get_user_by_fd(*it);
+				send_who(usr, vec->back(), us);
+			}
 			it++;
 		}
 
