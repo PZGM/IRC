@@ -1,24 +1,25 @@
 #ifndef USER_HPP
 # define USER_HPP
 
-# include "server.hpp"
 using namespace std;
+
+#include "server.hpp"
+#include "Channel.hpp"
+
+class Channel;
 
 class User
 {
 	private:
-		std::string 	_userName;
-		std::string 	_realName;
-		std::string		_nickName;
-		std::string 	_pass;
+		string 	_userName;
+		string 	_realName;
+		string	_nickName;
+		string 	_pass;
 		int				_fd;
 		bool			_flags;
 		bool			_registred;
 		bool			_isOper;
-		vector<string>	_channel;
-
-
-
+		list<Channel *>	_channel;
 
 	public:
 
@@ -83,19 +84,19 @@ class User
 			_registred = registration;
 		}
 
-		void add_channel(string str)
+		void add_channel(Channel * chan)
 		{
-			_channel.push_back(str);
+			_channel.push_back(chan);
 		}
 
 		bool find_channel(string str)
 		{
-			vector<string>::iterator it = _channel.begin();
+			list<Channel * >::iterator it = _channel.begin();
 			std::cout << "size chan = " << _channel.size() << std::endl;
 			while (it != _channel.end())
 			{
 				std::cout << "find channel = " <<(*it) << std::endl;
-				if ((*it) == str)
+				if ((*it)->get_name() == str)
 					return true;
 				it++;
 			}
@@ -115,7 +116,7 @@ class User
 			return (_fd == usr._fd);
 		}
 
-		vector<string> get_channels() {
+		list<Channel * > get_channels() {
 			return _channel;
 		}
 
