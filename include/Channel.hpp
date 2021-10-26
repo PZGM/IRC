@@ -2,9 +2,6 @@
 # define CHANNEL_HPP
 
 # include "server.hpp"
-#include "User.hpp"
-
-class User;
 
 void send_update(User & usr, string command, string params);
 void send(std::string str, int fd);
