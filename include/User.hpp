@@ -85,18 +85,21 @@ class User
 
 		void add_channel(string str)
 		{
-			_channel.insert((_channel.end())--, str);
+			_channel.push_back(str);
 		}
 
 		bool find_channel(string str)
 		{
 			vector<string>::iterator it = _channel.begin();
+			std::cout << "size chan = " << _channel.size() << std::endl;
 			while (it != _channel.end())
 			{
+				std::cout << "find channel = " <<(*it) << std::endl;
 				if ((*it) == str)
 					return true;
 				it++;
 			}
+			std::cout << "fini le find channel" << std::endl;
 			return false;
 		}
 
