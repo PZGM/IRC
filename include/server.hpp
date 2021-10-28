@@ -107,4 +107,10 @@ void mode_chan(vector<string> *vec, User & usr, Server & srv);
 //CONF.CPP
 Server	configure(char *path);
 
+// QUIT.CPP
+void	quit(vector<string> *vec, User & usr, Server & srv);
+
+// PART.CPP
+void	part(vector<string> *vec, User & usr, Server & srv);
+
 #endif

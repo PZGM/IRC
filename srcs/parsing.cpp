@@ -38,7 +38,9 @@ void parsing(std::string str, User & usr, Server & srv) {
 	fmap["MODE"] = mode;
 	fmap["PING"] = ping;
 	fmap["PONG"] = pong;
-	fmap["WHO"] = who;
+	fmap["WHO"]  = who;
+	fmap["PART"] = part;
+	fmap["QUIT"] = quit;
 
 	usr.print();
 	if (str[str.length() -1] == '\n')

@@ -38,24 +38,6 @@ void	who(vector<string> *vec, User & usr, Server & srv)
 	else 
 	{
 		std::cout << "===========================je suis dans le else" << std::endl;
-		// uchan = usr.get_channels();
-		// for (uit = uchan.begin(); uit != uchan.end(); uit++) {
-		// 	std::cout << "uit = " << (*uit)<< std::endl;
-		// 	lst = srv.get_channel_by_name((*uit)).get_users();
-		// 	// lst = chan.get_users();
-		// 	for(it = lst.begin(); it != lst.end(); it++){
-		// 		if (op == true && (*it).is_oper() == false)
-		// 			continue;
-		// 			std::cout << "get nick = " << (*it).get_nick()<< std::endl;
-		// 			std::cout << "back = " << vec->back() << std::endl;
-		// 			std::cout << "channel bool = " << (*it).find_channel(vec->back()) << std::endl;
-		// 		if (((*it).get_nick() == vec->back()) || ((*it).find_channel(vec->back()))) {
-		// 			std::cout << "j'affiche le msg" << std::endl;
-		// 		send((*it).get_nick(),(*it).get_fd());//send le machin
-		// 		}
-		// 	}
-		// }
-
 		vector<string> chans = usr.get_channels();
 		list<int> fds;
 		fds.push_back(usr.get_fd());

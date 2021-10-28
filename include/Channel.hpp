@@ -151,6 +151,20 @@ class Channel
 
 			send_error(366, usr, _name);
 		}
+
+		void	del_user(User & usr)
+		{
+			for (list<int>::iterator it = _operators.begin(); it != _operators.end(); it++)
+			{
+				if (usr.get_fd() == (*it))
+					_operators.erase(it);
+			}
+			for (list<User>::iterator it = _user.begin(); it != _user.end(); it++)
+			{
+				if (usr.get_nick() == (*it).get_nick())
+					_user.erase(it);
+			}
+		}
 };
 
 

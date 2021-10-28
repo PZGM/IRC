@@ -119,6 +119,18 @@ class User
 			return _channel;
 		}
 
+		void	del_chan(string del_chan)
+		{
+			for(vector<string>::iterator it = _channel.begin(); it != _channel.end(); it++)
+			{
+				if ((*it) == del_chan)
+				{
+					_channel.erase(it);
+					return;
+				}
+			}
+		}
+
 };
 
 

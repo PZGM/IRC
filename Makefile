@@ -28,6 +28,8 @@ SRCS =	./srcs/bot.cpp			\
 		./srcs/mode_chan.cpp	\
 		./srcs/conf.cpp			\
 		./srcs/who.cpp			\
+		./srcs/quit.cpp			\
+		./srcs/part.cpp			\
 		# ./srcs/.cpp			\
 		
 OBJS = ${SRCS:.cpp=.o}
