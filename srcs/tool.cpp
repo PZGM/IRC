@@ -7,7 +7,7 @@ string allupper(string str)
 	return(str);
 }
 
-bool	close_connection(int i, struct pollfd &fds, map<int, User> & users, Server & srv)
+bool	close_connection(int i, pollfd &fds, map<int, User> & users, Server & srv)
 {
 	bool close_conn = false;
 	char buff[BUFF] = {0};
