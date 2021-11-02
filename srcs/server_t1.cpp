@@ -93,10 +93,14 @@ int main(int argc,char **argv) {
 		}
 		size = nfds;					//with poll need to find which descriptor are readable
 		for (i = 0; i < size; i++) {
+			std::cout << "_i = " << i << std::endl;
+			std::cout << "_revent = " << srv.fds[i].revents << std::endl;
 			if (srv.fds[i].revents == 0)
 				continue;
 			if (srv.fds[i].revents % 2  != POLLIN) //if != 0 && != POLLIN then its unexpected
 			{
+				perror("=====>");
+				std::cout << "i = " << i << std::endl;
 				std::cout <<" Error revents = " << srv.fds[i].revents << std::endl;
 				std::cout << errno << std::endl;
 				end_serv = true;

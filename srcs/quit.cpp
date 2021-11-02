@@ -19,13 +19,12 @@ void	quit(vector<string> *vec, User & usr, Server & srv)
 		if (srv.find_channel((*it)) == true)
 			srv.get_channel_by_name((*it)).del_user(usr);
 	}
-	int i = usr.get_fd();
-	// while (usr.get_fd() != srv.fds[i].fd)
-	// 	i++;
+	int i = 0;
+	while (usr.get_fd() != srv.fds[i].fd)
+		i++;
+	std::cout << "close fd " << i << std::endl;
 	srv.del_user(usr);
-close(i);
-	// close_connection(i, *(srv.get_fds()), srv.get_users(), srv);
-
-
+	close(srv.fds[i].fd);
+	srv.fds[i].fd = -1;
 }
 #endif
