@@ -45,6 +45,7 @@ bool	close_connection(int i, pollfd &fds, map<int, User> & users, Server & srv)
 	} while(true);
 	if (close_conn)
 	{
+		std::cout << "je sors ici =" << (&fds)[i].fd << std::endl;
 		close((&fds)[i].fd);
 		(&fds)[i].fd = -1;
 		return true;
