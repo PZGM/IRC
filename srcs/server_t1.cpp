@@ -13,7 +13,7 @@ int initialize_socket_fd(int *rc) {
 		perror("error :");
 		exit(0);
 	}
-	if ((*rc = ioctl(sockfd, FIONBIO, &opt)) < 0) {//rc = fcntl(sockfd, F_SETFL, O_NONBLOCK)) < 0) { //set socket to be nonblocking
+	if ((*rc = fcntl(sockfd, F_SETFL, O_NONBLOCK)) < 0) {//((*rc = ioctl(sockfd, FIONBIO, &opt)) < 0) {// (*rc = fcntl(sockfd, F_SETFL, O_NONBLOCK)) < 0) { //set socket to be nonblocking
 		std::cerr << "fnctl error" << std::endl;
 		exit(0);
 	}
