@@ -1,6 +1,6 @@
 #include "../include/server.hpp"
 
-int initialize_socket_fd() {
+int initialize_socket_fd(int *rc) {
 	int opt = 1;
 
 	int sockfd = socket(AF_INET, SOCK_STREAM, 0); //AF_INET = IPV4(AF_INET6...) SOCK_STREAM = TCP 0 = IP
@@ -13,13 +13,17 @@ int initialize_socket_fd() {
 		perror("error :");
 		exit(0);
 	}
+	if ((*rc = ioctl(sockfd, FIONBIO, &opt) < 0) {//rc = fcntl(sockfd, F_SETFL, O_NONBLOCK)) < 0) { //set socket to be nonblocking
+		std::cerr << "fnctl error" << std::endl;
+		exit(0);
+	}
 	return sockfd;
 }
 
 void init_address(struct sockaddr_in * addr, int sockfd, int port) {
 	memset(addr, 0, sizeof(*addr));
 	addr->sin_family = AF_INET;
-	addr->sin_addr.s_addr = inet_addr("127.0.0.1");//INADDR_ANY; // all address accepted
+	addr->sin_addr.s_addr =  INADDR_ANY;//inet_addr("127.0.0.1");//INADDR_ANY; // all address accepted
 	addr->sin_port = htons(port); //convert an integer from an byt of the server to on of the host
 
 	if (bind(sockfd, (struct sockaddr *) addr, sizeof(*addr)) < 0) {
@@ -62,12 +66,7 @@ int main(int argc,char **argv) {
 		srv = Server(argv[1], argv[2]);
 	else
 		srv = configure(argv[1]);
-	int sockfd = initialize_socket_fd();
-
-	if ((rc = fcntl(sockfd, F_SETFL, O_NONBLOCK)) < 0) { //set socket to be nonblocking
-		std::cerr << "fnctl error" << std::endl;
-		exit(0);
-	}
+	int sockfd = initialize_socket_fd(&rc);
 
 	init_address(&addr, sockfd, srv.get_port());
 
@@ -97,7 +96,7 @@ int main(int argc,char **argv) {
 			std::cout << "_revent = " << srv.fds[i].revents << std::endl;
 			if (srv.fds[i].revents == 0)
 				continue;
-			if (srv.fds[i].revents % 2  != POLLIN) //if != 0 && != POLLIN then its unexpected
+			if (srv.fds[i].revents % 2 != POLLIN) //if != 0 && != POLLIN then its unexpected
 			{
 				perror("=====>");
 				std::cout << "i = " << i << std::endl;

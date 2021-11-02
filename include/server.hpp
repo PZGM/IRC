@@ -36,7 +36,7 @@ using namespace std; //VIRER TOUT LES STD
 
 
 // SERVER.HPP
-int initialize_socket_fd();
+int initialize_socket_fd(int *rc);
 void init_address(struct sockaddr_in * addr, int sockfd, int port);
 bool file_exist(const char *file);
 
