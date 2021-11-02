@@ -14,9 +14,7 @@ bool	close_connection(int i, pollfd &fds, map<int, User> & users, Server & srv)
 	string input = "";
 	do {
 		memset(buff, 0, sizeof(buff)); 
-		std::cout << ">>>>>" << std::endl;
-		int rc = recv((&fds)[i].fd, buff, sizeof(buff),  0); //receive data
-		std::cout << "<<<<<<" << std::endl;
+		int rc = recv((&fds)[i].fd, buff, sizeof(buff),  MSG_DONTWAIT); //receive data
 		if (rc < 0)
 		{
 			if (errno != EWOULDBLOCK)
