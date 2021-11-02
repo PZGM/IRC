@@ -36,7 +36,7 @@ using namespace std; //VIRER TOUT LES STD
 
 
 // SERVER.HPP
-int initialize_socket_fd();
+int initialize_socket_fd(int *rc);
 void init_address(struct sockaddr_in * addr, int sockfd, int port);
 bool file_exist(const char *file);
 
@@ -58,8 +58,8 @@ void user(vector<string> *vec, User & usr, Server & srv);
 
 // PRIVMSG.CPP
 void privmsg(vector<string> *vec, User & usr, Server & srv);
-bool	privmsg_user(vector<string> *vec, User & usr, Server & srv);
-bool	privmsg_channel(vector<string> *vec, User & usr, Server & srv);
+bool	privmsg_user(vector<string> *vec, User & usr, Server & srv,string msg);
+bool	privmsg_channel(vector<string> *vec, User & usr, Server & srv,string msg);
 
 // OPER.CPP
 void oper(vector<string> *vec, User & usr, Server & srv);

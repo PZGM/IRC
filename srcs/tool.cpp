@@ -7,14 +7,14 @@ string allupper(string str)
 	return(str);
 }
 
-bool	close_connection(int i, struct pollfd &fds, map<int, User> & users, Server & srv)
+bool	close_connection(int i, pollfd &fds, map<int, User> & users, Server & srv)
 {
 	bool close_conn = false;
 	char buff[BUFF] = {0};
 	string input = "";
 	do {
 		memset(buff, 0, sizeof(buff)); 
-		int rc = recv((&fds)[i].fd, buff, sizeof(buff),  0); //receive data
+		int rc = recv((&fds)[i].fd, buff, sizeof(buff),  MSG_DONTWAIT); //receive data
 		if (rc < 0)
 		{
 			if (errno != EWOULDBLOCK)
@@ -45,6 +45,7 @@ bool	close_connection(int i, struct pollfd &fds, map<int, User> & users, Server 
 	} while(true);
 	if (close_conn)
 	{
+		std::cout << "je sors ici =" << (&fds)[i].fd << std::endl;
 		close((&fds)[i].fd);
 		(&fds)[i].fd = -1;
 		return true;

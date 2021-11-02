@@ -1,6 +1,6 @@
 #include "../include/server.hpp"
 
-int initialize_socket_fd() {
+int initialize_socket_fd(int *rc) {
 	int opt = 1;
 
 	int sockfd = socket(AF_INET, SOCK_STREAM, 0); //AF_INET = IPV4(AF_INET6...) SOCK_STREAM = TCP 0 = IP
@@ -13,13 +13,17 @@ int initialize_socket_fd() {
 		perror("error :");
 		exit(0);
 	}
+	if ((*rc = fcntl(sockfd, F_SETFL, O_NONBLOCK)) < 0) {//((*rc = ioctl(sockfd, FIONBIO, &opt)) < 0) {// (*rc = fcntl(sockfd, F_SETFL, O_NONBLOCK)) < 0) { //set socket to be nonblocking
+		std::cerr << "fnctl error" << std::endl;
+		exit(0);
+	}
 	return sockfd;
 }
 
 void init_address(struct sockaddr_in * addr, int sockfd, int port) {
 	memset(addr, 0, sizeof(*addr));
 	addr->sin_family = AF_INET;
-	addr->sin_addr.s_addr = inet_addr("127.0.0.1");//INADDR_ANY; // all address accepted
+	addr->sin_addr.s_addr =  INADDR_ANY;//inet_addr("127.0.0.1");//INADDR_ANY; // all address accepted
 	addr->sin_port = htons(port); //convert an integer from an byt of the server to on of the host
 
 	if (bind(sockfd, (struct sockaddr *) addr, sizeof(*addr)) < 0) {
@@ -53,7 +57,7 @@ int main(int argc,char **argv) {
 	struct sockaddr_in addr;
 	int rc, new_sd, size, i;
 	bool end_serv = false;
-	struct pollfd fds[FD_MAX];
+	// struct pollfd fds[FD_MAX];
 	bool compr_arr = false;
 	int nfds = 1;
 
@@ -62,24 +66,22 @@ int main(int argc,char **argv) {
 		srv = Server(argv[1], argv[2]);
 	else
 		srv = configure(argv[1]);
-	int sockfd = initialize_socket_fd();
-
-	if ((rc = fcntl(sockfd, F_SETFL, O_NONBLOCK)) < 0) { //set socket to be nonblocking
-		std::cerr << "fnctl error" << std::endl;
-		exit(0);
-	}
+	int sockfd = initialize_socket_fd(&rc);
 
 	init_address(&addr, sockfd, srv.get_port());
 
-	memset(fds,0, sizeof(fds));
-	fds[0].fd = sockfd;
-	fds[0].events = POLLIN;
+	// memset(fds,0, sizeof(fds));
+	// fds[0].fd = sockfd;
+	// fds[0].events = POLLIN;
+
+	srv.set_fds(sockfd);
 
 	map<int, User> & users = srv.get_users();
 	do
 	{
 		std::cout << " waiting poll..." << std::endl;
-		if ((rc = poll(fds, nfds, -1)) < 0)
+		// if ((rc = poll(fds, nfds, -1)) < 0)
+		if ((rc = poll(srv.get_fds(), nfds, -1)) < 0)
 		{
 			std::cerr << "poll failed" << std::endl;
 			break;
@@ -90,16 +92,20 @@ int main(int argc,char **argv) {
 		}
 		size = nfds;					//with poll need to find which descriptor are readable
 		for (i = 0; i < size; i++) {
-			if (fds[i].revents == 0)
+			std::cout << "_i = " << i << std::endl;
+			std::cout << "_revent = " << srv.fds[i].revents << std::endl;
+			if (srv.fds[i].revents == 0)
 				continue;
-			if (fds[i].revents % 2  != POLLIN) //if != 0 && != POLLIN then its unexpected
+			if (srv.fds[i].revents % 2 != POLLIN) //if != 0 && != POLLIN then its unexpected
 			{
-				std::cout <<" Error revents = " << fds[i].revents << std::endl;
+				perror("=====>");
+				std::cout << "i = " << i << std::endl;
+				std::cout <<" Error revents = " << srv.fds[i].revents << std::endl;
 				std::cout << errno << std::endl;
 				end_serv = true;
 				break;
 			}
-			if (fds[i].fd == sockfd)
+			if (srv.fds[i].fd == sockfd)
 			{
 				std::cout << "Listening socket is readable"<< std::endl;
 				do
@@ -113,8 +119,8 @@ int main(int argc,char **argv) {
 						break;
 					}
 					std::cout << "new incoming connection - "<< new_sd << std::endl;
-					fds[nfds].fd = new_sd;
-					fds[nfds].events = POLLIN;
+					srv.fds[nfds].fd = new_sd;
+					srv.fds[nfds].events = POLLIN;
 					if (users.find(new_sd) == users.end()) {
 						std::cout << "User " << new_sd << " creation" << std::endl;
 						users[new_sd] = User(new_sd);
@@ -124,7 +130,7 @@ int main(int argc,char **argv) {
 			}
 			else //not the listening socket so an existing connection must be readable
 			{
-				compr_arr = close_connection(i, *fds, users, srv);
+				compr_arr = close_connection(i, *(srv.get_fds()), users, srv);
 			}
 		}
 		
@@ -133,10 +139,10 @@ int main(int argc,char **argv) {
 			compr_arr = false;
 			for ( int i = 0; i < nfds; i++)
 			{
-				if (fds[i].fd == -1)
+				if (srv.fds[i].fd == -1)
 				{
 					for (int j = i; j < nfds; j++)
-						fds[j].fd = fds[j +1].fd;
+						srv.fds[j].fd = srv.fds[j +1].fd;
 					i--;
 					nfds--;
 				}
@@ -145,8 +151,8 @@ int main(int argc,char **argv) {
 	} while(end_serv == false);
 	for (i = 0; i < nfds; i++)
 	{
-		if (fds[i].fd >= 0)
-			close(fds[i].fd);
+		if (srv.fds[i].fd >= 0)
+			close(srv.fds[i].fd);
 	}
 	return 0;
 }

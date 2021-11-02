@@ -7,6 +7,14 @@
 
 void	privmsg(vector<string> *vec, User & usr, Server & srv)
 {
+	string msg;
+	for (vector<string>::iterator it = vec->begin()++ ;it != vec->end(); it++)
+	{
+		if (it != vec->begin())
+			msg += " ";
+		msg += (*it);
+	}
+
 	if (vec->size() < 2)
 	{
 		send_error(461, usr);
@@ -15,12 +23,12 @@ void	privmsg(vector<string> *vec, User & usr, Server & srv)
 	}
 	if (srv.find_user(vec->front()) != false)
 	{
-		privmsg_user(vec, usr, srv);
+		privmsg_user(vec, usr, srv, msg);
 	}
 	else if (srv.find_channel(vec->front()) != false)
 	{
 		std::cout << "================j ai un channel" << std::endl;
-		privmsg_channel(vec, usr, srv);
+		privmsg_channel(vec, usr, srv, msg);
 	}
 	else
 	{
@@ -34,13 +42,13 @@ void	privmsg(vector<string> *vec, User & usr, Server & srv)
 	}
 }
 
-bool	privmsg_user(vector<string> *vec, User & usr, Server & srv)
+bool	privmsg_user(vector<string> *vec, User & usr, Server & srv,string msg)
 {
 	if (srv.find_user(vec->front()) != false)
 	{
 		int i = srv.get_fd_from_nick(vec->front());
 		vec->erase(vec->begin());
-		send_privmsg(usr, srv, "PRIVMSG", vec->front(), i);
+		send_privmsg(usr, srv, "PRIVMSG", msg, i);
 	}
 	else
 	{
@@ -51,7 +59,7 @@ bool	privmsg_user(vector<string> *vec, User & usr, Server & srv)
 	return true;
 }
 
-bool	privmsg_channel(vector<string> *vec, User & usr, Server & srv)
+bool	privmsg_channel(vector<string> *vec, User & usr, Server & srv,string msg)
 {
 	map<string, Channel>::iterator it = srv.get_begin_channel();
 	while(it != srv.get_end_channel())
@@ -60,7 +68,7 @@ bool	privmsg_channel(vector<string> *vec, User & usr, Server & srv)
 		{
 			std::string cmd = vec->front();
 			vec->erase(vec->begin());
-			(*it).second.general_msg(cmd, vec->front(), &usr);
+			(*it).second.general_msg(cmd, msg, &usr);
 			return true;
 		}
 		it++;

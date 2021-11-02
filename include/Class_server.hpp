@@ -3,6 +3,7 @@
 
 # include "server.hpp"
 using namespace std;
+#define FD_MAX 2000
 
 class Server
 {
@@ -19,6 +20,7 @@ class Server
 		// bool		_mp;
 
 	public:
+		struct pollfd fds[FD_MAX];
 
 		Server( string p, std::string passw): _passw(passw) {
 		for (string::iterator it = p.begin(); it != p.end(); it++) {
@@ -158,6 +160,22 @@ class Server
 			return false;
 		}
 
+		void	del_user(User & usr)
+		{
+			_users.erase(usr.get_fd());
+		}
+
+		void	set_fds(int sockfd)
+		{
+			memset(fds,0, sizeof(fds));
+			fds[0].fd = sockfd;
+			fds[0].events = POLLIN;
+		}
+
+		pollfd* get_fds()
+		{
+			return fds;
+		}
 };
 
 
