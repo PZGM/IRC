@@ -5,7 +5,6 @@
 
 void	mode(vector<string> *vec, User & usr, Server & srv)
 {
-	(void)srv;
 	if (vec->front()[0] == '#') {
 		mode_chan(vec, usr, srv);
 		return;
@@ -21,6 +20,15 @@ void	mode(vector<string> *vec, User & usr, Server & srv)
 		}
 		else if ((*vec)[1] == "+o")
 			;
+		else if ((*vec)[1] == "+i")
+		{
+			send_update(usr, srv, "MODE", (*vec)[0] + " " + (*vec)[1]);
+			usr.set_inv(true);
+		}
+		else if ((*vec)[1] == "-i")
+		{
+			usr.set_inv(false);
+		}
 		else {
 			send_error(501, usr, (*vec)[1]);
 			return;

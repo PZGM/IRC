@@ -7,7 +7,6 @@
 
 void	privmsg(vector<string> *vec, User & usr, Server & srv)
 {
-	string msg;
 	for (vector<string>::iterator it = vec->begin() + 1 ;it != vec->end(); it++)
 	{
 		if (it != vec->begin() + 1)

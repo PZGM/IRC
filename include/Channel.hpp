@@ -119,6 +119,7 @@ class Channel
 			{
 				if (usr.get_nick() == (*it).get_nick())
 				{
+
 					_user.erase(it);
 					break;
 				}
