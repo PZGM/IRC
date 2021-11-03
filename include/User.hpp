@@ -15,6 +15,7 @@ class User
 		bool			_flags;
 		bool			_registred;
 		bool			_isOper;
+		bool			_invisible;
 		vector<string>	_channel;
 
 
@@ -22,8 +23,8 @@ class User
 
 	public:
 
-		User() : _userName(""), _realName(""), _nickName(""), _pass(""), _fd(-1), _flags(false), _registred(false), _isOper(false) {};
-		User(int fd) : _userName(""), _realName(""), _nickName(""), _pass(""), _fd(fd), _flags(false), _registred(false), _isOper(false) {};
+		User() : _userName(""), _realName(""), _nickName(""), _pass(""), _fd(-1), _flags(false), _registred(false), _isOper(false), _invisible(false) {};
+		User(int fd) : _userName(""), _realName(""), _nickName(""), _pass(""), _fd(fd), _flags(false), _registred(false), _isOper(false), _invisible(false) {};
 		User(const User & src) {
 			_userName = src._userName;
 			_realName = src._realName;
@@ -32,11 +33,16 @@ class User
 			_fd = src._fd;
 			_flags = src._flags;
 			_registred = src._registred;
+			_isOper = src._isOper;
+			_invisible = src._invisible;
 		}
 		virtual	~User(){};
 
 		void set_oper(bool oper) {
 			_isOper = oper;
+		}
+		void set_inv(bool in) {
+			_invisible = in;
 		}
 
 		bool is_oper(void) const {
@@ -77,6 +83,9 @@ class User
 
 		bool is_registred(void) const {
 			return _registred;
+		}
+		bool get_inv(void) const {
+			return _invisible;
 		}
 
 		void set_registred(bool registration) {

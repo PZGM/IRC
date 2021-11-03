@@ -54,7 +54,8 @@ void	who(vector<string> *vec, User & usr, Server & srv)
 		while (it != fds.end()) {
 			if (srv.find_user_by_fd(*it)) {
 				User & us = srv.get_user_by_fd(*it);
-				send_who(usr, vec->back(), us);
+				if(us.get_inv() == false)
+					send_who(usr, vec->back(), us);
 			}
 			it++;
 		}
