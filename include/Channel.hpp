@@ -3,10 +3,12 @@
 
 # include "server.hpp"
 
-void send_update(User & usr, string command, string params);
+void send_update(User & usr, Server srv,  string command, string params);
 void send(std::string str, int fd);
 void send_msg2(int num, User & usr, string msg);
 void send_error(int err, User & usr, std::string ctx);
+
+class Server;
 
 class Channel
 {
@@ -101,13 +103,13 @@ class Channel
 		}
 
 		void	
-		    general_msg(string cmd, string msg, User * forbiden_usr = NULL)
+		    general_msg(string cmd, Server srv, string msg, User * forbiden_usr = NULL)
 		{
 			for (list<User>::iterator it = _user.begin(); it != _user.end(); it++)
 			{
 				if (forbiden_usr == NULL || (*it).get_fd() != forbiden_usr->get_fd())
 				{
-					send_update((*it), cmd, msg);
+					send_update((*it), srv,  cmd, msg);
 				}
 			}
 		}
@@ -130,9 +132,9 @@ class Channel
 			}
 		}
 
-		void	join_msg(User & usr)
+		void	join_msg(User & usr, Server srv)
 		{
-			send_update(usr, "JOIN", _name);
+			send_update(usr, srv, "JOIN", _name);
 			string msg = "= ";
 			msg += _name;
 			msg += " :";

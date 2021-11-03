@@ -58,7 +58,7 @@ bool	privmsg_channel(vector<string> *vec, User & usr, Server & srv)
 	{
 		if ((*it).first == vec->front() && (*it).second.find_user(usr) == true)
 		{
-			std::string cmd = vec->front();
+			std::string cmd = "PRIVMSG " + vec->front();
 			vec->erase(vec->begin());
 			(*it).second.general_msg(cmd, vec->front(), &usr);
 			return true;

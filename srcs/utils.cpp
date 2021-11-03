@@ -4,6 +4,16 @@
 
 #include "../include/server.hpp"
 
+string get_user_prefix(User usr, Server srv) {
+	string str = ":";
+	str += usr.get_nick();
+	str += "!";
+	str += usr.get_real_name();
+	str += "@";
+	str += srv.get_host();
+	return str;
+}
+
 bool check_char(bool alpha, bool digit, bool special, std::string more, char c) {
     if (alpha && ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')))
         return true;
@@ -111,24 +121,9 @@ void send_error(int err, User & usr, std::string ctx) {
     send(str, usr.get_fd());
 }
 
-void send_update(User & usr, Server & srv, string command, string params) {
-    string str;
-    str += ":";
-    str += usr.get_nick();
-    str += srv.get_host();
-    str += " ";
-    str += command;
-    str += " ";
-    str += params;
-    str += "\n";
-    send(str, usr.get_fd());
-}
-
 void send_privmsg(User & usr, Server & srv, string command, string params, int fd) {
     string str;
-    str += ":";
-    str += usr.get_nick();
-    str += srv.get_host();
+    str += get_user_prefix(usr, srv);
     str += " ";
     str += command;
     str += " ";
@@ -139,11 +134,8 @@ void send_privmsg(User & usr, Server & srv, string command, string params, int f
     send(str, fd);
 }
 
-void send_update(User & usr, string command, string params) {
-    string str;
-    str += ":";
-    str += usr.get_nick();
-    str += "!~u@kq2rf7a2iqsci.irc";
+void send_update(User & usr, Server & srv, string command, string params) {
+    string str = get_user_prefix(usr, srv);
     str += " ";
     str += command;
     str += " ";
@@ -154,10 +146,7 @@ void send_update(User & usr, string command, string params) {
 
 
 void send_update(User & usr, Server & srv, string command, string params, int fd) {
-    string str;
-    str += ":";
-    str += usr.get_nick();
-    str += srv.get_host();
+    string str = get_user_prefix(usr, srv);
     str += " ";
     str += command;
     str += " ";
