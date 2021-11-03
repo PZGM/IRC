@@ -8,12 +8,14 @@
 void	privmsg(vector<string> *vec, User & usr, Server & srv)
 {
 	string msg;
-	for (vector<string>::iterator it = vec->begin()++ ;it != vec->end(); it++)
+	for (vector<string>::iterator it = vec->begin() + 1 ;it != vec->end(); it++)
 	{
-		if (it != vec->begin())
+		if (it != vec->begin() + 1)
 			msg += " ";
 		msg += (*it);
 	}
+
+	std::cout << "msg = " << msg << std::endl;
 
 	if (vec->size() < 2)
 	{
@@ -46,9 +48,18 @@ bool	privmsg_user(vector<string> *vec, User & usr, Server & srv,string msg)
 {
 	if (srv.find_user(vec->front()) != false)
 	{
-		int i = srv.get_fd_from_nick(vec->front());
+		string nick = vec->front();
+		int i = srv.get_fd_from_nick(nick);
 		vec->erase(vec->begin());
-		send_privmsg(usr, srv, "PRIVMSG", msg, i);
+		string msg;
+		vector<string>::iterator it = vec->begin();
+		while (it != vec->end()) {
+			if (it != vec->begin())
+				msg += " ";
+			msg += *it;
+			it++;
+		}
+		send_update(usr, srv, "PRIVMSG " + nick, msg, i);
 	}
 	else
 	{
@@ -66,9 +77,7 @@ bool	privmsg_channel(vector<string> *vec, User & usr, Server & srv,string msg)
 	{
 		if ((*it).first == vec->front() && (*it).second.find_user(usr) == true)
 		{
-			std::string cmd = "PRIVMSG " + vec->front();
-			vec->erase(vec->begin());
-			(*it).second.general_msg(cmd, msg, &usr);
+			send_general_update(usr, srv, it->second, "PRIVMSG " + vec->front(), msg, true);
 			return true;
 		}
 		it++;

@@ -16,7 +16,7 @@ void	mode(vector<string> *vec, User & usr, Server & srv)
 	}
 	if (vec->size() > 1) {
 		if ((*vec)[1] == "-o") {
-			send_update(usr, srv, "MODE", (*vec)[0] + " " + (*vec)[1]);
+			// send_update(usr, srv, "MODE", (*vec)[0] + " " + (*vec)[1]);
 			usr.set_oper(false);
 		}
 		else if ((*vec)[1] == "+o")

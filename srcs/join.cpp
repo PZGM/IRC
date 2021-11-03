@@ -18,10 +18,12 @@ void	join(vector<string> *vec, User & usr, Server & srv)
 		{
 			if (usr.find_channel(vec->front()) == false || srv.find_chan_user(usr, (*it).second) == false)
 			{
-				usr.add_channel(vec->front());
-				srv.add_user_channel(usr, vec->front());
-				(*it).second.general_join_msg(vec->front(), &usr);
-				(*it).second.join_msg(usr);
+				string chanName = vec->front();
+				Channel chan = srv.get_channel_by_name(chanName);
+				usr.add_channel(chanName);
+				srv.add_user_channel(usr, chanName);
+				send_general_update(usr, srv, chan, "JOIN", chanName, false);
+				welcome_chan(usr, srv, chan);
 			}
 			return;
 		}
@@ -32,11 +34,31 @@ void	join(vector<string> *vec, User & usr, Server & srv)
 		Channel chan(vec->front(), usr);
 		usr.add_channel(vec->front());
 		srv.add_channel(chan);
-		chan.join_msg(usr);
+		send_general_update(usr, srv, chan, "JOIN", chan.get_name(), false);
+		welcome_chan(usr, srv, chan);
 	}
 }
 
-
+void	welcome_chan(User & usr, Server srv, Channel & chan)
+{
+	string msg = "= ";
+	msg += chan.get_name();
+	msg += " :";
+	list<User> userList = chan.get_users();
+	list<int> operList = chan.get_oper();
+	for (list<User>::iterator uit = userList.begin(); uit != userList.end(); uit++)
+	{
+		for(list<int>::iterator fdit = operList.begin(); fdit != operList.end(); fdit++)
+			if ((*fdit) == (*uit).get_fd())
+				msg += "@";
+		msg += (*uit).get_nick();
+		if (++uit != userList.end())
+			msg += " ";
+		uit--;
+	}
+	send_msg2(353, usr, msg);
+	send_error(366, usr, chan.get_name());
+}
 
 
 #endif

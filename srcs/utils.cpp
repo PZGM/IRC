@@ -4,7 +4,7 @@
 
 #include "../include/server.hpp"
 
-string get_user_prefix(User usr, Server srv) {
+string  get_user_prefix(User usr, Server srv) {
 	string str = ":";
 	str += usr.get_nick();
 	str += "!";
@@ -13,6 +13,22 @@ string get_user_prefix(User usr, Server srv) {
 	str += srv.get_host();
 	return str;
 }
+
+void    send_update(User & usr, Server & srv, string cmd, string args, int fd) {
+    string str = get_user_prefix(usr, srv);
+    str += " " + cmd + " :" + args + "\n";
+    send(str, fd);    
+}
+
+void    send_general_update(User & usr, Server & srv, Channel & chan, string cmd, string args, bool exclude_sender) {
+    list<User> userList = chan.get_users();
+    for (list<User>::iterator it = userList.begin(); it != userList.end(); it++)
+    {
+    	if (!exclude_sender || (*it).get_fd() != usr.get_fd())
+    		send_update(usr, srv, cmd, args, it->get_fd());
+    }
+}
+
 
 bool check_char(bool alpha, bool digit, bool special, std::string more, char c) {
     if (alpha && ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')))
@@ -65,6 +81,8 @@ void send(std::string str, int fd) {
     std::cout << "|" << str << std::endl;
     send(fd, str.c_str(), str.length(), 0);
 }
+
+//
 
 void send_rpl(int rpl, User & usr) {
     map<int, std::string> msgs = get_msgs();
@@ -134,26 +152,6 @@ void send_privmsg(User & usr, Server & srv, string command, string params, int f
     send(str, fd);
 }
 
-void send_update(User & usr, Server & srv, string command, string params) {
-    string str = get_user_prefix(usr, srv);
-    str += " ";
-    str += command;
-    str += " ";
-    str += params;
-    str += "\n";
-    send(str, usr.get_fd());
-}
-
-
-void send_update(User & usr, Server & srv, string command, string params, int fd) {
-    string str = get_user_prefix(usr, srv);
-    str += " ";
-    str += command;
-    str += " ";
-    str += params;
-    str += "\n";
-    send(str, fd);
-}
 // :ergo.test 352 fg #42 ~u 3s5467j74iggk.irc ergo.test ff H@ :0 f
 void send_who(User & usr, string chan_name,User & us) {
     string str;
@@ -190,7 +188,7 @@ void broadcast_update(User & usr, Server & srv, string command, string params) {
     fds.unique();
     list<int>::iterator it = fds.begin();
     while (it != fds.end()) {
-        send_update(usr, srv, command, params, *it);
+        // send_update(usr, srv, command, "", params, *it);
         it++;
     }
 }
