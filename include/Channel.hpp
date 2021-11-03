@@ -3,10 +3,11 @@
 
 # include "server.hpp"
 
-void send_update(User & usr, string command, string params);
+
 void send(std::string str, int fd);
 void send_msg2(int num, User & usr, string msg);
 void send_error(int err, User & usr, std::string ctx);
+
 
 class Channel
 {
@@ -37,6 +38,10 @@ class Channel
 
 		string		get_name() const {
 			return _name;
+		}
+
+		list<int>	get_oper() const{
+			return _operators;
 		}
 
 		string		get_mode() const {
@@ -98,58 +103,6 @@ class Channel
 				it++;
 			}
 			return false;
-		}
-
-		void	
-		    general_msg(string cmd, string msg, User * forbiden_usr = NULL)
-		{
-			for (list<User>::iterator it = _user.begin(); it != _user.end(); it++)
-			{
-				if (forbiden_usr == NULL || (*it).get_fd() != forbiden_usr->get_fd())
-				{
-					send_update((*it), cmd, msg);
-				}
-			}
-		}
-
-		void	general_join_msg(string cmd, User * usr)
-		{
-			for (std::list<User>::iterator it = _user.begin(); it != _user.end(); it++)
-			{
-				if (usr == NULL || (*it).get_fd() != usr->get_fd())
-				{
-					string str;
-					str += ":";
-					str += usr->get_nick();
-					str += "!~u@kq2rf7a2iqsci.irc";
-					str += " JOIN ";
-					str += cmd;
-					str += "\n";
-					send(str, (*it).get_fd());
-				}
-			}
-		}
-
-		void	join_msg(User & usr)
-		{
-			send_update(usr, "JOIN", _name);
-			string msg = "= ";
-			msg += _name;
-			msg += " :";
-			for (list<User>::iterator uit = _user.begin(); uit != _user.end(); uit++)
-			{
-				for(list<int>::iterator fdit = _operators.begin(); fdit != _operators.end(); fdit++)
-					if ((*fdit) == (*uit).get_fd())
-						msg += "@";
-				msg += (*uit).get_nick();
-				if (++uit != _user.end())
-					msg += " ";
-				uit--;
-			}
-			send_msg2(353, usr, msg);
-
-
-			send_error(366, usr, _name);
 		}
 
 		void	del_user(User & usr)
