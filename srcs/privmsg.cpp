@@ -8,9 +8,10 @@
 void	privmsg(vector<string> *vec, User & usr, Server & srv)
 {
 	string msg;
-	for (vector<string>::iterator it = vec->begin()++ ;it != vec->end(); it++)
+	vector<string>::iterator ito = ++vec->begin();
+	for (vector<string>::iterator it = ito ;it != vec->end(); it++)
 	{
-		if (it != vec->begin())
+		if (it != ito)
 			msg += " ";
 		msg += (*it);
 	}

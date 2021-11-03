@@ -128,7 +128,9 @@ void send_privmsg(User & usr, Server & srv, string command, string params, int f
     string str;
     str += ":";
     str += usr.get_nick();
-    str += srv.get_host();
+    str += "!";
+    str += usr.get_real_name();
+    str += "@127.0.0.1";
     str += " ";
     str += command;
     str += " ";
