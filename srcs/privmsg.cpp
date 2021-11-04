@@ -49,6 +49,7 @@ bool	privmsg_user(vector<string> *vec, User & usr, Server & srv)
 {
 	if (srv.find_user(vec->front()) != false)
 	{
+		string msg;
 		string nick = vec->front();
 		int i = srv.get_fd_from_nick(nick);
 		vec->erase(vec->begin());
