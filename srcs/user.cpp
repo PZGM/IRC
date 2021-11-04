@@ -31,7 +31,8 @@ void user(vector<string> *vec, User & usr, Server & srv) {
 		str += vec->front();
 		vec->erase(vec->begin());
 	}
-	str.erase(0, 1);
+	if (str[0] == ':')
+		str.erase(0, 1);
 	usr.set_real_name(str);
 	std::cout << "=====" << usr.get_nick() << std::endl;
 	if (usr.get_nick() != "")
