@@ -70,7 +70,7 @@ bool	privmsg_user(vector<string> *vec, User & usr, Server & srv, string msg)
 	return true;
 }
 
-bool	privmsg_channel(vector<string> *vec, User & usr, Server & srv,string msg)
+bool	privmsg_channel(vector<string> *vec, User & usr, Server & srv)
 {
 	map<string, Channel>::iterator it = srv.get_begin_channel();
 	while(it != srv.get_end_channel())
