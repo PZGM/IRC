@@ -1,6 +1,6 @@
 # IRC
-port 8080 server 
-porte 8000 proxy
+port 8080 server \
+port 8000 proxy
 ```
 clang++ server_t1.cpp -o server
 #clang++ client_t2.cpp -o client
