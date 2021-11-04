@@ -28,7 +28,7 @@
 #define BUFF 1024
 #define BACKLOG 7
 #define FD_MAX 2000
-#define SERVER_NAME "mepd"
+#define SERVER_NAME "irc.mepd"
 #define SERVER_VERSION "0.0.1"
 
 using namespace std; //VIRER TOUT LES STD

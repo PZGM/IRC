@@ -36,7 +36,7 @@ void	privmsg(vector<string> *vec, User & usr, Server & srv)
 	else
 	{
 		if (vec->front()[0] != '#')
-			send_error(401, usr);
+			send_error(401, usr, vec->front());
 		else
 			send_error(403, usr, vec->front());
 	// :ergo.test 401 fd g :No such nick
