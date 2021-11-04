@@ -45,14 +45,13 @@ void	privmsg(vector<string> *vec, User & usr, Server & srv)
 	}
 }
 
-bool	privmsg_user(vector<string> *vec, User & usr, Server & srv,string msg)
+bool	privmsg_user(vector<string> *vec, User & usr, Server & srv, string msg)
 {
 	if (srv.find_user(vec->front()) != false)
 	{
 		string nick = vec->front();
 		int i = srv.get_fd_from_nick(nick);
 		vec->erase(vec->begin());
-		string msg;
 		vector<string>::iterator it = vec->begin();
 		while (it != vec->end()) {
 			if (it != vec->begin())
@@ -60,7 +59,7 @@ bool	privmsg_user(vector<string> *vec, User & usr, Server & srv,string msg)
 			msg += *it;
 			it++;
 		}
-		// send_update(usr, srv, "PRIVMSG " + nick, msg, i);
+		send_update(usr, srv, "PRIVMSG " + nick, msg, i);
 	}
 	else
 	{

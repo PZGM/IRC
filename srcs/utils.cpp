@@ -29,6 +29,25 @@ void    send_general_update(User & usr, Server & srv, Channel & chan, string cmd
     }
 }
 
+void broadcast_update(User & usr, Server & srv, string command, string params) {
+    vector<string> chans = usr.get_channels();
+    list<int> fds;
+    fds.push_back(usr.get_fd());
+    for(vector<string>::iterator it = chans.begin(); it != chans.end(); it++) {
+        Channel chan = srv.get_channel_by_name(*it);
+        list<User> users = chan.get_users();
+        for(list<User>::iterator ite = users.begin(); ite != users.end(); ite++) {
+            fds.push_back(ite->get_fd());
+        }
+    }
+    fds.sort();
+    fds.unique();
+    list<int>::iterator it = fds.begin();
+    while (it != fds.end()) {
+        send_update(usr, srv, command, params, *it);
+        it++;
+    }
+}
 
 bool check_char(bool alpha, bool digit, bool special, std::string more, char c) {
     if (alpha && ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')))
@@ -171,26 +190,6 @@ void send_who(User & usr, string chan_name,User & us) {
     str += us.get_real_name();
     str += "\n";
     send(str, usr.get_fd());
-}
-
-void broadcast_update(User & usr, Server & srv, string command, string params) {
-    vector<string> chans = usr.get_channels();
-    list<int> fds;
-    fds.push_back(usr.get_fd());
-    for(vector<string>::iterator it = chans.begin(); it != chans.end(); it++) {
-        Channel chan = srv.get_channel_by_name(*it);
-        list<User> users = chan.get_users();
-        for(list<User>::iterator ite = users.begin(); ite != users.end(); ite++) {
-            fds.push_back(ite->get_fd());
-        }
-    }
-    fds.sort();
-    fds.unique();
-    list<int>::iterator it = fds.begin();
-    while (it != fds.end()) {
-        // send_update(usr, srv, command, "", params, *it);
-        it++;
-    }
 }
 
 void send_msg(string msg, User &usr) {
