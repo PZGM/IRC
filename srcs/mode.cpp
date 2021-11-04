@@ -22,7 +22,7 @@ void	mode(vector<string> *vec, User & usr, Server & srv)
 			;
 		else if ((*vec)[1] == "+i")
 		{
-			send_update(usr, srv, "MODE", (*vec)[0] + " " + (*vec)[1]);
+			// send_update(usr, srv, "MODE", (*vec)[0] + " " + (*vec)[1]);
 			usr.set_inv(true);
 		}
 		else if ((*vec)[1] == "-i")

@@ -7,7 +7,9 @@
 
 void	privmsg(vector<string> *vec, User & usr, Server & srv)
 {
-	for (vector<string>::iterator it = vec->begin() + 1 ;it != vec->end(); it++)
+	string msg;
+	vector<string>::iterator ito = ++vec->begin();
+	for (vector<string>::iterator it = ito + 1 ;it != vec->end(); it++)
 	{
 		if (it != vec->begin() + 1)
 			msg += " ";
@@ -58,7 +60,7 @@ bool	privmsg_user(vector<string> *vec, User & usr, Server & srv,string msg)
 			msg += *it;
 			it++;
 		}
-		send_update(usr, srv, "PRIVMSG " + nick, msg, i);
+		// send_update(usr, srv, "PRIVMSG " + nick, msg, i);
 	}
 	else
 	{

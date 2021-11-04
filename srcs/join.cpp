@@ -41,6 +41,7 @@ void	join(vector<string> *vec, User & usr, Server & srv)
 
 void	welcome_chan(User & usr, Server srv, Channel & chan)
 {
+	(void) srv;
 	string msg = "= ";
 	msg += chan.get_name();
 	msg += " :";

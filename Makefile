@@ -36,7 +36,7 @@ OBJS = ${SRCS:.cpp=.o}
 
 CC  = clang++
 
-FLAGS = -Wall -Wextra
+FLAGS = -Wall -Wextra -Werror
 
 SANI = -fsanitize=address -O0 -g3 --std=c++11
 
