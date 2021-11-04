@@ -22,7 +22,6 @@ void	who(vector<string> *vec, User & usr, Server & srv)
 
 	if (vec->size() == 0 || (vec->size() == 1  && vec->front() == "0"))
 	{
-		std::cout << "===========================je suis dans le if" << std::endl;
 		uchan = usr.get_channels();
 		for (uit = uchan.begin(); uit != uchan.end(); uit++) {
 			lst = srv.get_channel_by_name(*uit).get_users();
@@ -37,7 +36,6 @@ void	who(vector<string> *vec, User & usr, Server & srv)
 	}
 	else 
 	{
-		std::cout << "===========================je suis dans le else" << std::endl;
 		vector<string> chans = usr.get_channels();
 		list<int> fds;
 		fds.push_back(usr.get_fd());

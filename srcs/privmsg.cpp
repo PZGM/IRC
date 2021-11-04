@@ -16,8 +16,6 @@ void	privmsg(vector<string> *vec, User & usr, Server & srv)
 		msg += (*it);
 	}
 
-	std::cout << "msg = " << msg << std::endl;
-
 	if (vec->size() < 2)
 	{
 		send_error(461, usr);
@@ -30,7 +28,6 @@ void	privmsg(vector<string> *vec, User & usr, Server & srv)
 	}
 	else if (srv.find_channel(vec->front()) != false)
 	{
-		std::cout << "================j ai un channel" << std::endl;
 		privmsg_channel(vec, usr, srv, msg);
 	}
 	else
@@ -61,7 +58,6 @@ bool	privmsg_user(vector<string> *vec, User & usr, Server & srv)
 			it++;
 		}
 		msg.erase(0,1);
-		std::cout << "MSg ====== " << msg << std::endl;
 		send_update(usr, srv, "PRIVMSG " + nick, msg, i);
 	}
 	else

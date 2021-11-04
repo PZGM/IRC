@@ -100,23 +100,13 @@ class User
 		bool find_channel(string str)
 		{
 			vector<string>::iterator it = _channel.begin();
-			std::cout << "size chan = " << _channel.size() << std::endl;
 			while (it != _channel.end())
 			{
-				std::cout << "find channel = " <<(*it) << std::endl;
 				if ((*it) == str)
 					return true;
 				it++;
 			}
-			std::cout << "fini le find channel" << std::endl;
 			return false;
-		}
-
-		void print() {
-			if (_flags == true)
-				std::cout << "USER _ " << _fd << " : " << _nickName << "(" << _realName << ") is op"<< std::endl;
-			else
-				std::cout << "USER _ " << _fd << " : " << _nickName << "(" << _realName << ") isnt op" << std::endl; 
 		}
 
 		bool operator==(User & usr)

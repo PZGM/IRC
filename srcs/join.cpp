@@ -7,7 +7,6 @@ void	join(vector<string> *vec, User & usr, Server & srv)
 {
 	if (vec->size() == 0)
 	{
-		std::cout << "no parameter" << std::endl;
 		send_error(461, usr); //:ergo.test 461 fg JOIN :Not enough parameters
 		return;
 	}

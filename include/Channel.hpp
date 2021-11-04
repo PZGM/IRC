@@ -62,11 +62,9 @@ class Channel
 
 		bool find_user(string nick)
 		{
-			std::cout << "nick === " << nick << " size = " << _user.size() << std::endl;
 			list<User>::iterator it = _user.begin();
 			while (it != _user.end())
 			{
-				std::cout << "===> " << it->get_nick() << std::endl;
 				if ((it->get_nick()) == nick)
 					return true;
 				it++;

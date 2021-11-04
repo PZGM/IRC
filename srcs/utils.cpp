@@ -82,7 +82,6 @@ bool check_nick(std::string str) {
         return false;
     it++;
     while (it != str.end()) {
-        std::cout << "." << std::endl;
         if (!check_char(true, true, true, "-", *it))
             return false;
         it++;
@@ -98,7 +97,7 @@ bool check_user_name(std::string str) {
 
 
 void send(std::string str, int fd) { 
-    std::cout << "|" << str << std::endl;
+    std::cout << "> " << str << std::endl;
     send(fd, str.c_str(), str.length(), 0);
 }
 

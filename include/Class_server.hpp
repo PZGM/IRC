@@ -25,7 +25,6 @@ class Server
 		Server( string p, std::string passw): _passw(passw) {
 		for (string::iterator it = p.begin(); it != p.end(); it++) {
         	if (std::isdigit(*it) == 0) {
-			std::cout << "Port must be a number" << std::endl;
 			exit(0);
     		}
 		}
@@ -68,7 +67,6 @@ class Server
 		}
 		void	add_channel(Channel chan)
 		{
-			std::cout << "Channel cree" << std::endl;
 			_channel[(chan.get_name())] = chan;
 		}
 

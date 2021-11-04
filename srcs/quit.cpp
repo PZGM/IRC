@@ -22,7 +22,6 @@ void	quit(vector<string> *vec, User & usr, Server & srv)
 	int i = 0;
 	while (usr.get_fd() != srv.fds[i].fd)
 		i++;
-	std::cout << "close fd " << i << std::endl;
 	srv.del_user(usr);
 	close(srv.fds[i].fd);
 	srv.fds[i].fd = -1;
