@@ -48,7 +48,8 @@ void broadcast_update(User & usr, Server & srv, string command, string params) {
         it++;
     }
 }
-
+// :gg       ! g                      @127.0.0.1 PRIVMSG ff       :slt connard
+// :afreire-_!:Adrien FREIRE ELEUTERIO@127.0.0.1 PRIVMSG afreire- ::yo
 bool check_char(bool alpha, bool digit, bool special, std::string more, char c) {
     if (alpha && ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')))
         return true;

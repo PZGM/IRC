@@ -60,6 +60,8 @@ bool	privmsg_user(vector<string> *vec, User & usr, Server & srv)
 			msg += *it;
 			it++;
 		}
+		msg.erase(0,1);
+		std::cout << "MSg ====== " << msg << std::endl;
 		send_update(usr, srv, "PRIVMSG " + nick, msg, i);
 	}
 	else
