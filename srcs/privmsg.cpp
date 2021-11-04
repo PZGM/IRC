@@ -26,7 +26,7 @@ void	privmsg(vector<string> *vec, User & usr, Server & srv)
 	}
 	if (srv.find_user(vec->front()) != false)
 	{
-		privmsg_user(vec, usr, srv, msg);
+		privmsg_user(vec, usr, srv);
 	}
 	else if (srv.find_channel(vec->front()) != false)
 	{
