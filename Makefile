@@ -30,6 +30,7 @@ SRCS =	./srcs/bot.cpp			\
 		./srcs/who.cpp			\
 		./srcs/quit.cpp			\
 		./srcs/part.cpp			\
+		./srcs/cap.cpp			\
 		# ./srcs/.cpp			\
 		
 OBJS = ${SRCS:.cpp=.o}

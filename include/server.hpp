@@ -68,6 +68,9 @@ void oper(vector<string> *vec, User & usr, Server & srv);
 // MODE.CPP
 void mode(vector<string> *vec, User & usr, Server & srv);
 
+// CAP.CPP
+void cap(vector<string> *vec, User & usr, Server & srv);
+
 // MODE_CHAN
 void mode_chan(vector<string> *vec, User & usr, Server & srv);
 

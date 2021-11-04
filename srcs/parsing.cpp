@@ -41,8 +41,8 @@ void parsing(std::string str, User & usr, Server & srv) {
 	fmap["WHO"]  = who;
 	fmap["PART"] = part;
 	fmap["QUIT"] = quit;
+	fmap["CAP"] = cap;
 
-	usr.print();
 	if (str[str.length() -1] == '\n')
 		str.resize(str.length() - 1);
 	if (str[str.length() -1] == 13)
