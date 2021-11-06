@@ -16,7 +16,7 @@ Or
 ```
 
 You're now connected !!
-Available commands : (add "\" before the cmds on irssi)
+Available commands : (add '\\' before the cmds on irssi)
 ```
 - join <Channel_name> (add an # before the name if not on irssi)
 - privmsg <dest>
