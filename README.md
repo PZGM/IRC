@@ -1,13 +1,25 @@
 # IRC
 port 8080 server 
-porte 8000 proxy
 ```
-clang++ server_t1.cpp -o server
-#clang++ client_t2.cpp -o client
-nc -C localhost <PORT>
+make exe
 ```
-On differents terminal/windows :
+On differents Windows : 
 ```
-./server
-#./client 
+- nc -C <IP> <PORT>
+- user 1 2 3 4 
+- nick <Your_nickname>
+```
+Or
+```
+- irssi
+- \connect <IP> <PORT>
+```
+
+You're now connected !!
+Available commands : (add "\" before the cmds on irssi)
+```
+- join <Channel_name> (add an # before the name if not on irssi)
+- privmsg <dest>
+- who <Channel>
+- ping
 ```
