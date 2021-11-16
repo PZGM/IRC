@@ -17,7 +17,7 @@ class User
 		bool			_isOper;
 		bool			_invisible;
 		vector<string>	_channel;
-
+		vector<time_t>	_log; //0 = last registration; 1 = last change
 
 
 
@@ -36,6 +36,7 @@ class User
 			_isOper = src._isOper;
 			_invisible = src._invisible;
 		}
+
 		virtual	~User(){};
 
 		void set_oper(bool oper) {
@@ -130,6 +131,27 @@ class User
 			}
 		}
 
+		void	set_log(time_t now)
+		{
+			_log.push_back(now);
+			_log.push_back(now);
+		}
+
+		time_t	get_last_activity()
+		{
+			return _log.back();
+		}
+
+		void	set_last_activity(time_t now)
+		{
+			_log.pop_back();
+			_log.push_back(now);
+		}
+
+		time_t	get_last_connection()
+		{
+			return _log.front();
+		}
 };
 
 

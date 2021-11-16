@@ -14,6 +14,7 @@ bool register_user(User & usr, Server & srv) {
         return false;
     }
     usr.set_registred(true);
+    usr.set_log(time(0));
     send_rpl(1, usr, usr.get_nick());
     send_rpl(2, usr, SERVER_NAME, SERVER_VERSION);
     send_rpl(3, usr, srv.get_creation_time());
