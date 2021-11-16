@@ -85,6 +85,16 @@ class Server
 			return false;
 		}
 
+		User	&get_user(string nick)
+		{
+			for (map<int, User>::iterator it = _users.begin(); it != _users.end(); it++)
+			{
+				if ((*it).second.get_nick() == nick && (*it).second.is_registred())
+					return it->second;
+			}
+			return (_users.begin()->second);
+		}
+
 		string	get_creation_time(void) const {
 			string str = "";
 			struct tm * curtime = localtime ( &_tm );
@@ -174,6 +184,7 @@ class Server
 		{
 			return fds;
 		}
+
 };
 
 

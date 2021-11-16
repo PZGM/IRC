@@ -8,7 +8,7 @@
 void	privmsg(vector<string> *vec, User & usr, Server & srv)
 {
 	string msg;
-	vector<string>::iterator ito = ++vec->begin();
+	vector<string>::iterator ito = vec->begin();
 	for (vector<string>::iterator it = ito + 1 ;it != vec->end(); it++)
 	{
 		if (it != vec->begin() + 1)
@@ -44,6 +44,7 @@ void	privmsg(vector<string> *vec, User & usr, Server & srv)
 
 bool	privmsg_user(vector<string> *vec, User & usr, Server & srv)
 {
+
 	if (srv.find_user(vec->front()) != false)
 	{
 		string msg;
@@ -73,6 +74,7 @@ bool	privmsg_user(vector<string> *vec, User & usr, Server & srv)
 bool	privmsg_channel(vector<string> *vec, User & usr, Server & srv,string msg)
 {
 	map<string, Channel>::iterator it = srv.get_begin_channel();
+	
 	while(it != srv.get_end_channel())
 	{
 		if ((*it).first == vec->front() && (*it).second.find_user(usr) == true)

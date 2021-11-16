@@ -42,6 +42,7 @@ void parsing(std::string str, User & usr, Server & srv) {
 	fmap["PART"] = part;
 	fmap["QUIT"] = quit;
 	fmap["CAP"] = cap;
+	fmap["WHOIS"] = whois;
 
 	if (str[str.length() -1] == '\n')
 		str.resize(str.length() - 1);

@@ -10,8 +10,9 @@ void ping(vector<string> *vec, User & usr, Server & srv) {
     str += SERVER_NAME;
     str += " PONG ";
     str += SERVER_NAME;
-    str += " ";
+    str += " :";
     str += vec->front();
+	str += "\r\n";
     send(str, usr.get_fd());
 }
 

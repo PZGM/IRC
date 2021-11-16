@@ -12,8 +12,7 @@ endif
 
 NAME = ircserv
 
-SRCS =	./srcs/bot.cpp			\
-		./srcs/join.cpp			\
+SRCS =	./srcs/join.cpp			\
 		./srcs/mode.cpp			\
 		./srcs/nick.cpp			\
 		./srcs/oper.cpp			\
@@ -28,6 +27,7 @@ SRCS =	./srcs/bot.cpp			\
 		./srcs/mode_chan.cpp	\
 		./srcs/conf.cpp			\
 		./srcs/who.cpp			\
+		./srcs/whois.cpp		\
 		./srcs/quit.cpp			\
 		./srcs/part.cpp			\
 		./srcs/cap.cpp			\
