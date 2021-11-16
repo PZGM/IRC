@@ -10,6 +10,11 @@ void	join(vector<string> *vec, User & usr, Server & srv)
 		send_error(461, usr); //:ergo.test 461 fg JOIN :Not enough parameters
 		return;
 	}
+	if (vec->front()[0] != '#')
+	{
+		send_error(476, usr, vec->front());
+		return;
+	}
 	map<string, Channel>::iterator it = srv.get_begin_channel();
 	while(it != srv.get_end_channel())
 	{

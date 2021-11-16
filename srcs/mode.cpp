@@ -22,7 +22,7 @@ void	mode(vector<string> *vec, User & usr, Server & srv)
 			;
 		else if ((*vec)[1] == "+i")
 		{
-			broadcast_update(usr, srv, "MODE", (*vec)[0] + " " + (*vec)[1]);
+			broadcast_update(usr, srv, "MODE " + (*vec)[0], (*vec)[1]);
 			usr.set_inv(true);
 		}
 		else if ((*vec)[1] == "-i")
@@ -34,10 +34,12 @@ void	mode(vector<string> *vec, User & usr, Server & srv)
 			return;
 		}
 	}
+	string mode = "+Z";
 	if (usr.is_oper())
-		send_msg2(221, usr, "+Zo");
-	else
-		send_msg2(221, usr, "+Z");
+		mode += "o";
+	if (usr.get_inv())
+		mode += "i";
+	send_msg2(221, usr, mode);
 }
 
 #endif

@@ -50,6 +50,7 @@ void welcome_chan(User & usr, Server srv, Channel & chan);
 
 // WHO.CPP
 void who(vector<string> *vec, User & usr, Server & srv);
+void whois(vector<string> *vec, User & usr, Server & srv);
 
 // NICK.CPP
 void nick(vector<string> *vec, User & usr, Server & srv);
@@ -58,7 +59,7 @@ void nick(vector<string> *vec, User & usr, Server & srv);
 void user(vector<string> *vec, User & usr, Server & srv);
 
 // PRIVMSG.CPP
-void privmsg(vector<string> *vec, User & usr, Server & srv);
+void	privmsg(vector<string> *vec, User & usr, Server & srv);
 bool	privmsg_user(vector<string> *vec, User & usr, Server & srv);
 bool	privmsg_channel(vector<string> *vec, User & usr, Server & srv,string msg);
 
@@ -96,7 +97,8 @@ string prefix(int num);
 void send_msg(string msg, User &usr);
 void send_msg2(int num, User & usr, string msg);
 void send_privmsg(User & usr, Server & srv, string command, string params, int fd);
-void send_who(User & usr, string chan_name,User & us);
+void send_whois(User & usr,User & tom, Server srv);
+void send_who(User & usr, string chan_name,User & us, Server srv);
 
 //REGISTRATION.CPP
 bool register_user(User & usr, Server & srv);

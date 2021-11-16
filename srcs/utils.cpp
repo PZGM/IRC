@@ -16,7 +16,7 @@ string  get_user_prefix(User usr, Server srv) {
 
 void    send_update(User & usr, Server & srv, string cmd, string args, int fd) {
     string str = get_user_prefix(usr, srv);
-    str += " " + cmd + " :" + args + "\n";
+	str += " " + cmd + " :" + args + "\r\n";
     send(str, fd);    
 }
 
@@ -109,7 +109,7 @@ void send_rpl(int rpl, User & usr) {
     str += (usr.is_registred()) ? usr.get_nick() : "*";
     str += " :";
     str += msgs[rpl];
-    str += "\n";
+    str += "\r\n";
     send(str, usr.get_fd());
 }
 
@@ -120,7 +120,7 @@ void send_rpl(int rpl, User & usr, string s1) {
     str += " :";
     str += msgs[rpl];
     str.replace(str.find("+"), 1, s1);
-    str += "\n";
+    str += "\r\n";
     send(str, usr.get_fd());
 }
 
@@ -132,7 +132,7 @@ void send_rpl(int rpl, User & usr, string s1, string s2) {
     str += msgs[rpl];
     str.replace(str.find("+"), 1, s1);
     str.replace(str.find("+"), 1, s2);
-    str += "\n";
+    str += "\r\n";
     send(str, usr.get_fd());
 }
 
@@ -142,7 +142,7 @@ void send_error(int err, User & usr) {
     str += (usr.is_registred()) ? usr.get_nick() : "*";
     str += " :";
     str += msgs[err];
-    str += "\n";
+    str += "\r\n";
     send(str, usr.get_fd());
 }
 
@@ -154,7 +154,7 @@ void send_error(int err, User & usr, std::string ctx) {
     str += ctx;
     str += " :";
     str += msgs[err];
-    str += "\n";
+    str += "\r\n";
     send(str, usr.get_fd());
 }
 
@@ -167,20 +167,22 @@ void send_privmsg(User & usr, Server & srv, string command, string params, int f
     str += srv.get_nick_from_fd(fd);
     str += " :";
     str += params;
-    str += "\n";
+    str += "\r\n";
     send(str, fd);
 }
 
-// :ergo.test 352 fg #42 ~u 3s5467j74iggk.irc ergo.test ff H@ :0 f
-void send_who(User & usr, string chan_name,User & us) {
-    string str;
-    str += ":mepd 352 ";
-    str += usr.get_nick();
-    str += chan_name;
-    str += "!~u@kq2rf7a2iqsci.irc";
+void send_who(User & usr, string chan_name,User & us, Server srv) {
+    string str = prefix(352);
+	str += us.get_nick();
+	str += " ";
+	str += chan_name;
+	str += " ";
+	str += us.get_real_name();
+	str += " ";
+	str += srv.get_host();
     str += " ";
     str += SERVER_NAME;
-    str += " ";
+	str += " ";
     str += us.get_nick();
     str += " ";
     str += "H";
@@ -188,8 +190,73 @@ void send_who(User & usr, string chan_name,User & us) {
         str += "@";
     str += " :0 ";
     str += us.get_real_name();
-    str += "\n";
+    str += "\r\n";
+
     send(str, usr.get_fd());
+}
+
+void send_whois(User & usr, User & tom, Server srv)
+{
+	vector<string>  coco;
+	string str = prefix(311);
+	str += tom.get_nick();
+	str += " ";
+	str += tom.get_real_name();
+	str += " ";
+	str += srv.get_host();
+    str += " ";
+    str += SERVER_NAME;
+    str += " ";
+    str += "*";
+    str += " :";
+    str += tom.get_real_name();
+    str += "\r\n";
+	str += prefix(378);
+	str += usr.get_nick();
+	str += " ";
+	str += tom.get_nick();
+	str += " :is connecting from ";
+	str += tom.get_real_name();
+	str += "@";
+	str += srv.get_host();
+	str += " ";
+	str += srv.get_host();
+	str += "\r\n";
+	if(!tom.get_channels().empty())
+	{
+		coco = tom.get_channels();
+		str += prefix(319);
+		str += usr.get_nick();
+		str += " ";
+		str += " :";
+		for(vector<string>::iterator it = coco.begin(); it != coco.end(); it++)
+		{
+			str += ((srv.get_channel_by_name(*it).is_oper(tom)) ? "@" : "");
+			str += *it;
+			str += " ";
+		}
+		str += "\r\n";
+	}
+	str += prefix(312);
+	str += usr.get_nick();
+	str += " ";
+	str += tom.get_nick();
+	str += " ";
+	str += SERVER_NAME;
+	str += " :Local ";
+	str += "IRC Server";
+	str += "\r\n";
+	str += prefix(379);
+	str += usr.get_nick();
+	str += " ";
+	str += tom.get_nick();
+	str += " :is using modes +";
+	str += (tom.is_oper() ? "o" : "");
+	str += (tom.get_inv() ? "i" : "");
+	str += "\r\n";
+
+    send(str, usr.get_fd());
+	send_error(318, tom);
 }
 
 void send_msg(string msg, User &usr) {
@@ -231,7 +298,8 @@ map<int, string> get_msgs(void) {
     msgs[2]   = "Your host is +, running version +";
     msgs[3]   = "This server was created +";
     msgs[4]   = "+ + BERTZios CEIMRUabefhiklmnoqstuv Iabefhkloqv";
-    msgs[315] = "End of WHO list";
+    msgs[315] = "End of /WHO list";
+	msgs[318] = "End of /WHOIS list";
     msgs[366] = "End of NAMES list";
     msgs[372] = "- +";
     msgs[375] = "- + Message of the day -";
@@ -251,6 +319,7 @@ map<int, string> get_msgs(void) {
     msgs[462] = "You may not reregister";
     msgs[464] = "Password incorrect";
     msgs[472] = "is unknown mode char to me"; //en vrai ca devrait etre un peu plus long mais chuuuutttt
+    msgs[476] = "Invalid channel name";
     msgs[482] = "You're not a channel operator";
     msgs[501] = "Unknown MODE flag";
     msgs[502] = "Cannot view/change mode for other users";

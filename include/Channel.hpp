@@ -117,7 +117,7 @@ class Channel
 			{
 				if (usr.get_nick() == (*it).get_nick())
 				{
-
+					std::cout << "==========================" << (*it).get_nick() << std::endl;
 					_user.erase(it);
 					break;
 				}
