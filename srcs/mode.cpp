@@ -34,7 +34,7 @@ void	mode(std::vector<std::string> *vec, User & usr, Server & srv)
 			return;
 		}
 	}
-	std::string mode = "+Z";
+	std::string mode = "+";
 	if (usr.is_oper())
 		mode += "o";
 	if (usr.get_inv())

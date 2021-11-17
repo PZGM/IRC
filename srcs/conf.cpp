@@ -78,16 +78,6 @@ Server	configure(char *path)
 	host.resize(host.length() - 1); 
 	srv.set_host(host);
 	
-	std::string out;
-	getline(file, out);
-	if (out.find("TOUT=") == std::string::npos)
-	{
-		std::cout << "No time out in conf file" << std::endl;
-		exit(0);
-	}
-	out.erase(0, 5);
-	srv.set_time_out(stoi(out));
-
 	return srv;
 }
 

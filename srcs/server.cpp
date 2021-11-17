@@ -46,11 +46,6 @@ bool	check_users(int i, pollfd &fds, std::map<int, User> & users, Server & srv)
 	char buff[BUFF] = {0};
 	std::string input = "";
 	do {
-		std::map<int, User>::iterator it = users.begin();
-		while (it != users.end()) {
-			check_timeout(it->second, srv);
-			it++;
-		}
 		memset(buff, 0, sizeof(buff)); 
 		int rc = recv((&fds)[i].fd, buff, sizeof(buff),  MSG_DONTWAIT); //receive data
 		if (rc < 0)
@@ -72,8 +67,6 @@ bool	check_users(int i, pollfd &fds, std::map<int, User> & users, Server & srv)
 		input += buff;
 		if (input.find("\n")) {
 			User & usr = users[(&fds)[i].fd];
-			if (usr.is_registred())
-				usr.set_last_ping();
 			std::vector<std::string> * vec = split(input, "\n");
 			std::vector<std::string>::iterator it = vec->begin();
 			while (it != vec->end()){
@@ -93,9 +86,13 @@ bool	check_users(int i, pollfd &fds, std::map<int, User> & users, Server & srv)
 }
 
 Server routine(Server srv, int sockfd, int *nfds) {
+	
 	int size,new_sd, rc, i;
 	bool end_serv = false;
 	bool compr_arr = false;
+	struct sockaddr_in addr;
+	char ip[16];
+	socklen_t len = sizeof(addr);
 
 	std::map<int, User> & users = srv.get_users();
 	do
@@ -112,8 +109,6 @@ Server routine(Server srv, int sockfd, int *nfds) {
 		}
 		size = *nfds;					//with poll need to find which descriptor are readable	
 		for (i = 0; i < size; i++) {
-			std::cout << "_i = " << i << std::endl;
-			std::cout << "_revent = " << srv.fds[i].revents << std::endl;
 			if (srv.fds[i].revents == 0)
 				continue;
 			if (srv.fds[i].revents % 2 != POLLIN) //if != 0 && != POLLIN then its unexpected
@@ -142,8 +137,11 @@ Server routine(Server srv, int sockfd, int *nfds) {
 					srv.fds[*nfds].fd = new_sd;
 					srv.fds[*nfds].events = POLLIN;
 					if (users.find(new_sd) == users.end()) {
-						std::cout << "User " << new_sd << " creation" << std::endl;
-						users[new_sd] = User(new_sd);
+						bzero(&addr, sizeof(addr));
+						getpeername(new_sd, (struct sockaddr *)&addr, &len);
+					    strcpy(ip, inet_ntoa(addr.sin_addr));
+						std::cout << "User " << new_sd << " creation" << std::endl;	
+						users[new_sd] = User(new_sd, std::string(ip));
 					}
 					(*nfds)++;
 				} while(new_sd != -1);

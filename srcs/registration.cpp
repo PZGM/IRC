@@ -29,6 +29,7 @@ bool register_user(User & usr, Server & srv) {
         it++;
     }
     send_rpl(376, usr);
+	find_host(usr);
     return true;
 }
 
