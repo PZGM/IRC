@@ -2,7 +2,6 @@
 # define USER_HPP
 
 # include "server.hpp"
-using namespace std;
 
 class User
 {
@@ -16,8 +15,9 @@ class User
 		bool			_registred;
 		bool			_isOper;
 		bool			_invisible;
-		vector<string>	_channel;
-		vector<time_t>	_log; //0 = last registration; 1 = last change
+		bool			_waitingForPong;
+		std::vector<std::string>	_channel;
+		std::vector<time_t>	_log; //0 = last registration; 1 = last change
 
 
 
@@ -93,14 +93,14 @@ class User
 			_registred = registration;
 		}
 
-		void add_channel(string str)
+		void add_channel(std::string str)
 		{
 			_channel.push_back(str);
 		}
 
-		bool find_channel(string str)
+		bool find_channel(std::string str)
 		{
-			vector<string>::iterator it = _channel.begin();
+			std::vector<std::string>::iterator it = _channel.begin();
 			while (it != _channel.end())
 			{
 				if ((*it) == str)
@@ -115,13 +115,13 @@ class User
 			return (_fd == usr._fd);
 		}
 
-		vector<string> get_channels() {
+		std::vector<std::string> get_channels() {
 			return _channel;
 		}
 
-		void	del_chan(string del_chan)
+		void	del_chan(std::string del_chan)
 		{
-			for(vector<string>::iterator it = _channel.begin(); it != _channel.end(); it++)
+			for(std::vector<std::string>::iterator it = _channel.begin(); it != _channel.end(); it++)
 			{
 				if ((*it) == del_chan)
 				{
@@ -135,22 +135,38 @@ class User
 		{
 			_log.push_back(now);
 			_log.push_back(now);
+			_log.push_back(now);
 		}
 
 		time_t	get_last_activity()
 		{
-			return _log.back();
+			return _log[1];
 		}
 
 		void	set_last_activity(time_t now)
 		{
-			_log.pop_back();
-			_log.push_back(now);
+			_log[1] = now;
 		}
 
 		time_t	get_last_connection()
 		{
 			return _log.front();
+		}
+
+		void set_last_ping() {
+			_log[2] = time(0);
+		}
+
+		time_t get_last_ping() {
+			return _log[2];
+		}
+
+		void set_waiting_for_pong(bool w) {
+			_waitingForPong = w;
+		}
+
+		bool get_waiting_for_pong() {
+			return _waitingForPong;
 		}
 };
 

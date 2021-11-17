@@ -4,7 +4,8 @@
 #include "../include/server.hpp"
 
 bool register_user(User & usr, Server & srv) {
-    string nick = usr.get_nick();
+	std::cout << "Registration" << std::endl;
+    std::string nick = usr.get_nick();
     if (check_nick(nick) == false) {
         send_error(432, usr, nick);
         return false;
@@ -20,9 +21,9 @@ bool register_user(User & usr, Server & srv) {
     send_rpl(3, usr, srv.get_creation_time());
     send_rpl(4, usr, SERVER_NAME, SERVER_VERSION);
     send_rpl(375, usr, SERVER_NAME);
-    string motd = srv.get_motd();
-    vector<string> * vec = split(motd, "\\n");
-    vector<string>::iterator it = vec->begin();
+    std::string motd = srv.get_motd();
+    std::vector<std::string> * vec = split(motd, "\\n");
+    std::vector<std::string>::iterator it = vec->begin();
     while (it != vec->end()) {
         send_rpl(372, usr, *it);
         it++;

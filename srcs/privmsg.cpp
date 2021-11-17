@@ -5,11 +5,11 @@
 
 	// :ergo.test 451 * :You need to register before you can use that command
 
-void	privmsg(vector<string> *vec, User & usr, Server & srv)
+void	privmsg(std::vector<std::string> *vec, User & usr, Server & srv)
 {
-	string msg;
-	vector<string>::iterator ito = vec->begin();
-	for (vector<string>::iterator it = ito + 1 ;it != vec->end(); it++)
+	std::string msg;
+	std::vector<std::string>::iterator ito = vec->begin();
+	for (std::vector<std::string>::iterator it = ito + 1 ;it != vec->end(); it++)
 	{
 		if (it != vec->begin() + 1)
 			msg += " ";
@@ -42,16 +42,16 @@ void	privmsg(vector<string> *vec, User & usr, Server & srv)
 	}
 }
 
-bool	privmsg_user(vector<string> *vec, User & usr, Server & srv)
+bool	privmsg_user(std::vector<std::string> *vec, User & usr, Server & srv)
 {
 
 	if (srv.find_user(vec->front()) != false)
 	{
-		string msg;
-		string nick = vec->front();
+		std::string msg;
+		std::string nick = vec->front();
 		int i = srv.get_fd_from_nick(nick);
 		vec->erase(vec->begin());
-		vector<string>::iterator it = vec->begin();
+		std::vector<std::string>::iterator it = vec->begin();
 		while (it != vec->end()) {
 			if (it != vec->begin())
 				msg += " ";
@@ -71,9 +71,9 @@ bool	privmsg_user(vector<string> *vec, User & usr, Server & srv)
 	return true;
 }
 
-bool	privmsg_channel(vector<string> *vec, User & usr, Server & srv,string msg)
+bool	privmsg_channel(std::vector<std::string> *vec, User & usr, Server & srv, std::string msg)
 {
-	map<string, Channel>::iterator it = srv.get_begin_channel();
+	std::map<std::string, Channel>::iterator it = srv.get_begin_channel();
 	
 	while(it != srv.get_end_channel())
 	{

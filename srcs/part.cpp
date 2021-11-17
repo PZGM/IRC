@@ -3,10 +3,10 @@
 
 #include "../include/server.hpp"
 
-void	part(vector<string> *vec, User & usr, Server & srv)
+void	part(std::vector<std::string> *vec, User & usr, Server & srv)
 {
-	vector<string> * del_chan = split(vec->front(), ",");
-	for (vector<string>::iterator it = del_chan->begin(); it != del_chan->end(); it++)
+	std::vector<std::string> * del_chan = split(vec->front(), ",");
+	for (std::vector<std::string>::iterator it = del_chan->begin(); it != del_chan->end(); it++)
 	{
 		if (srv.find_channel((*it)) == true)
 		{

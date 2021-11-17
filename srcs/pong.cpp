@@ -3,10 +3,10 @@
 
 #include "../include/server.hpp"
 
-void ping(vector<string> *vec, User & usr, Server & srv) {
+void ping(std::vector<std::string> *vec, User & usr, Server & srv) {
     (void)usr;
     (void)srv;
-    string str = ":";
+    std::string str = ":";
     str += SERVER_NAME;
     str += " PONG ";
     str += SERVER_NAME;
@@ -16,10 +16,10 @@ void ping(vector<string> *vec, User & usr, Server & srv) {
     send(str, usr.get_fd());
 }
 
-void pong(vector<string> *vec, User & usr, Server & srv) {
+void pong(std::vector<std::string> *vec, User & usr, Server & srv) {
     (void)usr;
     (void)srv;
-    vector<string>::iterator it = vec->begin();
+    std::vector<std::string>::iterator it = vec->begin();
     while (it != vec->end()) {
         it++;
     }

@@ -29,94 +29,96 @@
 #define BACKLOG 7
 #define FD_MAX 2000
 #define SERVER_NAME "irc.mepd"
-#define SERVER_VERSION "0.0.1"
-
-using namespace std; //VIRER TOUT LES STD
+#define SERVER_VERSION "0.7.13"
 
 
+
+
+// CHECK_TIMEOUT_CPP
+void check_timeout(User & usr, Server srv);
 
 // SERVER.HPP
 int initialize_socket_fd(int *rc);
 void init_address(struct sockaddr_in * addr, int sockfd, int port);
-bool file_exist(const char *file);
+bool check_users(int i, struct pollfd &fds, std::map<int, User> & users, Server & srv);
 
 // PARSING.CPP
-vector<string> * split(string str, string sep);
+std::vector<std::string> * split(std::string str, std::string sep);
 void parsing(std::string str, User & usr, Server & srv);
 
 // JOIN.CPP
-void join(vector<string> *vec, User & usr, Server & srv);
+void join(std::vector<std::string> *vec, User & usr, Server & srv);
 void welcome_chan(User & usr, Server srv, Channel & chan);
 
 // WHO.CPP
-void who(vector<string> *vec, User & usr, Server & srv);
-void whois(vector<string> *vec, User & usr, Server & srv);
+void who(std::vector<std::string> *vec, User & usr, Server & srv);
+void whois(std::vector<std::string> *vec, User & usr, Server & srv);
 
 // NICK.CPP
-void nick(vector<string> *vec, User & usr, Server & srv);
+void nick(std::vector<std::string> *vec, User & usr, Server & srv);
 
 // USER.CPP
-void user(vector<string> *vec, User & usr, Server & srv);
+void user(std::vector<std::string> *vec, User & usr, Server & srv);
 
 // PRIVMSG.CPP
-void	privmsg(vector<string> *vec, User & usr, Server & srv);
-bool	privmsg_user(vector<string> *vec, User & usr, Server & srv);
-bool	privmsg_channel(vector<string> *vec, User & usr, Server & srv,string msg);
+void	privmsg(std::vector<std::string> *vec, User & usr, Server & srv);
+bool	privmsg_user(std::vector<std::string> *vec, User & usr, Server & srv);
+bool	privmsg_channel(std::vector<std::string> *vec, User & usr, Server & srv, std::string msg);
 
 // OPER.CPP
-void oper(vector<string> *vec, User & usr, Server & srv);
+void oper(std::vector<std::string> *vec, User & usr, Server & srv);
 
 // MODE.CPP
-void mode(vector<string> *vec, User & usr, Server & srv);
+void mode(std::vector<std::string> *vec, User & usr, Server & srv);
 
 // CAP.CPP
-void cap(vector<string> *vec, User & usr, Server & srv);
+void cap(std::vector<std::string> *vec, User & usr, Server & srv);
 
 // MODE_CHAN
-void mode_chan(vector<string> *vec, User & usr, Server & srv);
-
-// TOOL.CPP
-string allupper(string str);
-bool	close_connection(int i, struct pollfd &fds, map<int, User> & users, Server & srv);
+void mode_chan(std::vector<std::string> *vec, User & usr, Server & srv);
 
 //UTILS.CPP
+void broadcast_update(User & usr, Server & srv, std::string command, std::string params);
+bool check_nick(std::string str);
+bool check_nick_availibility(std::string str, Server & srv);
+bool check_user_name(std::string str);
+std::map<int, std::string> get_msgs(void);
+std::string  get_user_prefix(User usr, Server srv);
+std::string prefix(int num);
+std::string allupper(std::string str);
+
+//SEND.CPP
+void send_msg(std::string msg, User &usr);
+void send_msg2(int num, User & usr, std::string msg);
 void send(std::string str, int fd);
 void send_error(int err, User & usr);
 void send_error(int err, User & usr, std::string ctx);
 void send_rpl(int rpl, User & usr);
-void send_rpl(int rpl, User & usr, string s1);
-void send_rpl(int rpl, User & usr, string s1, string s2);
-void send_update(User & usr, Server & srv, string cmd, string params, int fd);
-void send_general_update(User & usr, Server & srv, Channel & chan, string cmd, string args, bool exclude_sender);
-void broadcast_update(User & usr, Server & srv, string command, string params);
-bool check_nick(std::string str);
-bool check_nick_availibility(std::string str, Server & srv);
-bool check_user_name(std::string str);
-map<int, string> get_msgs(void);
-string prefix(int num);
-void send_msg(string msg, User &usr);
-void send_msg2(int num, User & usr, string msg);
-void send_privmsg(User & usr, Server & srv, string command, string params, int fd);
+void send_rpl(int rpl, User & usr, std::string s1);
+void send_rpl(int rpl, User & usr, std::string s1, std::string s2);
+void send_update(User & usr, Server & srv, std::string cmd, std::string params, int fd);
+void send_general_update(User & usr, Server & srv, Channel & chan, std::string cmd, std::string args, bool exclude_sender);
+void send_privmsg(User & usr, Server & srv, std::string command, std::string params, int fd);
 void send_whois(User & usr,User & tom, Server srv);
-void send_who(User & usr, string chan_name,User & us, Server srv);
+void send_who(User & usr, std::string chan_name,User & us, Server srv);
 
 //REGISTRATION.CPP
 bool register_user(User & usr, Server & srv);
 
 //PONG.CPP
-void ping(vector<string> *vec, User & usr, Server & srv);
-void pong(vector<string> *vec, User & usr, Server & srv);
+void ping(std::vector<std::string> *vec, User & usr, Server & srv);
+void pong(std::vector<std::string> *vec, User & usr, Server & srv);
 
 //MODE_CHANS_CPP
-void mode_chan(vector<string> *vec, User & usr, Server & srv);
+void mode_chan(std::vector<std::string> *vec, User & usr, Server & srv);
 
 //CONF.CPP
 Server	configure(char *path);
 
 // QUIT.CPP
-void	quit(vector<string> *vec, User & usr, Server & srv);
+void	quit(std::vector<std::string> *vec, User & usr, Server & srv);
 
 // PART.CPP
-void	part(vector<string> *vec, User & usr, Server & srv);
+void	part(std::vector<std::string> *vec, User & usr, Server & srv);
 
 #endif

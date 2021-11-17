@@ -3,7 +3,7 @@
 
 #include "../include/server.hpp"
 
-void cap(vector<string> *vec, User & usr, Server & srv) {
+void cap(std::vector<std::string> *vec, User & usr, Server & srv) {
 	(void)vec;
 	(void)usr;
 	(void)srv;

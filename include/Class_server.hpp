@@ -2,64 +2,64 @@
 # define CLASS_SERVER_HPP
 
 # include "server.hpp"
-using namespace std;
 #define FD_MAX 2000
 
 class Server
 {
 	private:
-		map<int, User> _users; //fd, User
-		map<string, Channel> _channel; //name, Channel
-		map<string, string> _operators;
-		string		_name;
+		std::map<int, User> _users; //fd, User
+		std::map<std::string, Channel> _channel; //name, Channel
+		std::map<std::string, std::string> _operators;
+		std::string		_name;
 		time_t 		_tm;
-		string		_passw;
-		string		_host;
+		std::string		_passw;
+		std::string		_host;
 		int			_port;
-		string		_motd;
+		std::string		_motd;
+		int			_time_out;
 		// bool		_mp;
 
 	public:
 		struct pollfd fds[FD_MAX];
 
-		Server( string p, std::string passw): _passw(passw) {
-		for (string::iterator it = p.begin(); it != p.end(); it++) {
+		Server( std::string p, std::string passw): _passw(passw) {
+		for (std::string::iterator it = p.begin(); it != p.end(); it++) {
         	if (std::isdigit(*it) == 0) {
 			exit(0);
     		}
 		}
 		_port = std::stoi(p); //definir des values limites
-			_users = map<int, User>();
+			_users = std::map<int, User>();
 			_tm = time(NULL);
-			_operators = map<string, string>();
+			_operators = std::map<std::string, std::string>();
 			_operators["admin"] = "admin";
 		};
 		
 		Server(){
-			_users = map<int, User>();
+			_users = std::map<int, User>();
 		};
 
 		virtual	~Server(){};
 
-		void	set_name(string name){_name = name;}
-		void	set_motd(string motd){_motd = motd;}
-		void	set_op(map<string,string> op){_operators = op;}
-		map<int, User> & get_users(void)
+		void	set_name(std::string name){_name = name;}
+		void	set_motd(std::string motd){_motd = motd;}
+		void	set_op(std::map<std::string, std::string> op){_operators = op;}
+		std::map<int, User> & get_users(void)
 		{
 			return _users;
 		}
 
-		map<string, Channel>::iterator get_begin_channel()
+		std::map<std::string, Channel>::iterator get_begin_channel()
 		{
 			return(_channel.begin());
 		}
 
-		map<string, Channel>::iterator get_end_channel()
+		std::map<std::string, Channel>::iterator get_end_channel()
 		{
 			return(_channel.end());
 		}
 
-		bool	find_channel(string str)
+		bool	find_channel(std::string str)
 		{
 			if (_channel.find(str) != _channel.end())
 				return true;
@@ -75,9 +75,9 @@ class Server
 			return chan.find_user(usr);
 		}
 
-		bool	find_user(string nick)
+		bool	find_user(std::string nick)
 		{
-			for (map<int, User>::iterator it = _users.begin(); it != _users.end(); it++)
+			for (std::map<int, User>::iterator it = _users.begin(); it != _users.end(); it++)
 			{
 				if ((*it).second.get_nick() == nick && (*it).second.is_registred())
 					return true;
@@ -85,9 +85,9 @@ class Server
 			return false;
 		}
 
-		User	&get_user(string nick)
+		User	&get_user(std::string nick)
 		{
-			for (map<int, User>::iterator it = _users.begin(); it != _users.end(); it++)
+			for (std::map<int, User>::iterator it = _users.begin(); it != _users.end(); it++)
 			{
 				if ((*it).second.get_nick() == nick && (*it).second.is_registred())
 					return it->second;
@@ -95,8 +95,8 @@ class Server
 			return (_users.begin()->second);
 		}
 
-		string	get_creation_time(void) const {
-			string str = "";
+		std::string	get_creation_time(void) const {
+			std::string str = "";
 			struct tm * curtime = localtime ( &_tm );
 			str += asctime(curtime);
 			if (*(str.end() - 1) == '\n')
@@ -104,9 +104,9 @@ class Server
 			return str;
 		}
 
-		int		get_fd_from_nick(string nick)
+		int		get_fd_from_nick(std::string nick)
 		{
-			for (map<int, User>::iterator it = _users.begin(); it != _users.end(); it++)
+			for (std::map<int, User>::iterator it = _users.begin(); it != _users.end(); it++)
 			{
 				if ((*it).second.get_nick() == nick)
 					return (*it).first;
@@ -114,9 +114,9 @@ class Server
 			return 0;
 		}
 
-		string		get_nick_from_fd(int fd)
+		std::string		get_nick_from_fd(int fd)
 		{
-			for (map<int, User>::iterator it = _users.begin(); it != _users.end(); it++)
+			for (std::map<int, User>::iterator it = _users.begin(); it != _users.end(); it++)
 			{
 				if ((*it).second.get_fd() == fd)
 					return (*it).second.get_nick();
@@ -128,19 +128,19 @@ class Server
 			return _port;
 		}
 
-		string get_host() const {
+		std::string get_host() const {
 			return _host;
 		}
 
-		string get_motd() const {
+		std::string get_motd() const {
 			return _motd;
 		}
 
-		void set_host(string host) {
+		void set_host(std::string host) {
 			_host = host;
 		}
 
-		bool check_oper(string name, string pass) {
+		bool check_oper(std::string name, std::string pass) {
 			if (_operators.count(name) == 0) {
 				return false;
 			}	
@@ -149,12 +149,12 @@ class Server
 			}
 			return true;
 		}
-		void	add_user_channel(User &usr, string chan_name)
+		void	add_user_channel(User &usr, std::string chan_name)
 		{
 			_channel[chan_name].add_user(usr);
 		}
 
-		Channel & get_channel_by_name(string name) {
+		Channel & get_channel_by_name(std::string name) {			
 			return _channel[name];
 		}
 
@@ -166,6 +166,19 @@ class Server
 			if (_users.count(fd) != 0)
 				return true;
 			return false;
+		}
+		
+		void kick_user(int fd) {
+			User lya;
+			std::vector<std::string>::iterator lily;
+			if (find_user_by_fd(fd)) {
+				lya = get_user_by_fd(fd);
+				lily = lya.get_channels().begin();
+				for(; lily != lya.get_channels().end(); lily++) {
+					get_channel_by_name(*lily).del_user(lya);
+				}
+			del_user(lya);
+			}
 		}
 
 		void	del_user(User & usr)
@@ -185,6 +198,15 @@ class Server
 			return fds;
 		}
 
+		void	set_time_out(int x)
+		{
+			_time_out = x;
+		}
+
+		int		get_time_out()
+		{
+			return _time_out;
+		}
 };
 
 

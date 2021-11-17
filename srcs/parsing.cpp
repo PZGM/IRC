@@ -4,8 +4,8 @@
 #include "../include/server.hpp"
 
 
-vector<string> * split(string str, string sep) {
-	vector<string> * ret = new vector<string>();
+std::vector<std::string> * split(std::string str, std::string sep) {
+	std::vector<std::string> * ret = new std::vector<std::string>();
 	int i = 0;
 	while (1) {
 		if (str.length() == 0)
@@ -23,13 +23,13 @@ vector<string> * split(string str, string sep) {
 		ret->insert(ret->end(), str.substr(0, i));
 		str.erase(0, i);
 	}
-return (ret);
+	return (ret);
 }
 
 
 void parsing(std::string str, User & usr, Server & srv) {
 	std::cout << "< " << str << std::endl;
-    map<string,void(*)(vector<string>*, User &,Server &)> fmap;
+    std::map<std::string, void(*)(std::vector<std::string>*, User &,Server &)> fmap;
 	fmap["JOIN"] = join;
 	fmap["USER"] = user;
 	fmap["NICK"] = nick;
@@ -50,8 +50,8 @@ void parsing(std::string str, User & usr, Server & srv) {
 		str.resize(str.length() - 1);
 	if (str.size() == 0)
 		return;
-	vector<string> *vec = split(str, " ");
-	string command = allupper(vec->front());
+	std::vector<std::string> *vec = split(str, " ");
+	std::string command = allupper(vec->front());
 	if (command.empty())
 		return;
 	if (fmap.count(command)) {

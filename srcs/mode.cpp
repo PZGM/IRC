@@ -3,7 +3,7 @@
 
 #include "../include/server.hpp"
 
-void	mode(vector<string> *vec, User & usr, Server & srv)
+void	mode(std::vector<std::string> *vec, User & usr, Server & srv)
 {
 	if (vec->front()[0] == '#') {
 		mode_chan(vec, usr, srv);
@@ -34,7 +34,7 @@ void	mode(vector<string> *vec, User & usr, Server & srv)
 			return;
 		}
 	}
-	string mode = "+Z";
+	std::string mode = "+Z";
 	if (usr.is_oper())
 		mode += "o";
 	if (usr.get_inv())

@@ -3,10 +3,10 @@
 
 #include "../include/server.hpp"
 
-void mode_chan(vector<string> *vec, User & usr, Server & srv) {
-    string chan_name = (*vec)[0];
-    string flags = (vec->size() > 1) ? (*vec)[1] : "";
-    string nick = (vec->size() > 2) ? (*vec)[2] : "";
+void mode_chan(std::vector<std::string> *vec, User & usr, Server & srv) {
+    std::string chan_name = (*vec)[0];
+    std::string flags = (vec->size() > 1) ? (*vec)[1] : "";
+    std::string nick = (vec->size() > 2) ? (*vec)[2] : "";
     int sign = 0;
     if (srv.find_channel(vec->front()) == false) {
         send_error(403, usr, vec->front());
@@ -14,12 +14,12 @@ void mode_chan(vector<string> *vec, User & usr, Server & srv) {
     }
     Channel & chan = srv.get_channel_by_name(chan_name);
     if (flags != "") {
-        list<char> lst(flags.begin(), flags.end());
+        std::list<char> lst(flags.begin(), flags.end());
         lst.sort();
         lst.unique();
-        list<char>::iterator it = lst.begin();
+        std::list<char>::iterator it = lst.begin();
         while (it != lst.end()) {
-            string ch(1, *it);
+            std::string ch(1, *it);
             if (*it == '+' || *it == '-') {
                 sign = (*it == '+') ? 1 : -1;
                 it++;

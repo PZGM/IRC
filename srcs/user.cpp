@@ -3,12 +3,7 @@
 
 # include "../include/server.hpp"
 
-// bool verif(string str)
-// {
-// 	if (s)
-// }
-
-void user(vector<string> *vec, User & usr, Server & srv) {
+void user(std::vector<std::string> *vec, User & usr, Server & srv) {
 	(void)srv;
 	if (vec->size() < 4) {
 		send_error(461, usr, "USER");
@@ -24,7 +19,7 @@ void user(vector<string> *vec, User & usr, Server & srv) {
 	}
 	usr.set_user(vec->front());
 	vec->erase(vec->begin(), vec->begin() + 3);
-	string str = vec->front();
+	std::string str = vec->front();
 	vec->erase(vec->begin());
 	while (vec->size() != 0) {
 		str += " ";
@@ -34,8 +29,9 @@ void user(vector<string> *vec, User & usr, Server & srv) {
 	if (str[0] == ':')
 		str.erase(0, 1);
 	usr.set_real_name(str);
-	if (usr.get_nick() != "")
+	if (usr.get_nick() != "") {
 		register_user(usr, srv);
+	}
 }
 
 #endif

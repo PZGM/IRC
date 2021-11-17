@@ -3,7 +3,7 @@
 
 #include "../include/server.hpp"
 
-void	join(vector<string> *vec, User & usr, Server & srv)
+void	join(std::vector<std::string> *vec, User & usr, Server & srv)
 {
 	if (vec->size() == 0)
 	{
@@ -15,14 +15,14 @@ void	join(vector<string> *vec, User & usr, Server & srv)
 		send_error(476, usr, vec->front());
 		return;
 	}
-	map<string, Channel>::iterator it = srv.get_begin_channel();
+	std::map<std::string, Channel>::iterator it = srv.get_begin_channel();
 	while(it != srv.get_end_channel())
 	{
 		if ((vec->front()).compare((*it).first) == 0)
 		{
 			if (usr.find_channel(vec->front()) == false || srv.find_chan_user(usr, (*it).second) == false)
 			{
-				string chanName = vec->front();
+				std::string chanName = vec->front();
 				Channel chan = srv.get_channel_by_name(chanName);
 				usr.add_channel(chanName);
 				srv.add_user_channel(usr, chanName);
@@ -46,14 +46,14 @@ void	join(vector<string> *vec, User & usr, Server & srv)
 void	welcome_chan(User & usr, Server srv, Channel & chan)
 {
 	(void) srv;
-	string msg = "= ";
+	std::string msg = "= ";
 	msg += chan.get_name();
 	msg += " :";
-	list<User> userList = chan.get_users();
-	list<int> operList = chan.get_oper();
-	for (list<User>::iterator uit = userList.begin(); uit != userList.end(); uit++)
+	std::list<User> userList = chan.get_users();
+	std::list<int> operList = chan.get_oper();
+	for (std::list<User>::iterator uit = userList.begin(); uit != userList.end(); uit++)
 	{
-		for(list<int>::iterator fdit = operList.begin(); fdit != operList.end(); fdit++)
+		for(std::list<int>::iterator fdit = operList.begin(); fdit != operList.end(); fdit++)
 			if ((*fdit) == (*uit).get_fd())
 				msg += "@";
 		msg += (*uit).get_nick();
@@ -67,10 +67,3 @@ void	welcome_chan(User & usr, Server srv, Channel & chan)
 
 
 #endif
-
-
-
-/*
-- dans join lorsque le user join le channel la lsite le nom du chan s'affiche et des gens dedans s'affiche et les operator avec un @
-
-*/

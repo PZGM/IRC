@@ -1,17 +1,17 @@
 #include "../include/server.hpp"
 
-void	who(vector<string> *vec, User & usr, Server & srv)
+void	who(std::vector<std::string> *vec, User & usr, Server & srv)
 {
 	bool op = false;
 	if (vec->back() == "o") { //search just for operator
 		op = true;
 		vec->pop_back();
 	}
-	vector<string> uchan;
-	vector<string>::iterator uit;
+	std::vector<std::string> uchan;
+	std::vector<std::string>::iterator uit;
 	Channel chan;
-	list<User> lst;
-	list<User>::iterator it;
+	std::list<User> lst;
+	std::list<User>::iterator it;
 
 	if (vec->size() == 0 || (vec->size() == 1  && vec->front() == "0"))
 	{
@@ -28,19 +28,19 @@ void	who(vector<string> *vec, User & usr, Server & srv)
 	}
 	else 
 	{
-		vector<string> chans = usr.get_channels();
-		list<int> fds;
+		std::vector<std::string> chans = usr.get_channels();
+		std::list<int> fds;
 		fds.push_back(usr.get_fd());
-		for(vector<string>::iterator it = chans.begin(); it != chans.end(); it++) {
+		for(std::vector<std::string>::iterator it = chans.begin(); it != chans.end(); it++) {
 			Channel chan = srv.get_channel_by_name(*it);
-			list<User> users = chan.get_users();
-			for(list<User>::iterator ite = users.begin(); ite != users.end(); ite++) {
+			std::list<User> users = chan.get_users();
+			for(std::list<User>::iterator ite = users.begin(); ite != users.end(); ite++) {
 				fds.push_back(ite->get_fd());
 			}
 		}
 		fds.sort();
 		fds.unique();
-		list<int>::iterator it = fds.begin();
+		std::list<int>::iterator it = fds.begin();
 
 		while (it != fds.end()) {
 			if (srv.find_user_by_fd(*it)) {

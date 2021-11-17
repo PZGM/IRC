@@ -3,8 +3,8 @@
 
 #include "../include/server.hpp"
 
-void nick(vector<string> *vec, User & usr, Server & srv) {
-    string nick = vec->front();
+void nick(std::vector<std::string> *vec, User & usr, Server & srv) {
+    std::string nick = vec->front();
     if (nick == ":")
         vec->erase(vec->begin());
     if (vec->empty() == false && usr.get_real_name() == "") {
@@ -34,12 +34,11 @@ void nick(vector<string> *vec, User & usr, Server & srv) {
         register_user(usr, srv);
 }
 
-void inform_users(User & usr, string cmd, string nick, Server &srv) {
+void inform_users(User & usr, std::string cmd, std::string nick, Server &srv) {
     (void)usr;
     (void)cmd;
     (void)nick;
     (void)srv;
-    ;
 }
 
 #endif

@@ -1,6 +1,6 @@
 #include "../include/server.hpp"
 
-void	whois(vector<string> *vec, User & usr, Server & srv)
+void	whois(std::vector<std::string> *vec, User & usr, Server & srv)
 {
 	User tom;
 	if (srv.find_user(*vec->begin()))

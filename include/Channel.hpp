@@ -5,7 +5,7 @@
 
 
 void send(std::string str, int fd);
-void send_msg2(int num, User & usr, string msg);
+void send_msg2(int num, User & usr, std::string msg);
 void send_error(int err, User & usr, std::string ctx);
 
 
@@ -13,10 +13,10 @@ class Channel
 {
 	private:
 
-		string		_name;
-		list<User>	_user;
-		list<int>	_operators;
-		string		_mode;
+		std::string		_name;
+		std::list<User>	_user;
+		std::list<int>	_operators;
+		std::string		_mode;
 	
 	public:
 
@@ -24,7 +24,7 @@ class Channel
 			_mode = "+nt";
 
 		};
-		Channel(string name, User & usr): _name(name)
+		Channel(std::string name, User & usr): _name(name)
 		{
 			_user.push_front(usr);
 			_operators.push_back(usr.get_fd());
@@ -32,25 +32,25 @@ class Channel
 		};
 		virtual	~Channel(){};
 
-		list<User> get_users() const {
+		std::list<User> get_users() const {
 			return _user;
 		}
 
-		string		get_name() const {
+		std::string		get_name() const {
 			return _name;
 		}
 
-		list<int>	get_oper() const{
+		std::list<int>	get_oper() const{
 			return _operators;
 		}
 
-		string		get_mode() const {
+		std::string		get_mode() const {
 			return _mode;
 		}
 		
 		bool find_user(User & usr)
 		{
-			list<User>::iterator it = _user.begin();
+			std::list<User>::iterator it = _user.begin();
 			while (it != _user.end())
 			{
 				if (*it == usr)
@@ -60,9 +60,9 @@ class Channel
 			return false;
 		}
 
-		bool find_user(string nick)
+		bool find_user(std::string nick)
 		{
-			list<User>::iterator it = _user.begin();
+			std::list<User>::iterator it = _user.begin();
 			while (it != _user.end())
 			{
 				if ((it->get_nick()) == nick)
@@ -94,7 +94,7 @@ class Channel
 		}
 
 		bool	is_oper(User & usr) {
-			list<int>::iterator it = _operators.begin();
+			std::list<int>::iterator it = _operators.begin();
 			while (it != _operators.end()) {
 				if (*it == usr.get_fd())
 					return true;
@@ -105,7 +105,7 @@ class Channel
 
 		void	del_user(User & usr)
 		{
-			for (list<int>::iterator it = _operators.begin(); it != _operators.end(); it++)
+			for (std::list<int>::iterator it = _operators.begin(); it != _operators.end(); it++)
 			{
 				if (usr.get_fd() == (*it))
 				{
@@ -113,7 +113,7 @@ class Channel
 					break;
 				}
 			}
-			for (list<User>::iterator it = _user.begin(); it != _user.end(); it++)
+			for (std::list<User>::iterator it = _user.begin(); it != _user.end(); it++)
 			{
 				if (usr.get_nick() == (*it).get_nick())
 				{
