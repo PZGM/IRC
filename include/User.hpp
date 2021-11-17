@@ -10,6 +10,7 @@ class User
 		std::string 	_realName;
 		std::string		_nickName;
 		std::string 	_pass;
+		std::string		_ip;
 		int				_fd;
 		bool			_flags;
 		bool			_registred;
@@ -23,21 +24,23 @@ class User
 
 	public:
 
-		User() : _userName(""), _realName(""), _nickName(""), _pass(""), _fd(-1), _flags(false), _registred(false), _isOper(false), _invisible(false) {};
-		User(int fd) : _userName(""), _realName(""), _nickName(""), _pass(""), _fd(fd), _flags(false), _registred(false), _isOper(false), _invisible(false) {};
+		User() : _userName(""), _realName(""), _nickName(""), _pass(""),_ip("127.0.0.1"), _fd(-1), _flags(false), _registred(false), _isOper(false), _invisible(false) {};
+		User(int fd, std::string ip) : _userName(""), _realName(""), _nickName(""), _pass(""), _ip(ip), _fd(fd), _flags(false), _registred(false), _isOper(false), _invisible(false) {};
+		User(int fd) : _userName(""), _realName(""), _nickName(""), _pass(""), _ip("127.0.0.1"), _fd(fd), _flags(false), _registred(false), _isOper(false), _invisible(false) {};
 		User(const User & src) {
 			_userName = src._userName;
 			_realName = src._realName;
 			_nickName = src._nickName;
 			_pass = src._pass;
 			_fd = src._fd;
+			_ip = src._ip;
 			_flags = src._flags;
 			_registred = src._registred;
 			_isOper = src._isOper;
 			_invisible = src._invisible;
 		}
 
-		virtual	~User(){};
+		virtual	~User(){};	
 
 		void set_oper(bool oper) {
 			_isOper = oper;
@@ -67,6 +70,10 @@ class User
 			else
 				_flags = false;
 			return true;
+		}
+
+		std::string get_host(){
+			return _ip;
 		}
 		void set_real_name(std::string realName) {
 			_realName = realName;
@@ -135,7 +142,6 @@ class User
 		{
 			_log.push_back(now);
 			_log.push_back(now);
-			_log.push_back(now);
 		}
 
 		time_t	get_last_activity()
@@ -153,13 +159,7 @@ class User
 			return _log.front();
 		}
 
-		void set_last_ping() {
-			_log[2] = time(0);
-		}
 
-		time_t get_last_ping() {
-			return _log[2];
-		}
 
 		void set_waiting_for_pong(bool w) {
 			_waitingForPong = w;

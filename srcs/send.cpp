@@ -5,18 +5,18 @@ void send(std::string str, int fd) {
     send(fd, str.c_str(), str.length(), 0);
 }
 
-void    send_update(User & usr, Server & srv, std::string cmd, std::string args, int fd) {
-    std::string str = get_user_prefix(usr, srv);
+void    send_update(User & usr, std::string cmd, std::string args, int fd) {
+    std::string str = get_user_prefix(usr);
 	str += " " + cmd + " :" + args + "\r\n";
     send(str, fd);    
 }
 
-void    send_general_update(User & usr, Server & srv, Channel & chan, std::string cmd, std::string args, bool exclude_sender) {
+void    send_general_update(User & usr, Channel & chan, std::string cmd, std::string args, bool exclude_sender) {
     std::list<User> userList = chan.get_users();
     for (std::list<User>::iterator it = userList.begin(); it != userList.end(); it++)
     {
     	if (!exclude_sender || (*it).get_fd() != usr.get_fd())
-    		send_update(usr, srv, cmd, args, it->get_fd());
+    		send_update(usr, cmd, args, it->get_fd());
     }
 }
 
@@ -78,7 +78,7 @@ void send_error(int err, User & usr, std::string ctx) {
 
 void send_privmsg(User & usr, Server & srv, std::string command, std::string params, int fd) {
     std::string str;
-    str += get_user_prefix(usr, srv);
+    str += get_user_prefix(usr);
     str += " ";
     str += command;
     str += " ";
@@ -89,7 +89,7 @@ void send_privmsg(User & usr, Server & srv, std::string command, std::string par
     send(str, fd);
 }
 
-void send_who(User & usr, std::string chan_name, User & us, Server srv) {
+void send_who(User & usr, std::string chan_name, User & us) {
     std::string str = prefix(352);
 	str += us.get_nick();
 	str += " ";
@@ -97,7 +97,7 @@ void send_who(User & usr, std::string chan_name, User & us, Server srv) {
 	str += " ";
 	str += us.get_real_name();
 	str += " ";
-	str += srv.get_host();
+	str += usr.get_host();
     str += " ";
     str += SERVER_NAME;
 	str += " ";
@@ -121,7 +121,7 @@ void send_whois(User & usr, User & tom, Server srv)
 	str += " ";
 	str += tom.get_real_name();
 	str += " ";
-	str += srv.get_host();
+	str += usr.get_host();
     str += " ";
     str += SERVER_NAME;
     str += " ";
@@ -136,9 +136,9 @@ void send_whois(User & usr, User & tom, Server srv)
 	str += " :is connecting from ";
 	str += tom.get_real_name();
 	str += "@";
-	str += srv.get_host();
+	str += usr.get_host();
 	str += " ";
-	str += srv.get_host();
+	str += usr.get_host();
 	str += "\r\n";
 	if(!tom.get_channels().empty())
 	{

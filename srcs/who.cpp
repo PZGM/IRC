@@ -50,10 +50,10 @@ void	who(std::vector<std::string> *vec, User & usr, Server & srv)
 					if (vec->back()[0] != '#')
 					{
 						if (us.get_channels().empty() == false)
-							send_who(usr, us.get_channels().back(), us, srv);
+							send_who(usr, us.get_channels().back(), us);
 					}
 					else
-						send_who(usr, vec->back(), us, srv);
+						send_who(usr, vec->back(), us);
 				}
 			}
 			it++;

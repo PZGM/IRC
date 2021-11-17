@@ -18,7 +18,8 @@ SRCS =	./srcs/join.cpp			\
 		./srcs/oper.cpp			\
 		./srcs/parsing.cpp		\
 		./srcs/privmsg.cpp		\
-		./srcs/server_t1.cpp	\
+		./srcs/server.cpp		\
+		./srcs/find_host.cpp	\
 		./srcs/send.cpp			\
 		./srcs/user.cpp			\
 		./srcs/utils.cpp		\
@@ -31,7 +32,6 @@ SRCS =	./srcs/join.cpp			\
 		./srcs/quit.cpp			\
 		./srcs/part.cpp			\
 		./srcs/cap.cpp			\
-		./srcs/check_timeout.cpp\
 		# ./srcs/.cpp			\
 		
 OBJS = ${SRCS:.cpp=.o}

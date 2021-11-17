@@ -59,7 +59,7 @@ bool	privmsg_user(std::vector<std::string> *vec, User & usr, Server & srv)
 			it++;
 		}
 		msg.erase(0,1);
-		send_update(usr, srv, "PRIVMSG " + nick, msg, i);
+		send_update(usr, "PRIVMSG " + nick, msg, i);
 		usr.set_last_activity(time(0));
 	}
 	else
@@ -79,7 +79,7 @@ bool	privmsg_channel(std::vector<std::string> *vec, User & usr, Server & srv, st
 	{
 		if ((*it).first == vec->front() && (*it).second.find_user(usr) == true)
 		{
-			send_general_update(usr, srv, it->second, "PRIVMSG " + vec->front(), msg, true);
+			send_general_update(usr, it->second, "PRIVMSG " + vec->front(), msg, true);
 			usr.set_last_activity(time(0));
 			return true;
 		}

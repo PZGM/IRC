@@ -1,12 +1,12 @@
 #include "../include/server.hpp"
 
-std::string  get_user_prefix(User usr, Server srv) {
+std::string  get_user_prefix(User usr) {
 	std::string str = ":";
 	str += usr.get_nick();
 	str += "!";
 	str += usr.get_real_name();
 	str += "@";
-	str += srv.get_host();
+	str += usr.get_host();
 	return str;
 }
 
@@ -25,7 +25,7 @@ void broadcast_update(User & usr, Server & srv, std::string command, std::string
     fds.unique();
     std::list<int>::iterator it = fds.begin();
     while (it != fds.end()) {
-        send_update(usr, srv, command, params, *it);
+        send_update(usr, command, params, *it);
         it++;
     }
 }

@@ -3,6 +3,7 @@
 
 # include "server.hpp"
 #define FD_MAX 2000
+#define SERVER_ADDR "138.68.159.15"
 
 class Server
 {
@@ -16,7 +17,6 @@ class Server
 		std::string		_host;
 		int			_port;
 		std::string		_motd;
-		int			_time_out;
 		// bool		_mp;
 
 	public:
@@ -198,15 +198,6 @@ class Server
 			return fds;
 		}
 
-		void	set_time_out(int x)
-		{
-			_time_out = x;
-		}
-
-		int		get_time_out()
-		{
-			return _time_out;
-		}
 };
 
 

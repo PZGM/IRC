@@ -26,7 +26,7 @@ void	join(std::vector<std::string> *vec, User & usr, Server & srv)
 				Channel chan = srv.get_channel_by_name(chanName);
 				usr.add_channel(chanName);
 				srv.add_user_channel(usr, chanName);
-				send_general_update(usr, srv, chan, "JOIN", chanName, false);
+				send_general_update(usr, chan, "JOIN", chanName, false);
 				welcome_chan(usr, srv, chan);
 			}
 			return;
@@ -38,7 +38,7 @@ void	join(std::vector<std::string> *vec, User & usr, Server & srv)
 		Channel chan(vec->front(), usr);
 		usr.add_channel(vec->front());
 		srv.add_channel(chan);
-		send_general_update(usr, srv, chan, "JOIN", chan.get_name(), false);
+		send_general_update(usr, chan, "JOIN", chan.get_name(), false);
 		welcome_chan(usr, srv, chan);
 	}
 }

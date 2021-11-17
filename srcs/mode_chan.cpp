@@ -37,11 +37,11 @@ void mode_chan(std::vector<std::string> *vec, User & usr, Server & srv) {
                                 int to_add = srv.get_fd_from_nick(nick);
                                 if (sign == 1) {
                                     chan.add_oper(to_add);
-                                    send_general_update(usr, srv, chan, "MODE " + chan_name + " +o", nick, false);
+                                    send_general_update(usr, chan, "MODE " + chan_name + " +o", nick, false);
                                 }
                                 if (sign == 2) {
                                     chan.rm_oper(to_add);
-                                    send_general_update(usr, srv, chan, "MODE " + chan_name + " -o", nick, false);
+                                    send_general_update(usr, chan, "MODE " + chan_name + " -o", nick, false);
                                 }
                             }
                             else {

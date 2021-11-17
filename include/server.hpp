@@ -34,9 +34,6 @@
 
 
 
-// CHECK_TIMEOUT_CPP
-void check_timeout(User & usr, Server srv);
-
 // SERVER.HPP
 int initialize_socket_fd(int *rc);
 void init_address(struct sockaddr_in * addr, int sockfd, int port);
@@ -83,7 +80,7 @@ bool check_nick(std::string str);
 bool check_nick_availibility(std::string str, Server & srv);
 bool check_user_name(std::string str);
 std::map<int, std::string> get_msgs(void);
-std::string  get_user_prefix(User usr, Server srv);
+std::string  get_user_prefix(User usr);
 std::string prefix(int num);
 std::string allupper(std::string str);
 
@@ -96,11 +93,11 @@ void send_error(int err, User & usr, std::string ctx);
 void send_rpl(int rpl, User & usr);
 void send_rpl(int rpl, User & usr, std::string s1);
 void send_rpl(int rpl, User & usr, std::string s1, std::string s2);
-void send_update(User & usr, Server & srv, std::string cmd, std::string params, int fd);
-void send_general_update(User & usr, Server & srv, Channel & chan, std::string cmd, std::string args, bool exclude_sender);
+void send_update(User & usr, std::string cmd, std::string params, int fd);
+void send_general_update(User & usr, Channel & chan, std::string cmd, std::string args, bool exclude_sender);
 void send_privmsg(User & usr, Server & srv, std::string command, std::string params, int fd);
 void send_whois(User & usr,User & tom, Server srv);
-void send_who(User & usr, std::string chan_name,User & us, Server srv);
+void send_who(User & usr, std::string chan_name,User & us);
 
 //REGISTRATION.CPP
 bool register_user(User & usr, Server & srv);
@@ -111,6 +108,9 @@ void pong(std::vector<std::string> *vec, User & usr, Server & srv);
 
 //MODE_CHANS_CPP
 void mode_chan(std::vector<std::string> *vec, User & usr, Server & srv);
+
+//FIND_HOST_CPP
+void find_host(User &);
 
 //CONF.CPP
 Server	configure(char *path);
