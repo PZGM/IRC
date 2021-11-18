@@ -58,7 +58,7 @@ bool	privmsg_user(std::vector<std::string> *vec, User & usr, Server & srv)
 			msg += *it;
 			it++;
 		}
-		msg.erase(0,1);
+		// msg.erase(0,1);
 		send_update(usr, "PRIVMSG " + nick, msg, i);
 		usr.set_last_activity(time(0));
 	}

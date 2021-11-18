@@ -3,6 +3,8 @@
 
 # include "server.hpp"
 
+bool check_char(bool alpha, bool digit, bool special, std::string more, char c);
+
 class User
 {
 	private:
@@ -28,9 +30,9 @@ class User
 		User(int fd, std::string ip) : _userName(""), _realName(""), _nickName(""), _pass(""), _ip(ip), _fd(fd), _flags(false), _registred(false), _isOper(false), _invisible(false) {};
 		User(int fd) : _userName(""), _realName(""), _nickName(""), _pass(""), _ip("127.0.0.1"), _fd(fd), _flags(false), _registred(false), _isOper(false), _invisible(false) {};
 		User(const User & src) {
-			_userName = src._userName;
-			_realName = src._realName;
-			_nickName = src._nickName;
+			_userName = check_valid(src._userName);
+			_realName = check_valid(src._realName);
+			_nickName = check_valid(src._nickName);
 			_pass = src._pass;
 			_fd = src._fd;
 			_ip = src._ip;
@@ -41,6 +43,17 @@ class User
 		}
 
 		virtual	~User(){};	
+
+		std::string	check_valid(std::string name)
+		{
+			for (std::string::iterator it = name.begin(); it != name.end(); it++)
+			{
+				if (check_char(true, true, false, "_-", (*it)) == false)
+					name.replace(name.find(*it), 1, "_");
+			}
+			return name;
+		}
+
 
 		void set_oper(bool oper) {
 			_isOper = oper;
@@ -60,10 +73,17 @@ class User
 			_realName = real;
 			return true;
 		}
+
 		bool set_user(std::string user) {
+			for (std::string::iterator it = user.begin(); it != user.end(); it++)
+			{
+				if (check_char(true, true, false, "_-", (*it)) == false)
+					user.replace(user.find(*it), 1, "_");
+			}
 			_userName = user;
 			return true;
 		}
+
 		bool set_flags(std::string flag) {
 			if (flag[0] == '1')
 				_flags = true;

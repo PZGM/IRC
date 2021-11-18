@@ -7,7 +7,7 @@ void send(std::string str, int fd) {
 
 void    send_update(User & usr, std::string cmd, std::string args, int fd) {
     std::string str = get_user_prefix(usr);
-	str += " " + cmd + " :" + args + "\r\n";
+	str += " " + cmd + " " + args + "\r\n";
     send(str, fd);    
 }
 

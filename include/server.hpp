@@ -79,6 +79,7 @@ void broadcast_update(User & usr, Server & srv, std::string command, std::string
 bool check_nick(std::string str);
 bool check_nick_availibility(std::string str, Server & srv);
 bool check_user_name(std::string str);
+bool check_char(bool alpha, bool digit, bool special, std::string more, char c);
 std::map<int, std::string> get_msgs(void);
 std::string  get_user_prefix(User usr);
 std::string prefix(int num);
