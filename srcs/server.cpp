@@ -52,7 +52,7 @@ bool	check_users(int i, pollfd &fds, std::map<int, User> & users, Server & srv)
 		{
 			if (errno != EWOULDBLOCK)
 			{
-				std::cerr << " recv error" << std::endl;
+				// std::cerr << " recv error" << std::endl;
 				close_conn = true;
 			}
 			return false;
