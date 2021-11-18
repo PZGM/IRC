@@ -60,10 +60,10 @@ fclean:  clean
 re: fclean all clean
 
 exe: re
-	@echo "nc -C localhost <PORT: 8080 ou 8000>"
+	@echo "nc -C localhost <PORT: 8080 (ou 8000 si proxy)>"
 	@echo "${YELLOW}Execution${RESET}"
-	# @./${NAME} conf.conf
-	@./${NAME} 8080 hrien4
+	@./${NAME} conf.conf
+	#@./${NAME} 8080 hrien4
 
 
 san: fclean
