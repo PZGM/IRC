@@ -202,6 +202,11 @@ class Server
 		{
 			return _name;
 		}
+
+		void del_chan(std::string chan)
+		{
+			_channel.erase(chan);
+		}
 };
 
 
