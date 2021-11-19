@@ -47,7 +47,7 @@ Server	configure(char *path)
 		exit(0);
 	}
 	name.erase(0, 5);
-	srv.set_name("irc." + name);
+	srv.set_name( name);
 
 	std::string oper;
 	getline(file, oper);

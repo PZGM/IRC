@@ -122,26 +122,28 @@ void send_whois(User & usr, User & tom, Server srv)
 	str += tom.get_real_name();
 	str += " ";
 	str += usr.get_host();
-    str += " ";
-    str += srv.get_name();
-    str += " ";
-    str += "*";
-    str += " :";
-    str += tom.get_real_name();
-    str += "\r\n";
-	str += prefix(378, srv);
-	str += usr.get_nick();
 	str += " ";
-	str += tom.get_nick();
-	str += " :is connecting from ";	
-    if (tom.is_oper() == true)
-        str += "@";
-    str += tom.get_real_name();
-	str += "@";
-	str += usr.get_host();
+	str += srv.get_name();
 	str += " ";
-	str += usr.get_host();
+	str += "*";
+	str += " :";
+	str += tom.get_real_name();
 	str += "\r\n";
+	if (usr.get_fd() == tom.get_fd()) {
+		str += prefix(378, srv);
+		str += usr.get_nick();
+		str += " ";
+		str += tom.get_nick();
+		str += " :is connecting from ";	
+		if (tom.is_oper() == true)
+			str += "@";
+		str += tom.get_real_name();
+		str += "@";
+		str += usr.get_host();
+		str += " ";
+		str += usr.get_host();
+		str += "\r\n";
+	}
 	if(!tom.get_channels().empty())
 	{
 		coco = tom.get_channels();
@@ -163,17 +165,19 @@ void send_whois(User & usr, User & tom, Server srv)
 	str += tom.get_nick();
 	str += " ";
 	str += srv.get_name();
-	str += " :Local ";
+	str += " :Local "; /////////////////////////???
 	str += "IRC Server";
 	str += "\r\n";
-	str += prefix(379, srv);
-	str += usr.get_nick();
-	str += " ";
-	str += tom.get_nick();
-	str += " :is using modes +";
-	str += (tom.is_oper() ? "o" : "");
-	str += (tom.get_inv() ? "i" : "");
-	str += "\r\n";
+	if (usr.get_fd()  == tom.get_fd()) {
+		str += prefix(379, srv);
+		str += usr.get_nick();
+		str += " ";
+		str += tom.get_nick();
+		str += " :is using modes +";
+		str += (tom.is_oper() ? "o" : "");
+		str += (tom.get_inv() ? "i" : "");
+		str += "\r\n";
+	}
 	str += prefix(317,srv);
 	str += usr.get_nick();
 	str += " ";

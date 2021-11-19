@@ -19,9 +19,9 @@ void	who(std::vector<std::string> *vec, User & usr, Server & srv)
 		for (uit = uchan.begin(); uit != uchan.end(); uit++) {
 			lst = srv.get_channel_by_name(*uit).get_users();
 			for(it = lst.begin(); it != lst.end(); it++){
-				if (op == true && (*it).is_oper() == false)
+				if ((op == true && (*it).is_oper() == false) || ( vec->front() == "0" && (*it).get_inv()))
 					continue;
-				send((*it).get_nick(),(*it).get_fd());//send le machin
+				send((*it).get_nick(),(*it).get_fd());
 			}
 		}
 		return;
@@ -45,7 +45,7 @@ void	who(std::vector<std::string> *vec, User & usr, Server & srv)
 		while (it != fds.end()) {
 			if (srv.find_user_by_fd(*it)) {
 				User & us = srv.get_user_by_fd(*it);
-				if(us.get_inv() == false)
+				if(us.get_inv() == false || us.get_inv())
 				{
 					if (vec->back()[0] != '#')
 					{
