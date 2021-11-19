@@ -101,7 +101,7 @@ std::map<int, std::string> get_msgs(void) {
     msgs[1]   = "Welcome to the Internet Relay Network +";
     msgs[2]   = "Your host is +, running version +";
     msgs[3]   = "This server was created +";
-    msgs[4]   = "+ + BERTZios CEIMRUabefhiklmnoqstuv Iabefhkloqv";
+    msgs[4]   = "+ +";
     msgs[315] = "End of /WHO list";
 	msgs[318] = "End of /WHOIS list";
     msgs[366] = "End of NAMES list";
