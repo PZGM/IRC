@@ -117,9 +117,8 @@ class Channel
 			}
 			for (std::list<User>::iterator it = _user.begin(); it != _user.end(); it++)
 			{
-				if (usr.get_nick() == (*it).get_nick())
+				if (usr.get_fd() == (*it).get_fd())
 				{
-					std::cout << "==========================" << (*it).get_nick() << std::endl;
 					_user.erase(it);
 					break;
 				}

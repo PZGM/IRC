@@ -40,7 +40,7 @@ void parsing(std::string str, User & usr, Server & srv) {
 	fmap["PING"] = ping;
 	fmap["PONG"] = pong;
 	fmap["WHO"]  = who;
-	fmap["PART"] = part;
+	// fmap["PART"] = part;
 	fmap["QUIT"] = quit;
 	fmap["CAP"] = cap;
 	fmap["WHOIS"] = whois;
@@ -69,6 +69,12 @@ void parsing(std::string str, User & usr, Server & srv) {
 	}
 	else if (command == "MOTD")
 		motd(usr, srv);
+	else if (command == "PART")
+	{
+		vec->erase(vec->begin());
+		vec->push_back(":");
+		part(vec, usr, srv);
+	}
 	else
 		send_error(421, usr, command,srv);
 }

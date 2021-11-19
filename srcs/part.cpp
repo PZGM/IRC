@@ -10,9 +10,12 @@ void	part(std::vector<std::string> *vec, User & usr, Server & srv)
 	{
 		if (srv.find_channel((*it)) == true)
 		{
-			broadcast_update(usr, srv, "PART", srv.get_channel_by_name((*it)).get_name());
+			std::string param = srv.get_channel_by_name((*it)).get_name();
+			broadcast_update(usr, srv, "PART", param);
 			srv.get_channel_by_name((*it)).del_user(usr);
 			usr.del_chan(srv.get_channel_by_name((*it)).get_name());
+			if (srv.get_channel_by_name((*it)).get_users().empty() == 0)
+				srv.del_chan((*it));
 		}
 	}
 }
