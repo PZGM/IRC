@@ -32,6 +32,8 @@ SRCS =	./srcs/join.cpp			\
 		./srcs/quit.cpp			\
 		./srcs/part.cpp			\
 		./srcs/cap.cpp			\
+		./srcs/notice.cpp		\
+		./srcs/motd.cpp			\
 		# ./srcs/.cpp			\
 		
 OBJS = ${SRCS:.cpp=.o}
@@ -63,7 +65,7 @@ exe: re
 	@echo "nc -C localhost <PORT: 8080 (ou 8000 si proxy)>"
 	@echo "${YELLOW}Execution${RESET}"
 	@./${NAME} conf.conf
-	#@./${NAME} 8080 hrien4
+	# @./${NAME} 8080 hrien4
 
 
 san: fclean

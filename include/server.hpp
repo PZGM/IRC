@@ -122,4 +122,12 @@ void	quit(std::vector<std::string> *vec, User & usr, Server & srv);
 // PART.CPP
 void	part(std::vector<std::string> *vec, User & usr, Server & srv);
 
+// MOTD.CPP
+void    motd(User & usr, Server & srv);
+
+// NOTICE.CPP
+void	notice(std::vector<std::string> *vec, User & usr, Server & srv);
+bool	notice_user(std::vector<std::string> *vec, User & usr, Server & srv);
+bool	notice_channel(std::vector<std::string> *vec, User & usr, Server & srv, std::string msg);
+
 #endif

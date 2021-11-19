@@ -21,6 +21,8 @@ void user(std::vector<std::string> *vec, User & usr, Server & srv) {
 	vec->erase(vec->begin(), vec->begin() + 3);
 	std::string str = vec->front();
 	vec->erase(vec->begin());
+	if (vec->front() == ":")
+		vec->erase(vec->begin());
 	while (vec->size() != 0) {
 		str += " ";
 		str += vec->front();
