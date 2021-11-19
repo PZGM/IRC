@@ -7,23 +7,18 @@ void	who(std::vector<std::string> *vec, User & usr, Server & srv)
 		op = true;
 		vec->pop_back();
 	}
-	std::vector<std::string> uchan;
-	std::vector<std::string>::iterator uit;
 	Channel chan;
+	std::map<int, User> users = srv.get_users();;
 	std::list<User> lst;
 	std::list<User>::iterator it;
-
-	if (vec->size() == 0 || (vec->size() == 1  && vec->front() == "0"))
+	if (vec->size() == 1  && vec->front() == "0")
 	{
-		uchan = usr.get_channels();
-		for (uit = uchan.begin(); uit != uchan.end(); uit++) {
-			lst = srv.get_channel_by_name(*uit).get_users();
-			for(it = lst.begin(); it != lst.end(); it++){
-				if ((op == true && (*it).is_oper() == false) || ( vec->front() == "0" && (*it).get_inv()))
+		for (std::map<int, User>::iterator it = users.begin(); it != users.end(); it++) {
+				if (((op == true && it->second.is_oper() == false) || it->second.get_inv()) && it->first != usr.get_fd())
 					continue;
-				send((*it).get_nick(),(*it).get_fd());
+				send_who(usr,"",  it->second, srv);
 			}
-		}
+			send_error(315, usr, vec->back(),srv);
 		return;
 	}
 	else 
