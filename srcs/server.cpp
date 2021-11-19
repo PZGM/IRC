@@ -40,14 +40,14 @@ void init_address(struct sockaddr_in * addr, int sockfd, int port) {
 	}
 }
 
-bool	check_users(int i, pollfd &fds, std::map<int, User> & users, Server & srv)
+bool	check_users(int i, pollfd &fds, std::map<int, User> & users, Server & srv, std::map<int, std::string> & inputs)
 {
+	int fd = (&fds)[i].fd;
 	bool close_conn = false;
 	char buff[BUFF] = {0};
-	std::string input = "";
 	do {
 		memset(buff, 0, sizeof(buff)); 
-		int rc = recv((&fds)[i].fd, buff, sizeof(buff),  MSG_DONTWAIT); //receive data
+		int rc = recv(fd, buff, sizeof(buff),  MSG_DONTWAIT); //receive data
 		if (rc < 0)
 		{
 			if (errno != EWOULDBLOCK)
@@ -59,26 +59,26 @@ bool	check_users(int i, pollfd &fds, std::map<int, User> & users, Server & srv)
 		}
 		if (rc == 0)
 		{
-			users.erase(users.find((&fds)[i].fd));
+			users.erase(users.find(fd));
 			std::cout << "user deleted from database" << std::endl;
 			close_conn = true;
 			break;
 		}
-		input += buff;
-		if (input.find("\n")) {
-			User & usr = users[(&fds)[i].fd];
-			std::vector<std::string> * vec = split(input, "\n");
+		inputs[fd] += buff;
+		if (inputs[fd].find("\n") != std::string::npos) {
+			User & usr = users[fd];
+			std::vector<std::string> * vec = split(inputs[fd], "\n");
 			std::vector<std::string>::iterator it = vec->begin();
 			while (it != vec->end()){
 				parsing(*it, usr, srv);
 				it++;
 			}
-			input = "";
+			inputs[fd] = "";
 		}
 	} while(true);
 	if (close_conn)
 	{
-		close((&fds)[i].fd);
+		close(fd);
 		(&fds)[i].fd = -1;
 		return true;
 	}
@@ -93,6 +93,7 @@ Server routine(Server srv, int sockfd, int *nfds) {
 	struct sockaddr_in addr;
 	char ip[16];
 	socklen_t len = sizeof(addr);
+	std::map<int, std::string> inputs;
 
 	std::map<int, User> & users = srv.get_users();
 	do
@@ -142,12 +143,13 @@ Server routine(Server srv, int sockfd, int *nfds) {
 					    strcpy(ip, inet_ntoa(addr.sin_addr));
 						std::cout << "User " << new_sd << " creation" << std::endl;	
 						users[new_sd] = User(new_sd, std::string(ip));
+						inputs[new_sd] = "";
 					}
 					(*nfds)++;
 				} while(new_sd != -1);
 			}
 			else //not the listening socket so an existing connection must be readable
-				compr_arr = check_users(i, *(srv.get_fds()), users, srv);
+				compr_arr = check_users(i, *(srv.get_fds()), users, srv, inputs);
 		}
 
 		if (compr_arr)
