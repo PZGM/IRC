@@ -24,23 +24,29 @@ void mode_chan(std::vector<std::string> *vec, User & usr, Server & srv) {
                 sign = (*it == '+') ? 1 : -1;
                 it++;
             }
+			std::cerr << "THERe" << std::endl;
             if (*it == '+' || *it == '-')
                 break;
             if (*it == 'o')
             {
+				std::cerr << "HELLO" << std::endl;
                 if (nick != "") {
                     if (srv.find_user(nick)){
                         if (chan.find_user(nick))
                         {
+							std::cerr << " ERR " << std::endl;
                             if (chan.is_oper(usr))
                             {
+								std::cerr << " OR " << std::endl;
                                 int to_add = srv.get_fd_from_nick(nick);
                                 if (sign == 1) {
+									std::cerr << "JADE" <<std::endl;
                                     chan.add_oper(to_add);
                                     send_general_update(usr, chan, "MODE " + chan_name + " +o", nick, false);
                                 }
-                                if (sign == 2) {
+                                if (sign == -1) {
                                     chan.rm_oper(to_add);
+									std::cerr << "JRM WALA" << std::endl;
                                     send_general_update(usr, chan, "MODE " + chan_name + " -o", nick, false);
                                 }
                             }

@@ -25,6 +25,7 @@ class Channel
 			_mode = "+nt";
 
 		};
+		
 		Channel(std::string name, User & usr): _name(name)
 		{
 			_user.push_front(usr);
