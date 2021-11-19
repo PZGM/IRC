@@ -124,8 +124,9 @@ std::map<int, std::string> get_msgs(void) {
     msgs[464] = "Password incorrect";
     msgs[472] = "is unknown mode char to me"; //en vrai ca devrait etre un peu plus long mais chuuuutttt
     msgs[476] = "Invalid channel name";
+    msgs[481] = "Permission Denied - Only operators may set user mode o";
     msgs[482] = "You're not a channel operator";
     msgs[501] = "Unknown MODE flag";
-    msgs[502] = "Cannot view/change mode for other users";
+	msgs[502] = "Can't change mode for other users";
     return msgs;
 }

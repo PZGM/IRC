@@ -15,11 +15,13 @@ void	mode(std::vector<std::string> *vec, User & usr, Server & srv)
 	}
 	if (vec->size() > 1) {
 		if ((*vec)[1] == "-o") {
-			// send_update(usr, srv, "MODE", (*vec)[0] + " " + (*vec)[1]);
+			send_update(usr, "MODE", (*vec)[0] + " " + (*vec)[1], usr.get_fd());
 			usr.set_oper(false);
 		}
-		else if ((*vec)[1] == "+o")
-			;
+		else if ((*vec)[1] == "+o") {
+			if (usr.is_oper() == false)
+				send_error(481, usr, srv);
+		}
 		else if ((*vec)[1] == "+i")
 		{
 			broadcast_update(usr, srv, "MODE " + (*vec)[0], (*vec)[1]);
@@ -34,12 +36,6 @@ void	mode(std::vector<std::string> *vec, User & usr, Server & srv)
 			return;
 		}
 	}
-	std::string mode = "+";
-	if (usr.is_oper())
-		mode += "o";
-	if (usr.get_inv())
-		mode += "i";
-	send_msg2(221, usr, mode, srv);
 }
 
 #endif
