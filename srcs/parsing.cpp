@@ -34,6 +34,7 @@ void parsing(std::string str, User & usr, Server & srv) {
 	fmap["USER"] = user;
 	fmap["NICK"] = nick;
 	fmap["PRIVMSG"] = privmsg;
+	fmap["NOTICE"] = notice;
 	fmap["OPER"] = oper;
 	fmap["MODE"] = mode;
 	fmap["PING"] = ping;
@@ -66,6 +67,8 @@ void parsing(std::string str, User & usr, Server & srv) {
 		}
 		fmap[command](vec, usr, srv);
 	}
+	else if (command == "MOTD")
+		motd(usr, srv);
 	else
 		send_error(421, usr, command,srv);
 }
