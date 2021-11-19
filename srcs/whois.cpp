@@ -10,8 +10,8 @@ void	whois(std::vector<std::string> *vec, User & usr, Server & srv)
 		}
 	else
 	{
-		send_error(401, usr);
-		send_error(318, usr);
+		send_error(401, usr,srv);
+		send_error(318, usr,srv);
 
 		return;
 	}

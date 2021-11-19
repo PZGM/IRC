@@ -12,11 +12,11 @@ void nick(std::vector<std::string> *vec, User & usr, Server & srv) {
         return;
     }
     if (vec->empty()) {
-        send_error(431, usr);
+        send_error(431, usr,srv);
         return;
     }
     if (check_nick(nick) == false) {
-        send_error(432, usr, nick);
+        send_error(432, usr, nick,srv);
         return;
     }
 
@@ -24,7 +24,7 @@ void nick(std::vector<std::string> *vec, User & usr, Server & srv) {
         return;
 
     if (check_nick_availibility(nick, srv) == false) {
-        send_error(433, usr, nick);
+        send_error(433, usr, nick,srv);
         return;
     }
     if (usr.is_registred())

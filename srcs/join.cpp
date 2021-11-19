@@ -7,12 +7,12 @@ void	join(std::vector<std::string> *vec, User & usr, Server & srv)
 {
 	if (vec->size() == 0)
 	{
-		send_error(461, usr); //:ergo.test 461 fg JOIN :Not enough parameters
+		send_error(461, usr, srv); //:ergo.test 461 fg JOIN :Not enough parameter)s
 		return;
 	}
 	if (vec->front()[0] != '#')
 	{
-		send_error(476, usr, vec->front());
+		send_error(476, usr, vec->front(), srv);
 		return;
 	}
 	std::map<std::string, Channel>::iterator it = srv.get_begin_channel();
@@ -61,8 +61,8 @@ void	welcome_chan(User & usr, Server srv, Channel & chan)
 			msg += " ";
 		uit--;
 	}
-	send_msg2(353, usr, msg);
-	send_error(366, usr, chan.get_name());
+	send_msg2(353, usr, msg, srv);
+	send_error(366, usr, chan.get_name(), srv);
 }
 
 

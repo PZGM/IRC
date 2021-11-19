@@ -1,15 +1,15 @@
 #include "../include/server.hpp"
       #include <sys/socket.h>
        #include <netdb.h>
-void find_host(User & usr) {
+void find_host(User & usr, Server & srv) {
 	std::string str = ":";
-	str += SERVER_NAME;
+	str += srv.get_name();
 	str += " NOTICE * :*** Looking up your hostname...\r\n";
 	send(str, usr.get_fd());
 	usleep(1000000);
 
 	str = ":";
-	str += SERVER_NAME;
+	str += srv.get_name();
 	str += " NOTICE ";
 	str += usr.get_nick();
 	str += " :*** Could not resolve your hostname: Request timed out; using your IP address (";

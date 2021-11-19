@@ -75,10 +75,10 @@ bool check_nick(std::string str) {
     return true;
 }
 
-std::string prefix(int num) {
+std::string prefix(int num, Server & srv) {
     std::string str;
     str += ":";
-    str += SERVER_NAME;
+    str += srv.get_name();
     str += " ";
     if (num < 10)
         str += "0";

@@ -9,7 +9,7 @@ void mode_chan(std::vector<std::string> *vec, User & usr, Server & srv) {
     std::string nick = (vec->size() > 2) ? (*vec)[2] : "";
     int sign = 0;
     if (srv.find_channel(vec->front()) == false) {
-        send_error(403, usr, vec->front());
+        send_error(403, usr, vec->front(),srv);
         return;
     }
     Channel & chan = srv.get_channel_by_name(chan_name);
@@ -45,23 +45,23 @@ void mode_chan(std::vector<std::string> *vec, User & usr, Server & srv) {
                                 }
                             }
                             else {
-                                send_error(482, usr, chan_name);
+                                send_error(482, usr, chan_name,srv);
                                 return;
                             }
                         }
                         else
-                            send_error(441, usr, chan_name);
+                            send_error(441, usr, chan_name,srv);
                     }
                     else
-                        send_error(401, usr, nick);
+                        send_error(401, usr, nick,srv);
                 }
             }
             else
-                send_error(472, usr, ch);
+                send_error(472, usr, ch,srv);
             it++;
         }
     }
-    send_msg2(324, usr, chan.get_name() + " " + chan.get_mode());
+    send_msg2(324, usr, chan.get_name() + " " + chan.get_mode(), srv);
 }
 
 #endif

@@ -56,18 +56,18 @@ void parsing(std::string str, User & usr, Server & srv) {
 		return;
 	if (fmap.count(command)) {
 		if (!usr.is_registred() && (command == "JOIN" || command == "PRIVMSG" || command == "OPER")) {
-			send_error(451, usr);
+			send_error(451, usr,srv);
 			return;
 		}
 		vec->erase(vec->begin());
 		if (vec->size() == 0) {
-			send_error(461, usr, command);
+			send_error(461, usr, command,srv);
 			return;
 		}
 		fmap[command](vec, usr, srv);
 	}
 	else
-		send_error(421, usr, command);
+		send_error(421, usr, command,srv);
 }
 
 

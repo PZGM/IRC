@@ -3,10 +3,11 @@
 
 # include "server.hpp"
 
+class Server;
 
 void send(std::string str, int fd);
-void send_msg2(int num, User & usr, std::string msg);
-void send_error(int err, User & usr, std::string ctx);
+void send_msg2(int num, User & usr, std::string msg, Server & srv);
+void send_error(int err, User & usr, std::string ctx, Server & srv);
 
 
 class Channel

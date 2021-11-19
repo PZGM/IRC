@@ -22,13 +22,13 @@ class Server
 	public:
 		struct pollfd fds[FD_MAX];
 
-		Server( std::string p, std::string passw): _passw(passw) {
-		for (std::string::iterator it = p.begin(); it != p.end(); it++) {
-        	if (std::isdigit(*it) == 0) {
-			exit(0);
-    		}
-		}
-		_port = std::stoi(p); //definir des values limites
+		Server( std::string p, std::string name):_name("irc." + name){
+			for (std::string::iterator it = p.begin(); it != p.end(); it++) {
+				if (std::isdigit(*it) == 0) {
+				exit(0);
+				}
+			}
+			_port = std::stoi(p); //definir des values limites
 			_users = std::map<int, User>();
 			_tm = time(NULL);
 			_operators = std::map<std::string, std::string>();
@@ -198,6 +198,10 @@ class Server
 			return fds;
 		}
 
+		std::string get_name()
+		{
+			return _name;
+		}
 };
 
 

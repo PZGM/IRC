@@ -18,7 +18,7 @@ void	privmsg(std::vector<std::string> *vec, User & usr, Server & srv)
 
 	if (vec->size() < 2)
 	{
-		send_error(461, usr);
+		send_error(461, usr,srv);
 		return;
 	// :ergo.test 461 fg PRIVMSG :Not enough parameters
 	}
@@ -33,9 +33,9 @@ void	privmsg(std::vector<std::string> *vec, User & usr, Server & srv)
 	else
 	{
 		if (vec->front()[0] != '#')
-			send_error(401, usr, vec->front());
+			send_error(401, usr, vec->front(),srv);
 		else
-			send_error(403, usr, vec->front());
+			send_error(403, usr, vec->front(),srv);
 	// :ergo.test 401 fd g :No such nick
 	// :ergo.test 403 fd g :No such channel
 		return ;
@@ -64,7 +64,7 @@ bool	privmsg_user(std::vector<std::string> *vec, User & usr, Server & srv)
 	}
 	else
 	{
-		send_error(401, usr);
+		send_error(401, usr,srv);
 	// :ergo.test 401 fd g :No such nick
 		return false;
 	}

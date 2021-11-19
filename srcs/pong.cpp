@@ -7,9 +7,9 @@ void ping(std::vector<std::string> *vec, User & usr, Server & srv) {
     (void)usr;
     (void)srv;
     std::string str = ":";
-    str += SERVER_NAME;
+    str += srv.get_name();
     str += " PONG ";
-    str += SERVER_NAME;
+    str += srv.get_name();
     str += " :";
     str += vec->front();
 	str += "\r\n";

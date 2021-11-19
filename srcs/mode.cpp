@@ -10,7 +10,7 @@ void	mode(std::vector<std::string> *vec, User & usr, Server & srv)
 		return;
 	}
 	if (vec->front() != usr.get_nick()) {
-		send_error(502, usr);
+		send_error(502, usr,srv);
 		return;
 	}
 	if (vec->size() > 1) {
@@ -30,7 +30,7 @@ void	mode(std::vector<std::string> *vec, User & usr, Server & srv)
 			usr.set_inv(false);
 		}
 		else {
-			send_error(501, usr, (*vec)[1]);
+			send_error(501, usr, (*vec)[1],srv);
 			return;
 		}
 	}
@@ -39,7 +39,7 @@ void	mode(std::vector<std::string> *vec, User & usr, Server & srv)
 		mode += "o";
 	if (usr.get_inv())
 		mode += "i";
-	send_msg2(221, usr, mode);
+	send_msg2(221, usr, mode, srv);
 }
 
 #endif

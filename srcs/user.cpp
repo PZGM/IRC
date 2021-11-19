@@ -6,15 +6,15 @@
 void user(std::vector<std::string> *vec, User & usr, Server & srv) {
 	(void)srv;
 	if (vec->size() < 4) {
-		send_error(461, usr, "USER");
+		send_error(461, usr, "USER",srv);
 		return;
 	}
 	if (usr.is_registred() == true) {
-		send_error(462, usr);
+		send_error(462, usr,srv);
 		return;
 	}
 	if (check_user_name(vec->front()) == false) {
-		send_error(468, usr);
+		send_error(468, usr,srv);
 		return;
 	}
 	usr.set_user(vec->front());
