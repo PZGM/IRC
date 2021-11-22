@@ -206,6 +206,11 @@ class Server
 		void del_chan(std::string chan)
 		{
 			_channel.erase(chan);
+			std::map<int, User>::iterator it = _users.begin();
+			while (it != _users.end()) {
+				it->second.del_chan(chan);
+				it++;
+			}
 		}
 };
 

@@ -98,7 +98,6 @@ Server routine(Server srv, int sockfd, int *nfds) {
 	std::map<int, User> & users = srv.get_users();
 	do
 	{
-		std::cout << " waiting poll..." << std::endl;
 		if ((rc = poll(srv.get_fds(), *nfds, -1)) < 0)
 		{
 			std::cerr << "poll failed" << std::endl;

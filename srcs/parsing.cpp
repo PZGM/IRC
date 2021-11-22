@@ -28,7 +28,7 @@ std::vector<std::string> * split(std::string str, std::string sep) {
 
 
 void parsing(std::string str, User & usr, Server & srv) {
-	std::cout << "< " << str << std::endl;
+	//std::cout << "< " << str << std::endl;
     std::map<std::string, void(*)(std::vector<std::string>*, User &,Server &)> fmap;
 	fmap["JOIN"] = join;
 	fmap["USER"] = user;

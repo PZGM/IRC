@@ -1,7 +1,7 @@
 #include "../include/server.hpp"
 
 void send(std::string str, int fd) { 
-    std::cout << "> " << str << std::endl;
+    //std::cout << "> " << str << std::endl;
     send(fd, str.c_str(), str.length(), 0);
 }
 
