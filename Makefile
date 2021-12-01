@@ -44,7 +44,7 @@ FLAGS = -Wall -Wextra -Werror
 
 SANI = -fsanitize=address -O0 -g3 --std=c++11
 
-$(NAME):
+$(NAME): ${OBJS} Makefile
 	@echo "\r\r${YELLOW}Compilation...${RESET}"
 	@${CC} -o ${NAME} ${FLAGS} ${SRCS} 
 	@echo "${GREEN}Compilation OK${RESET}"
