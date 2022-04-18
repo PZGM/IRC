@@ -3,7 +3,7 @@ port 8080 server
 ```
 make exe
 ```
-On differents Windows : 
+On a different terminal : 
 ```
 - nc -C <IP> <PORT>
 - user 1 2 3 4 
